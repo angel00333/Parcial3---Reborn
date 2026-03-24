@@ -1,4 +1,6 @@
-﻿using MySqlConnector;
+﻿using Microsoft.AspNetCore.Identity;
+using MySqlConnector;
+using System.Data;
 
 namespace Parcial3_Aeropuerto.Models
 {
@@ -44,6 +46,75 @@ namespace Parcial3_Aeropuerto.Models
                 con.Close();
             }
             return resultado;
+        }
+
+        public static int EliminarPasajero(int id)
+        {
+            int resultado = 0;
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+                string sql = "DELETE FROM Pasajeros WHERE Id=@Id";
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.Parameters.AddWithValue("@Id", id);
+                resultado = comando.ExecuteNonQuery();
+                con.Close();
+            }
+            return resultado;
+        }
+
+        public static List<Pasajero> MostrarPasajeros()
+        {
+            List<Pasajero> pasajeros = new List<Pasajero>();
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+                string sql = "SELECT * FROM Pasajeros";
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.CommandType = System.Data.CommandType.Text;
+                IDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    Pasajero pasajero = new Pasajero();
+                    pasajero.Id = reader.GetInt32(0);
+                    pasajero.Nombre = reader.GetString(1);
+                    pasajero.Apellido = reader.GetString(2);
+                    pasajero.Pasaporte = reader.GetString(3);
+                    pasajero.Edad = reader.GetInt32(4);
+                    pasajero.Pais = reader.GetString(5);
+                    pasajero.Visa = reader.GetString(6);
+                    pasajeros.Add(pasajero);
+
+                }
+                con.Close();
+                return pasajeros;
+            }
+        }
+
+        public static Pasajero ObtenerPasajeroPorId(int id)
+        {
+            Pasajero pasajero = new Pasajero();
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+                string sql = "SELECT * FROM Pasajeros WHERE Id=@Id";
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.Parameters.AddWithValue("@Id", id);
+                comando.CommandType = System.Data.CommandType.Text;
+                IDataReader reader = comando.ExecuteReader();
+                if (reader.Read())
+                {
+                    pasajero.Id = reader.GetInt32(0);
+                    pasajero.Nombre = reader.GetString(1);
+                    pasajero.Apellido = reader.GetString(2);
+                    pasajero.Pasaporte = reader.GetString(3);
+                    pasajero.Edad = reader.GetInt32(4);
+                    pasajero.Pais = reader.GetString(5);
+                    pasajero.Visa = reader.GetString(6);
+                }
+                con.Close();
+                return pasajero;
+            }
         }
     }
 }
