@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Operations;
 using MySqlConnector;
 using Parcial3_Aeropuerto.Models; // Agrega esta línea para incluir el espacio de nombres de tu modelo
 
@@ -47,43 +48,39 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(AvionesDAL.ObtenerAvionesPorID(id));
         }
 
         // POST: Aviones/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Aviones aviones)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                AvionesDAL.ModificarAviones(aviones);
+                return RedirectToAction("Aviones");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: Aviones/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(AvionesDAL.ObtenerAvionesPorID(id));
+
         }
 
         // POST: Aviones/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Aviones aviones)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+           
+               
+                AvionesDAL.EliminarAviones(aviones.Id_avion);
+            return RedirectToAction("Aviones");
+
         }
     }
 }

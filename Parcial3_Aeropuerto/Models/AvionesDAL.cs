@@ -93,6 +93,7 @@ namespace Parcial3_Aeropuerto.Models
                 comando.CommandType = CommandType.Text;
                 comando.Parameters.AddWithValue("@id_aerolinea", aviones.Id_aerolinea);
                 comando.Parameters.AddWithValue("@capacidad", aviones.Capacidad);
+                comando.Parameters.AddWithValue("@id_avion", aviones.Id_avion);
                 resultado = comando.ExecuteNonQuery();
                 con.Close();
             }
