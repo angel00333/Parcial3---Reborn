@@ -159,3 +159,19 @@ footer nav {
         background-color: inherit !important;
         color: #8EE42B !important;
     }
+
+.acciones {
+    height: 20px;
+    width: 20px;
+}
+
+.table-striped {
+    --bs-table-bg: none;
+    --bs-table-bg-type: rgb(0 0 0 / 40%);
+}
+
+.table-striped tbody, td, tfoot, th, thead, tr {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+}
