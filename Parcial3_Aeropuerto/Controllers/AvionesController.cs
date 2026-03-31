@@ -21,7 +21,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(AvionesDAL.ObtenerAvionesPorID(id));
         }
 
         // GET: Aviones/Create
