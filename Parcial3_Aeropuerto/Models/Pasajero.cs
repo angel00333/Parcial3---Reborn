@@ -8,23 +8,20 @@ namespace Parcial3_Aeropuerto.Models
         public int Id_pasajero { get; set; }
 
         [Required(ErrorMessage = "El nombre es obligatorio.")]
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El apellido es obligatorio.")]
-        public string Apellido { get; set; }
+        public string Apellido { get; set; } = string.Empty;
 
-        public string Pasaporte { get; set; }
+        public string Pasaporte { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "La edad es obligatoria.")]
-
-        [Range(0, 100, ErrorMessage = "La edad debe estar entre 0 y 100.")]
+        [Range(1, 100, ErrorMessage = "La edad debe estar entre 0 y 100.")]
         public int Edad { get; set; }
 
-        [Required(ErrorMessage = "El pais es obligatorio.")]
+        [Required(ErrorMessage = "El país es obligatorio.")]
+        public string Pais { get; set; } = string.Empty;
 
-        public string Pais { get; set; }
-
-        public string Visa { get; set; }
-
+        public string Visa { get; set; } = string.Empty;
     }
 }

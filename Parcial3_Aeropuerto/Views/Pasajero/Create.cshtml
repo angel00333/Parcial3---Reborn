@@ -1,5 +1,9 @@
 ﻿@model Parcial3_Aeropuerto.Models.Pasajero
 
+@{
+    Layout = null;
+}
+
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -19,37 +23,37 @@
 
                     <div class="mb-3">
                         <label asp-for="Nombre" class="form-label"></label>
-                        <input asp-for="Nombre" class="form-control" required/>
+                        <input asp-for="Nombre" class="form-control"/>
                         <span asp-validation-for="Nombre" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Apellido" class="form-label"></label>
-                        <input asp-for="Apellido" class="form-control" required/>
+                        <input asp-for="Apellido" class="form-control"/>
                         <span asp-validation-for="Apellido" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Pasaporte" class="form-label"></label>
-                        <input asp-for="Pasaporte" class="form-control" required/>
+                        <input asp-for="Pasaporte" class="form-control"/>
                         <span asp-validation-for="Pasaporte" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Edad" class="form-label"></label>
-                        <input asp-for="Edad" class="form-control" required/>
+                        <input asp-for="Edad" class="form-control"/>
                         <span asp-validation-for="Edad" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Pais" class="form-label"></label>
-                        <input asp-for="Pais" class="form-control" required/>
+                        <input asp-for="Pais" class="form-control"/>
                         <span asp-validation-for="Pais" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Visa" class="form-label"></label>
-                        <input asp-for="Visa" class="form-control" required/>
+                        <input asp-for="Visa" class="form-control"/>
                         <span asp-validation-for="Visa" class="text-danger"></span>
                     </div>
 
@@ -62,3 +66,6 @@
         </div>
     </div>
 </div>
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

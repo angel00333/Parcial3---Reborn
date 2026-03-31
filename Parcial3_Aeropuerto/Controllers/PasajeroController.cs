@@ -8,17 +8,10 @@ namespace Parcial3_Aeropuerto.Controllers
     public class PasajeroController : Controller
     {
         // GET: PasajeroController
-       public ActionResult Pasajero(string buscar)
-   {
-       if (string.IsNullOrEmpty(buscar))
-       {
-           return View(PasajeroDAL.MostrarPasajeros());
-
-       }
-
-       var resultado = PasajeroDAL.BuscarPasajeros(buscar);
-       return View(resultado);
-   }
+        public ActionResult Pasajero()
+        {
+            return View(PasajeroDAL.MostrarPasajeros());
+        }
 
         // GET: PasajeroController/Details/5
         public ActionResult Details(int id)
@@ -29,10 +22,10 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: PasajeroController/Create
         public ActionResult Create()
         {
-            return PartialView("Create");
+            return View();
         }
 
-        // POST: PersonaController1/Create
+        // POST: PasajeroController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pasajero pasajero)
@@ -44,23 +37,17 @@ namespace Parcial3_Aeropuerto.Controllers
             }
             catch
             {
-                return PartialView("Create", pasajero);
+                return PartialView("Create");
             }
         }
 
         // GET: PasajeroController/Edit/5
         public ActionResult Edit(int id)
         {
-            var pasajero = PasajeroDAL.ObtenerPasajeroPorId(id);
-
-            if (pasajero == null)
-            {
-                return Content("No se encontró el pasajero.");
-            }
-
-            return PartialView("Edit", pasajero);
+            return PartialView(PasajeroDAL.ObtenerPasajeroPorId(id));
         }
 
+        // POST: PasajeroController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Pasajero pasajero)
@@ -70,30 +57,22 @@ namespace Parcial3_Aeropuerto.Controllers
                 PasajeroDAL.ModificarPasajero(pasajero);
                 return RedirectToAction("Pasajero");
             }
-
             return PartialView("Edit", pasajero);
         }
-
 
         // GET: PasajeroController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return PartialView("Delete", PasajeroDAL.ObtenerPasajeroPorId(id));
         }
 
-        // POST: PasajeroController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Pasajero));
-            }
-            catch
-            {
-                return View();
-            }
+            PasajeroDAL.EliminarPasajero(id);
+            return RedirectToAction("Pasajero");
         }
     }
 }

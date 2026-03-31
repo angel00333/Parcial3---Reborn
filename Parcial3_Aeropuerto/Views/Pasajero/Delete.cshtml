@@ -1,0 +1,40 @@
+﻿@model Parcial3_Aeropuerto.Models.Pasajero
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Eliminar Pasajero</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <h5>
+                    ¿Quieres eliminar a <br />
+                    <strong>@Model.Nombre @Model.Apellido</strong>?
+                </h5>
+            </div>
+
+            <div class="modal-footer justify-content-center">
+                <form asp-action="Delete" asp-controller="Pasajero" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="id" value="@Model.Id_pasajero" />
+
+                    <button type="submit" class="btn btn-success">
+                        Sí
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
