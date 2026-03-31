@@ -1,59 +1,56 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Parcial3_Aeropuerto.Models;
+using MySqlConnector;
+using Parcial3_Aeropuerto.Models; // Agrega esta línea para incluir el espacio de nombres de tu modelo
 
 namespace Parcial3_Aeropuerto.Controllers
 {
-    public class PasajeroController : Controller
+    public class AvionesController : Controller
     {
-        // GET: PasajeroController
-       public ActionResult Pasajero(string buscar)
-   {
-       if (string.IsNullOrEmpty(buscar))
-       {
-           return View(PasajeroDAL.MostrarPasajeros());
+        // GET: Aviones
+        public ActionResult Aviones(string buscar)
+        {
+            if (string.IsNullOrEmpty(buscar))
+            {
+                return View(AvionesDAL.MostrarAviones());
+            }
+            var resultado = AvionesDAL.BuscarAviones(buscar);
+            return View(resultado);
+        }
 
-       }
-
-       var resultado = PasajeroDAL.BuscarPasajeros(buscar);
-       return View(resultado);
-   }
-
-        // GET: PasajeroController/Details/5
+        // GET: Aviones/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: PasajeroController/Create
+        // GET: Aviones/Create
         public ActionResult Create()
         {
-            return PartialView("Create");
+            return View();
         }
 
-        // POST: PasajeroController/Create
+        // POST: Aviones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pasajero pasajero)
+        public ActionResult Create(Aviones aviones)
         {
-            try
+            ModelState.Remove("Id_avion");
+            if (ModelState.IsValid)
             {
-                PasajeroDAL.AgregarPasajero(pasajero);
-                return RedirectToAction(nameof(Pasajero));
+                AvionesDAL.InsertarAviones(aviones);
+                return RedirectToAction("Aviones");
             }
-            catch
-            {
-                return PartialView("Create", pasajero);
-            }
+            return View();
         }
 
-        // GET: PasajeroController/Edit/5
+        // GET: Aviones/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: PasajeroController/Edit/5
+        // POST: Aviones/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -68,13 +65,13 @@ namespace Parcial3_Aeropuerto.Controllers
             }
         }
 
-        // GET: PasajeroController/Delete/5
+        // GET: Aviones/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: PasajeroController/Delete/5
+        // POST: Aviones/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
