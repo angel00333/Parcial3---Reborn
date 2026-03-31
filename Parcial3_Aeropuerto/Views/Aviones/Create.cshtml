@@ -1,0 +1,47 @@
+﻿@model Parcial3_Aeropuerto.Models.Aviones
+@{
+    // ESTO ES LO QUE ARREGLA EL LOGO DUPLICADO Y EL FONDO, ya no es un Sandwitch
+    Layout = null;
+}
+
+<div class="modal fade" id="Create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registrar Nuevo Avión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 
+                    <div class="mb-3">
+                        <input asp-for="Id_avion"  type="hidden" />
+                        <span asp-validation-for="Id_avion" class="text-danger"></span>
+                    </div>
+
+                    <div class=" mb-3">
+                        <label asp-for="Id_aerolinea" class="form-label"></label>
+                        <input asp-for="Id_aerolinea" class="form-control" />
+                        <span asp-validation-for="Id_aerolinea" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Capacidad" class="form-label"></label>
+                        <input asp-for="Capacidad" class="form-control" />
+                        <span asp-validation-for="Capacidad" class="text-danger"></span>
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <input type="submit" value="Guardar Avión" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

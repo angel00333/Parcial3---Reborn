@@ -8,10 +8,17 @@ namespace Parcial3_Aeropuerto.Controllers
     public class PasajeroController : Controller
     {
         // GET: PasajeroController
-        public ActionResult Pasajero()
-        {
-            return View(PasajeroDAL.MostrarPasajeros());
-        }
+       public ActionResult Pasajero(string buscar)
+   {
+       if (string.IsNullOrEmpty(buscar))
+       {
+           return View(PasajeroDAL.MostrarPasajeros());
+
+       }
+
+       var resultado = PasajeroDAL.BuscarPasajeros(buscar);
+       return View(resultado);
+   }
 
         // GET: PasajeroController/Details/5
         public ActionResult Details(int id)

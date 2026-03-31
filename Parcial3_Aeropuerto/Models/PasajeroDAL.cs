@@ -116,5 +116,37 @@ namespace Parcial3_Aeropuerto.Models
                 return pasajero;
             }
         }
+
+             public static List<Pasajero> BuscarPasajeros(string criterio)
+             {
+                  List<Pasajero> pasajeros = new List<Pasajero>();
+                    using (MySqlConnection con = ConexionSQL.Conectar())
+                    {
+                        con.Open();
+                        string sql = "SELECT * FROM Pasajeros WHERE Nombre LIKE @Criterio OR Apellido LIKE @Criterio OR Pasaporte LIKE @Criterio OR Pais LIKE @Criterio";
+                        MySqlCommand comando = new MySqlCommand(sql, con);
+                        comando.Parameters.AddWithValue("@Criterio", "%" + criterio + "%");
+
+                            comando.CommandType = System.Data.CommandType.Text;
+                            IDataReader reader = comando.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Pasajero pasajero = new Pasajero();
+                            pasajero.Id = reader.GetInt32(0);
+                            pasajero.Nombre = reader.GetString(1);
+                            pasajero.Apellido = reader.GetString(2);
+                            pasajero.Pasaporte = reader.GetString(3);
+                            pasajero.Edad = reader.GetInt32(4);
+                            pasajero.Pais = reader.GetString(5);
+                            pasajero.Visa = reader.GetString(6);
+                            pasajeros.Add(pasajero);
+                        }
+                        con.Close();
+                        return pasajeros;
+            
+                    }
+
+
+             }
     }
 }
