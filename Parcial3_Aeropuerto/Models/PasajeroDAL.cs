@@ -93,31 +93,40 @@ namespace Parcial3_Aeropuerto.Models
 
         public static Pasajero ObtenerPasajeroPorId(int id)
         {
-            Pasajero pasajero = new Pasajero();
+            Pasajero pasajero = null;
+
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "SELECT * FROM Pasajeros WHERE Id_pasajero=@Id_pasajero";
+                string sql = "SELECT * FROM Pasajeros WHERE Id_pasajero = @Id_pasajero";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
                 comando.Parameters.AddWithValue("@Id_pasajero", id);
-                IDataReader reader = comando.ExecuteReader();
-                if (reader.Read())
+
+                using (IDataReader reader = comando.ExecuteReader())
                 {
-                    pasajero.Id_pasajero = reader.GetInt32(0);
-                    pasajero.Nombre = reader.GetString(1);
-                    pasajero.Apellido = reader.GetString(2);
-                    pasajero.Pasaporte = reader.GetString(3);
-                    pasajero.Edad = reader.GetInt32(4);
-                    pasajero.Pais = reader.GetString(5);
-                    pasajero.Visa = reader.GetString(6);
+                    if (reader.Read())
+                    {
+                        pasajero = new Pasajero
+                        {
+                            Id_pasajero = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Apellido = reader.GetString(2),
+                            Pasaporte = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                            Edad = reader.GetInt32(4),
+                            Pais = reader.GetString(5),
+                            Visa = reader.IsDBNull(6) ? "" : reader.GetString(6)
+                        };
+                    }
                 }
+
                 con.Close();
-                return pasajero;
             }
+
+            return pasajero;
         }
 
-             public static List<Pasajero> BuscarPasajeros(string criterio)
+        public static List<Pasajero> BuscarPasajeros(string criterio)
              {
                   List<Pasajero> pasajeros = new List<Pasajero>();
                     using (MySqlConnection con = ConexionSQL.Conectar())
@@ -132,7 +141,7 @@ namespace Parcial3_Aeropuerto.Models
                         while (reader.Read())
                         {
                             Pasajero pasajero = new Pasajero();
-                            pasajero.Id = reader.GetInt32(0);
+                            pasajero.Id_pasajero = reader.GetInt32(0);
                             pasajero.Nombre = reader.GetString(1);
                             pasajero.Apellido = reader.GetString(2);
                             pasajero.Pasaporte = reader.GetString(3);

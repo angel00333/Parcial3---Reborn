@@ -32,26 +32,35 @@ namespace Parcial3_Aeropuerto.Controllers
             return PartialView("Create");
         }
 
-        // POST: PasajeroController/Create
+        // POST: PersonaController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pasajero pasajero)
         {
-            if (ModelState.IsValid)
+            try
             {
                 PasajeroDAL.AgregarPasajero(pasajero);
                 return RedirectToAction("Pasajero");
             }
-            return View(pasajero);
+            catch
+            {
+                return PartialView("Create", pasajero);
+            }
         }
 
         // GET: PasajeroController/Edit/5
         public ActionResult Edit(int id)
         {
-            return PartialView(PasajeroDAL.ObtenerPasajeroPorId(id));
+            var pasajero = PasajeroDAL.ObtenerPasajeroPorId(id);
+
+            if (pasajero == null)
+            {
+                return Content("No se encontró el pasajero.");
+            }
+
+            return PartialView("Edit", pasajero);
         }
 
-        // POST: PasajeroController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Pasajero pasajero)
@@ -61,8 +70,10 @@ namespace Parcial3_Aeropuerto.Controllers
                 PasajeroDAL.ModificarPasajero(pasajero);
                 return RedirectToAction("Pasajero");
             }
-            return PartialView();
+
+            return PartialView("Edit", pasajero);
         }
+
 
         // GET: PasajeroController/Delete/5
         public ActionResult Delete(int id)
