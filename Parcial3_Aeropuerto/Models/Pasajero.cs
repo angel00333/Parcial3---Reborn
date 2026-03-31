@@ -5,7 +5,7 @@ namespace Parcial3_Aeropuerto.Models
 {
     public class Pasajero
     {
-        public int Id { get; set; }
+        public int Id_pasajero { get; set; }
 
         [Required(ErrorMessage = "El nombre es obligatorio.")]
         public string Nombre { get; set; }

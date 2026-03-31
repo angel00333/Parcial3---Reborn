@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Parcial3_Aeropuerto.Models;
 
 namespace Parcial3_Aeropuerto.Controllers
@@ -29,36 +30,31 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pasajero pasajero)
         {
-            try
+            if (ModelState.IsValid)
             {
                 PasajeroDAL.AgregarPasajero(pasajero);
-                return RedirectToAction(nameof(Pasajero));
+                return RedirectToAction("Pasajero");
             }
-            catch
-            {
-                return PartialView("Create", pasajero);
-            }
+            return View(pasajero);
         }
 
         // GET: PasajeroController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return PartialView(PasajeroDAL.ObtenerPasajeroPorId(id));
         }
 
         // POST: PasajeroController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Pasajero pasajero)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                PasajeroDAL.ModificarPasajero(pasajero);
+                return RedirectToAction("Pasajero");
             }
-            catch
-            {
-                return View();
-            }
+            return PartialView();
         }
 
         // GET: PasajeroController/Delete/5
@@ -74,7 +70,7 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Pasajero));
             }
             catch
             {

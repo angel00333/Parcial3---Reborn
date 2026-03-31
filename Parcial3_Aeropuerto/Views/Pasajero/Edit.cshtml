@@ -1,60 +1,60 @@
 ﻿@model Parcial3_Aeropuerto.Models.Pasajero
 
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Crear Persona</h5>
+                <h5 class="modal-title" id="editModalLabel">Editar Pasajero</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form asp-action="Create" method="post">
+                <form asp-action="Edit" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="mb-3">
-                        <input asp-for="Id_pasajero" class="form-control" type="hidden"/>
+                        <input asp-for="Id_pasajero" class="form-control" type="hidden" />
                         <span asp-validation-for="Id_pasajero" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Nombre" class="form-label"></label>
-                        <input asp-for="Nombre" class="form-control" required/>
+                        <input asp-for="Nombre" class="form-control" required />
                         <span asp-validation-for="Nombre" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Apellido" class="form-label"></label>
-                        <input asp-for="Apellido" class="form-control" required/>
+                        <input asp-for="Apellido" class="form-control" required />
                         <span asp-validation-for="Apellido" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Pasaporte" class="form-label"></label>
-                        <input asp-for="Pasaporte" class="form-control" required/>
+                        <input asp-for="Pasaporte" class="form-control" required />
                         <span asp-validation-for="Pasaporte" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Edad" class="form-label"></label>
-                        <input asp-for="Edad" class="form-control" required/>
+                        <input asp-for="Edad" class="form-control" required />
                         <span asp-validation-for="Edad" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Pais" class="form-label"></label>
-                        <input asp-for="Pais" class="form-control" required/>
+                        <input asp-for="Pais" class="form-control" required />
                         <span asp-validation-for="Pais" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Visa" class="form-label"></label>
-                        <input asp-for="Visa" class="form-control" required/>
+                        <input asp-for="Visa" class="form-control" required />
                         <span asp-validation-for="Visa" class="text-danger"></span>
                     </div>
 
                     <div class="modal-footer px-0 pb-0">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
@@ -62,3 +62,4 @@
         </div>
     </div>
 </div>
+

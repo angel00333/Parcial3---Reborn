@@ -33,7 +33,7 @@ namespace Parcial3_Aeropuerto.Models
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "UPDATE Pasajeros SET Nombre=@Nombre, Apellido=@Apellido, Pasaporte=@Pasaporte, Edad=@Edad, Pais=@Pais, Visa=@Visa WHERE Id=@Id";
+                string sql = "UPDATE Pasajeros SET Nombre=@Nombre, Apellido=@Apellido, Pasaporte=@Pasaporte, Edad=@Edad, Pais=@Pais, Visa=@Visa WHERE Id_pasajero=@Id_pasajero";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@Nombre", pasajero.Nombre);
                 comando.Parameters.AddWithValue("@Apellido", pasajero.Apellido);
@@ -41,7 +41,7 @@ namespace Parcial3_Aeropuerto.Models
                 comando.Parameters.AddWithValue("@Edad", pasajero.Edad);
                 comando.Parameters.AddWithValue("@Pais", pasajero.Pais);
                 comando.Parameters.AddWithValue("@Visa", pasajero.Visa);
-                comando.Parameters.AddWithValue("@Id", pasajero.Id);
+                comando.Parameters.AddWithValue("@Id_pasajero", pasajero.Id_pasajero);
                 resultado = comando.ExecuteNonQuery();
                 con.Close();
             }
@@ -54,9 +54,9 @@ namespace Parcial3_Aeropuerto.Models
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "DELETE FROM Pasajeros WHERE Id=@Id";
+                string sql = "DELETE FROM Pasajeros WHERE Id_pasajero=@Id_pasajero";
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.Parameters.AddWithValue("@Id", id);
+                comando.Parameters.AddWithValue("@Id_pasajero", id);
                 resultado = comando.ExecuteNonQuery();
                 con.Close();
             }
@@ -71,12 +71,12 @@ namespace Parcial3_Aeropuerto.Models
                 con.Open();
                 string sql = "SELECT * FROM Pasajeros";
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandType = CommandType.Text;
                 IDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
                     Pasajero pasajero = new Pasajero();
-                    pasajero.Id = reader.GetInt32(0);
+                    pasajero.Id_pasajero = reader.GetInt32(0);
                     pasajero.Nombre = reader.GetString(1);
                     pasajero.Apellido = reader.GetString(2);
                     pasajero.Pasaporte = reader.GetString(3);
@@ -97,14 +97,14 @@ namespace Parcial3_Aeropuerto.Models
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "SELECT * FROM Pasajeros WHERE Id=@Id";
+                string sql = "SELECT * FROM Pasajeros WHERE Id_pasajero=@Id_pasajero";
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.Parameters.AddWithValue("@Id", id);
-                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandType = CommandType.Text;
+                comando.Parameters.AddWithValue("@Id_pasajero", id);
                 IDataReader reader = comando.ExecuteReader();
                 if (reader.Read())
                 {
-                    pasajero.Id = reader.GetInt32(0);
+                    pasajero.Id_pasajero = reader.GetInt32(0);
                     pasajero.Nombre = reader.GetString(1);
                     pasajero.Apellido = reader.GetString(2);
                     pasajero.Pasaporte = reader.GetString(3);

@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.Id_pasajero)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -43,7 +43,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.Id_pasajero)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
@@ -64,7 +64,7 @@
                 @Html.DisplayFor(modelItem => item.Visa)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Id_pasajero }, new { @class = "btn btn-primary btn-sm", onclick = "mostrarEdit(" + item.Id_pasajero + "); return false;" })
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
@@ -79,6 +79,14 @@
         $.get('/Pasajero/Create', function (data) {
             $('#modalContainer').html(data);
             var modal = new bootstrap.Modal(document.getElementById('createModal'));
+            modal.show();
+        });
+    }
+
+    function mostrarEdit() {
+        $.get('/Pasajero/Edit', function (data) {
+            $('#modalContainer').html(data);
+            var modal = new bootstrap.Modal(document.getElementById('editModal'));
             modal.show();
         });
     }
