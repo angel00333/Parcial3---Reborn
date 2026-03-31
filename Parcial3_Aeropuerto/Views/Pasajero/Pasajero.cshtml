@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<Parcial3_Aeropuerto.Models.Pasajero>
-@await Html.PartialAsync("Edit", new Parcial3_Aeropuerto.Models.Pasajero())
 
 @{
     ViewData["Title"] = "Pasajero";
@@ -89,9 +88,9 @@
                 @Html.DisplayFor(modelItem => item.Visa)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a href="javascript:void(0);"class="btn btn-primary btn-sm" onclick="mostrarEdit(@item.Id_pasajero); return false;">Editar</a>
+
+                <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_pasajero)">Delete</a>
             </td>
         </tr>
 }
@@ -108,11 +107,20 @@
         });
     }
 
-        
-    function mostrarEdit(id) {
-        $.get('/Pasajero/Edit', { id: id }, function (data) {
+          function mostrarEdit(id) {
+    $.get('/Pasajero/Edit?id=' + id, function (data) {
+        $('#modalContainer').html(data);
+
+        var modal = new bootstrap.Modal(document.getElementById('editModal'));
+        modal.show();
+    });
+}
+
+    function mostrarDelete(id) {
+        $.get('/Pasajero/Delete?id=' + id, function (data) {
             $('#modalContainer').html(data);
-            var modal = new bootstrap.Modal(document.getElementById('editModal'));
+
+            var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
             modal.show();
         });
     }
