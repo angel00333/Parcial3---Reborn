@@ -1,0 +1,76 @@
+﻿@model Parcial3_Aeropuerto.Models.Aviones
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Aviones</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id_avion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id_avion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id_aerolinea)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id_aerolinea)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Capacidad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Capacidad)
+        </dd>
+    </dl>
+
+   <form asp-action="Delete" method="post" class="form-eliminar">
+        <input type="hidden" asp-for="Id_avion" />
+        
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="Aviones" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.querySelectorAll(".form-eliminar").forEach(form => {
+    form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    Swal.fire({
+    title: "¿Estás seguro?",
+    icon: "warning",
+    iconColor: "#FB0700",
+    showCancelButton: true,
+    confirmButtonText: "Sí, eliminar",
+    confirmButtonColor: "#F46958",
+    cancelButtonColor: "#6c757d",
+    }).then((result) => {
+    if (result.isConfirmed) {
+
+    // 🔥 alerta con tiempo
+    Swal.fire({
+    title: "Eliminado",
+    text: "Se eliminó correctamente",
+    icon: "success",
+    iconColor: "#37FB00",
+    timer: 1090, //Temporixador XD
+    timerProgressBar: true,
+    showConfirmButton: false
+    }).then(() => {
+    form.submit(); // se envía después del tiempo xd
+    });
+
+    }
+    });
+    });
+    });
+</script>

@@ -1,6 +1,5 @@
 ﻿@model Parcial3_Aeropuerto.Models.Aviones
 @{
-    // ESTO ES LO QUE ARREGLA EL LOGO DUPLICADO Y EL FONDO, ya no es un Sandwitch
     Layout = null;
 }
 
@@ -12,35 +11,59 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form asp-action="Create" method="post">
+                <form asp-action="Create" method="post" id="form-crear-avion">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                  
-                    <div class="mb-3">
-                        <input asp-for="Id_avion"  type="hidden" />
-                        <span asp-validation-for="Id_avion" class="text-danger"></span>
-                    </div>
+                    <input asp-for="Id_avion" type="hidden" />
 
-                    <div class=" mb-3">
-                        <label asp-for="Id_aerolinea" class="form-label"></label>
-                        <input asp-for="Id_aerolinea" class="form-control" />
+                    <div class="mb-3">
+                        <label asp-for="Id_aerolinea" class="form-label">Aerolínea</label>
+                        <input asp-for="Id_aerolinea" class="form-control" required />
                         <span asp-validation-for="Id_aerolinea" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Capacidad" class="form-label"></label>
-                        <input asp-for="Capacidad" class="form-control" />
+                        <label asp-for="Capacidad" class="form-label">Capacidad</label>
+                        <input asp-for="Capacidad" class="form-control" required />
                         <span asp-validation-for="Capacidad" class="text-danger"></span>
                     </div>
 
                     <div class="modal-footer px-0 pb-0">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <input type="submit" value="Guardar Avión" class="btn btn-primary" />
+                        <button type="submit" class="btn btn-primary">Guardar Avión</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Usamos una función para asegurar que el evento se pegue al formulario correcto
+    (function() {
+    const formulario = document.getElementById("form-crear-avion");
+        
+    if (formulario) {
+    formulario.addEventListener("submit", function (e) {
+    e.preventDefault(); // Detenemos el refresco de página
+
+    Swal.fire({
+    title: "¡Excelente!",
+    text: "El avión se agregó correctamente",
+    icon: "success",
+    iconColor: "#198754",
+    timer: 2000,
+    showConfirmButton: false,
+    timerProgressBar: true
+    }).then(() => {
+    // Solo enviamos cuando la alerta termina
+    formulario.submit();
+    });
+    });
+    }
+    })();
+</script>
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
