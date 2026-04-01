@@ -1,0 +1,34 @@
+﻿@model Parcial3_Aeropuerto.Models.Aerolineas
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Aerolineas</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Id_aerolinea" class="control-label"></label>
+                <input asp-for="Id_aerolinea" class="form-control" />
+                <span asp-validation-for="Id_aerolinea" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Nombre_aerolinea" class="control-label"></label>
+                <input asp-for="Nombre_aerolinea" class="form-control" />
+                <span asp-validation-for="Nombre_aerolinea" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Actualizar Datos</button>
+                <a asp-action="Aerolineas" class="btn btn-secondary">Regresar a la Lista</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+

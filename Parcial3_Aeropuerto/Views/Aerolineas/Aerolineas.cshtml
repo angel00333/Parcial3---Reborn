@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Parcial3_Aeropuerto.Models.Aerolineas>
+
+@{
+    ViewData["Title"] = "Aerolineas";
+}
+
+<h1>Aerolineas</h1>
+
+<p>
+    <a href="javascript:void()" class="btn btn-primary" onclick="mostrarCreate()">Nueva Aerolinea</a>
+</p>
+
+<div class="row-md-6 mb-5">
+    <form asp-action="Aerolineas" method="get" class="d-flex shadow-sm">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-search text-muted"></i>
+            </span>
+            <input type="text" name="buscar" class="form-control border-start-0"
+                   placeholder="Buscar por nombre o apellido..." value="@ViewData["buscar"]" />
+
+            <button type="submit" class=" btn text-white" style="background-color: blue">
+                Buscar
+            </button>
+
+            @if (!string.IsNullOrEmpty(Context.Request.Query["buscar"]))
+            {
+                <a asp-action="Aerolineas" class="btn btn-outline-secondary">Limpiar</a>
+            }
+
+        </div>
+    </form>
+
+
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_aerolinea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre_aerolinea)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_aerolinea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_aerolinea)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new {  id=item.Id_aerolinea }) 
+                
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id_aerolinea  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div id="modalContainer"></div>
+
+<script>
+    function mostrarCreate() {
+        // 1. Asegúrate que la ruta sea correcta
+        $.get('/Aerolineas/Create', function (data) {
+            // 2. Inyecta el HTML en el contenedor
+            $('#modalContainer').html(data);
+            
+            // 3. El ID 'Create' debe existir dentro de la vista que cargaste
+            var modalElem = document.getElementById('Create');
+            if (modalElem) {
+                var modal = new bootstrap.Modal(modalElem);
+                modal.show();
+            } else {
+                console.error("No se encontró un elemento con ID 'Create' en la vista parcial.");
+            }
+        });
+    }
+</script>
