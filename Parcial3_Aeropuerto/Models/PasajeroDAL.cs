@@ -128,7 +128,7 @@ namespace Parcial3_Aeropuerto.Models
                         MySqlCommand comando = new MySqlCommand(sql, con);
                         comando.Parameters.AddWithValue("@Criterio", "%" + criterio + "%");
 
-                            comando.CommandType = System.Data.CommandType.Text;
+                            comando.CommandType = CommandType.Text;
                             IDataReader reader = comando.ExecuteReader();
                         while (reader.Read())
                         {
