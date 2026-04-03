@@ -13,9 +13,11 @@ namespace Parcial3_Aeropuerto.Models
             {
                 con.Open();
                 string sql = "SELECT * FROM Aerolineas";
+
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
                 IDataReader reader = comando.ExecuteReader();
+
                 while (reader.Read())
                 {
                     Aerolineas aerolineas = new Aerolineas();
@@ -81,9 +83,6 @@ namespace Parcial3_Aeropuerto.Models
                 con.Close();
             }
             return resultado;
-
-
-
         }
 
         public static int ModificarAerolineas(Aerolineas aerolineas)
@@ -100,9 +99,7 @@ namespace Parcial3_Aeropuerto.Models
                 con.Close();
             }
             return resultado;
-        }
-
-        public static Aerolineas ObtenerAerolineasPorId(int id)
+        }public static Aerolineas ObtenerAerolineasPorId(int id)
         {
             Aerolineas aerolineas = new Aerolineas();
             using (MySqlConnection con = ConexionSQL.Conectar())
@@ -123,9 +120,6 @@ namespace Parcial3_Aeropuerto.Models
                 con.Close();
             }
             return aerolineas;
-
-
-
 
         }
     }

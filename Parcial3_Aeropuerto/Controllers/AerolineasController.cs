@@ -11,7 +11,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AerolieasController
         public ActionResult Aerolineas(string buscar)
         {
-            if (string.IsNullOrWhiteSpace(buscar))
+            if (string.IsNullOrEmpty(buscar))
             {
                 return View(AerolineasDAL.MostrarAerolineas());
             }
