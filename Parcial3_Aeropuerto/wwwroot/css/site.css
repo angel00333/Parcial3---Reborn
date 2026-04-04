@@ -24,6 +24,8 @@ body {
     background-position: center; /* centrada */
     background-repeat: no-repeat; /* que no se repita */
     background-attachment: fixed;
+    min-height: 105vh;
+    overflow-y: auto;
 }
 
     body::before {
@@ -92,6 +94,8 @@ body {
 footer {
     background: #111;
     padding: 15px 0;
+    position: static;
+    width: 100%;
 }
 
 footer nav {

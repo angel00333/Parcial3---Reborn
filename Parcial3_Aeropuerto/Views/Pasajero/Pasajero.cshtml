@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Parcial3_Aeropuerto.Models.Pasajero>
+﻿@model Parcial3_Aeropuerto.Models.Paginacion<Parcial3_Aeropuerto.Models.Pasajero>
+
 
 @{
     ViewData["Title"] = "Pasajero";
@@ -37,56 +38,26 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_pasajero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pasaporte)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Edad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pais)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Visa)
-            </th>
-            <th>
-                Acciones
-            </th>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Pasaporte</th>
+            <th>Edad</th>
+            <th>País</th>
+            <th>Visa</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Items) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_pasajero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pasaporte)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pais)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Visa)
-            </td>
+                <td>@item.Id_pasajero</td>
+                <td>@item.Nombre</td>
+                <td>@item.Apellido</td>
+                <td>@item.Pasaporte</td>
+                <td>@item.Edad</td>
+                <td>@item.Pais</td>
+                <td>@item.Visa</td>
             <td>
                     <a href="javascript:void(0);"class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_pasajero); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png"/></a>
 
@@ -98,6 +69,30 @@
 }
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        @if (Model.PaginaActual > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Pasajero" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                <a class="page-link" asp-action="Pasajero" asp-route-paginas="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.PaginaActual < Model.TotalPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Pasajero" asp-route-paginas="@(Model.PaginaActual + 1)">Siguiente</a>
+            </li>
+        }
+    </ul>
+</nav>
 <div id="modalContainer"></div>
 
 <script>

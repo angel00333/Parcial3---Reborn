@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Parcial3_Aeropuerto.Models;
 
@@ -8,9 +9,28 @@ namespace Parcial3_Aeropuerto.Controllers
     public class PasajeroController : Controller
     {
         // GET: PasajeroController
-        public ActionResult Pasajero()
+        public ActionResult Pasajero(int paginas = 1)
         {
-            return View(PasajeroDAL.MostrarPasajeros());
+            int registrosPorPagina = 5;
+
+            var listaCompleta = PasajeroDAL.MostrarPasajeros();
+
+            var totalRegistros = listaCompleta.Count();
+
+            var pasajeros = listaCompleta
+                .OrderBy(p => p.Id_pasajero)
+                .Skip((paginas - 1) * registrosPorPagina)
+                .Take(registrosPorPagina)
+                .ToList();
+
+            var modelo = new Paginacion<Pasajero>
+            {
+                Items = pasajeros,
+                PaginaActual = paginas,
+                TotalPaginas = (int)Math.Ceiling((double)totalRegistros / registrosPorPagina)
+            };
+
+            return View("Pasajero", modelo);
         }
 
         // GET: PasajeroController/Details/5
