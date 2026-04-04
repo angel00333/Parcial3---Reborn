@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Parcial3_Aeropuerto.Models;
+using System.Data;
+using MySqlConnector;
 
 namespace Parcial3_Aeropuerto.Controllers
 {
@@ -35,58 +37,54 @@ namespace Parcial3_Aeropuerto.Controllers
         // POST: AeropuertosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Aeropuertos aeropuertos)
         {
-            try
+
+            ModelState.Remove("Id_aeropuerto");
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                AeropuertosDAL.InsertarAeropuertos(aeropuertos);
+                return RedirectToAction("Aeropuertos");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View();
         }
 
         // GET: AeropuertosController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            
+            return View(AeropuertosDAL.ObtenerAerolineasPorId(id));
         }
 
         // POST: AeropuertosController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Aeropuertos aeropuertos)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                AeropuertosDAL.ModificarAropuertos(aeropuertos);
+                return RedirectToAction("Aeropuertos");
+
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: AeropuertosController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(AeropuertosDAL.ObtenerAerolineasPorId(id));
         }
 
         // POST: AeropuertosController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Aeropuertos aeropuertos)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            AeropuertosDAL.EliminarAeropuertos(aeropuertos.Id_aeropuerto);
+            return RedirectToAction("Aeropuertos");
+
         }
     }
 }
