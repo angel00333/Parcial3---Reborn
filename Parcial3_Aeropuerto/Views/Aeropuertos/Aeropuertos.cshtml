@@ -73,12 +73,11 @@
 
     <script>
         function mostrarCreate() {
-            // 1. Asegúrate que la ruta sea correcta
+           
             $.get('/Aeropuertos/Create', function (data) {
-                // 2. Inyecta el HTML en el contenedor
+               
                 $('#modalContainer').html(data);
             
-                // 3. El ID 'Create' debe existir dentro de la vista que cargaste
                 var modalElem = document.getElementById('Create');
                 if (modalElem) {
                     var modal = new bootstrap.Modal(modalElem);
