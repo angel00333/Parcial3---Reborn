@@ -62,7 +62,7 @@ namespace Parcial3_Aeropuerto.Models
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "INSERT INTO Aeropuertos (Nombre_aeropuerto, Pais) VALUES (@Nombre_aeropuerto, @pais)";
+                string sql = "INSERT INTO Aeropuertos (Nombre_aeropuerto, Pais) VALUES (@Nombre_aeropuerto, @Pais)";
                 MySqlCommand comando = new MySqlCommand(sql, con);
 
                 comando.Parameters.AddWithValue("@Nombre_aeropuerto", aeropuertos.Nombre_aeropuerto );
@@ -105,29 +105,32 @@ namespace Parcial3_Aeropuerto.Models
             int resultado = 0;
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
-                string sql = "UPDATE Aeropuertos  SET  Nombre_aeropuerto=@Nombre_aeropuerto, Pais=@Pais WHERE Id_aeropuertos= Id_aeropuertos";
+
+                con.Open();
+                string sql = "UPDATE Aeropuertos  SET  Nombre_aeropuerto=@Nombre_aeropuerto, Pais=@Pais WHERE Id_aeropuerto= @Id_aeropuerto";
 
                 MySqlCommand comando = new MySqlCommand(sql, con);
 
                 comando.Parameters.AddWithValue("@Nombre_aeropuerto", aeropuertos.Nombre_aeropuerto);
                 comando.Parameters.AddWithValue("@Pais", aeropuertos.Pais);
                 comando.Parameters.AddWithValue("@Id_aeropuerto", aeropuertos.Id_aeropuerto);
+                resultado = comando.ExecuteNonQuery();
                 con.Close();
             }
             return resultado;
         }
        
 
-        public static int EliminarAeropuertos(Aeropuertos aeropuertos)
+        public static int EliminarAeropuertos(int id)
         {
             int resultado = 0;
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
 
-                string sql = "DELETE FROM Aeropuertos WHERE Id_aeropuertos=@Id_Aeropuertos";
+                string sql = "DELETE FROM Aeropuertos WHERE Id_aeropuerto=@Id_aeropuerto";
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.Parameters.AddWithValue("Id_aeropuerto", aeropuertos.Id_aeropuerto);
+                comando.Parameters.AddWithValue("Id_aeropuerto", id);
                 resultado = comando.ExecuteNonQuery();
                 con.Close();
             }
