@@ -117,7 +117,7 @@ namespace Parcial3_Aeropuerto.Models
             }
         }
 
-        public static List<Reservas> BuscarPasajeros(string criterio)
+        public static List<Reservas> BuscarReserva(string criterio)
         {
             List<Reservas> reservas = new List<Reservas>();
             using (MySqlConnection con = ConexionSQL.Conectar())

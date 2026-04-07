@@ -35,7 +35,7 @@ body {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(255,255,255,0.3); /* aqui controlas la opacidad */
+        background: rgba(255,255,255,0.7); /* aqui controlas la opacidad */
         z-index: -1;
     }
 
@@ -171,7 +171,15 @@ footer nav {
 
 .table-striped {
     --bs-table-bg: none;
-    --bs-table-bg-type: rgb(0 0 0 / 40%);
+    --bs-table-bg-type: rgb(0 2 0 / 40%);
+}
+
+.table > :not(caption) > * > * {
+    padding: .5rem .5rem;
+    color: var(--bs-table-color-state, var(--bs-table-color-type, #000000));
+    background-color: var(--bs-table-bg);
+    border-bottom-width: var(--bs-border-width);
+    box-shadow: inset 0 0 0 9999px var(--bs-table-bg-state, rgb(178 177 177 / 2%));
 }
 
 .table-striped tbody, td, tfoot, th, thead, tr {

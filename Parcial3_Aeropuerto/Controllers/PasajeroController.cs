@@ -9,15 +9,17 @@ namespace Parcial3_Aeropuerto.Controllers
     public class PasajeroController : Controller
     {
         // GET: PasajeroController
-        public ActionResult Pasajero(int paginas = 1)
+        public ActionResult Pasajero(int paginas = 1, string buscar = "")
         {
             int registrosPorPagina = 5;
 
-            var listaCompleta = PasajeroDAL.MostrarPasajeros();
+            var lista = string.IsNullOrEmpty(buscar)
+                ? PasajeroDAL.MostrarPasajeros()
+                : PasajeroDAL.BuscarPasajeros(buscar);
 
-            var totalRegistros = listaCompleta.Count();
+            var totalRegistros = lista.Count();
 
-            var pasajeros = listaCompleta
+            var pasajeros = lista
                 .OrderBy(p => p.Id_pasajero)
                 .Skip((paginas - 1) * registrosPorPagina)
                 .Take(registrosPorPagina)
@@ -30,9 +32,10 @@ namespace Parcial3_Aeropuerto.Controllers
                 TotalPaginas = (int)Math.Ceiling((double)totalRegistros / registrosPorPagina)
             };
 
+            ViewBag.Buscar = buscar;
+
             return View("Pasajero", modelo);
         }
-
         // GET: PasajeroController/Details/5
         public ActionResult Details(int id)
         {
