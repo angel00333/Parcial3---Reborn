@@ -1,72 +1,73 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Parcial3_Aeropuerto.Models;
+using MySqlConnector;
+using System.Data;
 
 namespace Parcial3_Aeropuerto.Controllers
 {
-    public class ReservasController : Controller
+    public class RolesController : Controller
     {
-        // GET: ReservasController
-        public ActionResult Reservas()
+        // GET: RolesController
+        public ActionResult Roles(string buscar )
         {
-            return View(ReservasDAL.MostrarReservas());
+            return View(RolDAL.MostrarRoles());
         }
 
-        // GET: ReservasController/Details/5
+        // GET: RolesController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ReservasController/Create
+        // GET: RolesController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ReservasController/Create
+        // POST: RolesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Rol roles)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                RolDAL.InsertarRoles(roles);
+                return RedirectToAction("Roles");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
+            
         }
 
-        // GET: ReservasController/Edit/5
+        // GET: RolesController/Edit/5
         public ActionResult Edit(int id)
         {
+            return View(RolDAL.ObtenerRolesPorId(id));
+        }
+
+        // POST: RolesController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Rol roles)
+        {
+            ModelState.Remove("Id_rol");
+            if (ModelState.IsValid)
+            {
+                RolDAL.ModificarRoles(roles);
+                return RedirectToAction("Roles");
+
+            }
             return View();
         }
 
-        // POST: ReservasController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ReservasController/Delete/5
+        // GET: RolesController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: ReservasController/Delete/5
+        // POST: RolesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

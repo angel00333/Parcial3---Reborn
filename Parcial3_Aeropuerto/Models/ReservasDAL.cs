@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Parcial3_Aeropuerto.Models
 {
-    public class ReservasDALcs
+    public class ReservasDAL
     {
         public static int AgregarReserva(Reservas reserva)
         {

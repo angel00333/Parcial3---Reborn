@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Parcial3_Aeropuerto.Models.Rol>
+
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<h1>Roles</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_rol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre_rol)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_rol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_rol)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new {  id=item.Id_rol }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id=item.Id_rol })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
