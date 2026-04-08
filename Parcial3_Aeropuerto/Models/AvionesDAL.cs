@@ -1,4 +1,5 @@
 ﻿
+using Humanizer;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
 using MySqlConnector;
@@ -64,17 +65,22 @@ namespace Parcial3_Aeropuerto.Models
 
         public static int InsertarAviones(Aviones aviones)
         {
+            //Ajustamos la estructura pues es  un inser, por ende se extrae del Model_el nombre y se agrega el Id_aeroliena.
             int resultado = 0;
+
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "INSERT INTO aviones(Id_aerolinea, Capacidad) VALUES (@id_aerolinea, @capacidad)";
+
+                string sql = "INSERT INTO Aviones (Id_aerolinea, Capacidad) VALUES (@id_aerolinea, @capacidad)";
 
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.CommandType = CommandType.Text;
+
                 comando.Parameters.AddWithValue("@id_aerolinea", aviones.Id_aerolinea);
                 comando.Parameters.AddWithValue("@capacidad", aviones.Capacidad);
+
                 resultado = comando.ExecuteNonQuery();
+
                 con.Close();
             }
 

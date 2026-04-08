@@ -87,8 +87,9 @@ namespace Parcial3_Aeropuerto.Models
                 con.Open();
                 string sql = "INSERT INTO Rol (Nombre_rol) VALUES (@Nombre_rol)";
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.Parameters.AddWithValue("@Nombre_rol", roles.Nombre_rol);
+                comando.Parameters.AddWithValue("@Nombre_rol", roles.Nombre_rol);       
                 resultado = comando.ExecuteNonQuery();
+               
                 con.Close();
             }
             return resultado;

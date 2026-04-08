@@ -31,6 +31,7 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Rol roles)
         {
+            ModelState.Remove("Id_rol");
             if (ModelState.IsValid)
             {
                 RolDAL.InsertarRoles(roles);

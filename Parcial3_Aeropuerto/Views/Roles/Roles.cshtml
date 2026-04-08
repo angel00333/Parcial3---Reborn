@@ -7,8 +7,9 @@
 <h1>Roles</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a href="javascript:void()" class="btn btn-primary" onclick="mostrarCreate()">Nuevo Avion</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -18,7 +19,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nombre_rol)
             </th>
-            <th>Acciones</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -31,10 +32,31 @@
                 @Html.DisplayFor(modelItem => item.Nombre_rol)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new {  id=item.Id_rol }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id=item.Id_rol })
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+  <div id="modalContainer"></div>
+
+    <script>
+        function mostrarCreate() {
+           
+            $.get('/Roles/Create', function (data) {
+               
+                $('#modalContainer').html(data);
+            
+                var modalElem = document.getElementById('Create');
+                if (modalElem) {
+                    var modal = new bootstrap.Modal(modalElem);
+                    modal.show();
+                } else {
+                    console.error("No se encontró un elemento con ID 'Create' en la vista parcial.");
+                }
+            });
+        }
+    </script>

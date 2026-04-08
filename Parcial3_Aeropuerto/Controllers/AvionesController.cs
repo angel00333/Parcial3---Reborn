@@ -28,6 +28,8 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones/Create
         public ActionResult Create()
         {
+            //Se extrae la vista de Aerolineas hacia aviones/ GET
+            ViewBag.Aerolineas = AerolineasDAL.MostrarAerolineas();
             return View();
         }
 

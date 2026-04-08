@@ -1,0 +1,73 @@
+﻿@model Parcial3_Aeropuerto.Models.Rol
+
+@{
+    // IMPORTANTE: Layout null para que no cargue el banner azul ni el fondo dos veces
+    Layout = null;
+}
+
+<div class="modal fade" id="Create" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalLabel">
+                    <i class="bi bi-airplane-fill me-2"></i> Registrar rol
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body p-4">
+                <form asp-action="Create" method="post" id="form-create-roles">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input asp-for="Id_rol" type="hidden" />
+
+                    <div class="mb-3">
+                        <label asp-for="Nombre_rol" class="form-label fw-bold">Nombre del Aeropuerto</label>
+                        <input asp-for="Nombre_rol" class="form-control" placeholder="Escribe el nombre" required />
+                        <span asp-validation-for="Nombre_rol" class="text-danger"></span>
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0 pt-3">
+                        <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary px-4">Guardar Aeropuerto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    (function () {
+    const formulario = document.getElementById("form-create-roles");
+
+    if (formulario) {
+    formulario.addEventListener("submit", function (e) {
+    e.preventDefault(); // Detenemos el salto de página
+
+    // Enviamos los datos por AJAX (fetch)
+    fetch(formulario.action, {
+    method: 'POST',
+    body: new FormData(formulario)
+    })
+    .then(response => {
+    if (response.ok) {
+    Swal.fire({
+    title: "¡Excelente!",
+    text: "Rol guardado correctamente",
+    icon: "success",
+    timer: 1500,
+    showConfirmButton: false
+    }).then(() => {
+    // En lugar de redirigir, recargamos la lista principal
+    window.location.reload();
+    });
+    } else {
+    Swal.fire("Error", "No se pudo guardar. Revisa los datos.", "error");
+    }
+    });
+    });
+    }
+    })();
+</script>

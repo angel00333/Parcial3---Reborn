@@ -17,9 +17,18 @@
                     <input asp-for="Id_avion" type="hidden" />
 
                     <div class="mb-3">
-                        <label asp-for="Id_aerolinea" class="form-label">Aerolínea</label>
-                        <input asp-for="Id_aerolinea" class="form-control" required />
-                        <span asp-validation-for="Id_aerolinea" class="text-danger"></span>
+                        <label class="form-label fw-bold">Aerolínea</label>
+
+                        <select asp-for="Id_aerolinea" class="form-control">
+                            <option value="">-- Seleccione una aerolínea --</option>
+
+                            @foreach (var aero in ViewBag.Aerolineas)
+                            {
+                                <option value="@aero.Id_aerolinea">
+                                    @aero.Nombre_aerolinea
+                                </option>
+                            }
+                        </select>
                     </div>
 
                     <div class="mb-3">
