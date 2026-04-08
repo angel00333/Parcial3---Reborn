@@ -1,0 +1,111 @@
+﻿@model Parcial3_Aeropuerto.Models.Usuarios
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="Create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registrar Nuevo Avión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" method="post" id="form-crear-usuario">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 
+                    <input asp-for="Id_usuario" type="hidden" />
+
+                    
+                    <div class="mb-3">
+                        <label asp-for="Nombre_usuario" class="form-label">Nombre de Usuario</label>
+                        <input asp-for="Nombre_usuario" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Contraseña" class="form-label">Contraseña</label>
+                        <div class="input-group">
+                            <input asp-for="Contraseña" type="password" id="txtPassword" class="form-control" required />
+                            <button class="btn btn-outline-secondary" type="button" id="btnTogglePassword">
+                                <i class="bi bi-eye"></i> Ver
+                            </button>
+                        </div>
+                        <span asp-validation-for="Contraseña" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Aerolínea</label>
+
+                        <select asp-for="Id_rol" class="form-control">
+                            <option value="">--|Seleccione un Rol XD| --</option>
+
+                            @foreach (var rl in ViewBag.Roles)
+                            {
+                                <option value="@rl.Id_rol">
+                                    @rl.Nombre_rol
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+
+                    <div class="modal-footer px-0 pb-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Avión</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Usamos una función para asegurar que el evento se pegue al formulario correcto
+    (function() {
+    const formulario = document.getElementById("form-crear-usuario");
+        
+    if (formulario) {
+    formulario.addEventListener("submit", function (e) {
+    e.preventDefault(); // Detenemos el refresco de página
+
+    Swal.fire({
+    title: "¡Excelente!",
+    text: "El avión se agregó correctamente",
+    icon: "success",
+    iconColor: "#198754",
+    timer: 2000,
+    showConfirmButton: false,
+    timerProgressBar: true
+    }).then(() => {
+    // Solo enviamos cuando la alerta termina
+    formulario.submit();
+    });
+    });
+    }
+    })();
+
+
+
+
+
+
+
+    //Librebria+Ver+Contra XD
+    document.getElementById("btnTogglePassword").addEventListener("click", function () {
+    const passwordInput = document.getElementById("txtPassword");
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+    
+    // Opcional: Cambiar el texto del botón
+    this.textContent = type === "password" ? "Ver" : "Ocultar";
+    });
+</script>
+
+
+
+
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

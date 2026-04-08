@@ -119,7 +119,7 @@ namespace Parcial3_Aeropuerto.Models
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "DELETE FROM Roles WHERE Id_rol=@Id_rol";
+                string sql = "DELETE FROM Rol WHERE Id_rol=@Id_rol";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
                 comando.Parameters.AddWithValue("@Id_rol", id);

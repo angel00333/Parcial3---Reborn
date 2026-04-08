@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Parcial3_Aeropuerto.Models.Usuarios>
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<h1>Usuarios</h1>
+<p>
+    <a href="javascript:void()" class="btn btn-primary" onclick="mostrarCreate()">Nuevo Usuario</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre_usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contraseña)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_rol)
+            </th>
+          
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contraseña)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_rol)
+            </td>
+          
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div id="modalContainer"></div>
+
+<script>
+    function mostrarCreate() {
+           
+        $.get('/Usuarios/Create', function (data) {
+               
+            $('#modalContainer').html(data);
+            
+            var modalElem = document.getElementById('Create');
+            if (modalElem) {
+                var modal = new bootstrap.Modal(modalElem);
+                modal.show();
+            } else {
+                console.error("No se encontró un elemento con ID 'Create' en la vista parcial.");
+            }
+        });
+    }
+</script>
