@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="Parcial3_Aeropuerto/Parcial3_Aeropuerto.csproj" />
+  <Project Path="Parcial3_Aeropuerto.BL/Parcial3_Aeropuerto.BL.csproj" Id="ba51a652-9a04-4ad0-9a79-29c218a9f177" />
+  <Project Path="Parcial3_Aeropuerto.DAL/Parcial3_Aeropuerto.DAL.csproj" Id="a49e3968-7a7d-4d39-aff7-49088240eeb7" />
+  <Project Path="Parcial3_Aeropuerto.EN/Parcial3_Aeropuerto.EN.csproj" Id="b291ef12-c2f4-4449-b6a1-9103433a5856" />
+  <Project Path="Parcial3_Aeropuerto/Parcial3_Aeropuerto.UI.csproj" />
 </Solution>
