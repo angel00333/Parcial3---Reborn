@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using MySqlConnector;
 using System.Data;
 
-namespace Parcial3_Aeropuerto.Models
+using Parcial3_Aeropuerto.EN;
+
+namespace Parcial3_Aeropuerto.DAL
 {
     public class PasajeroDAL
     {

@@ -1,10 +1,13 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Humanizer;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
 using MySqlConnector;
-using System.Data; //libreria para conectar con mysql
-namespace Parcial3_Aeropuerto.Models
+using System.Data;
+using Parcial3_Aeropuerto.DAL; //libreria para conectar con mysql
+namespace Parcial3_Aeropuerto.EN
 {
     public class AvionesDAL
     {
@@ -24,7 +27,7 @@ namespace Parcial3_Aeropuerto.Models
                 {
                     Aviones aviones = new Aviones();
                     aviones.Id_avion = reader.GetInt32(0);
-                    aviones.Id_aerolinea = reader.GetInt32(1);
+                    aviones.Aerolineas = AerolineasDAL.ObtenerAerolineasPorId(reader.GetInt32(1));
                     aviones. Capacidad = reader.GetInt32(2);                   
                     avioneslist.Add(aviones);
                 }
@@ -50,7 +53,7 @@ namespace Parcial3_Aeropuerto.Models
                     avioneslist.Add(new Aviones
                     {
                         Id_avion = reader.GetInt32(0),
-                        Id_aerolinea = reader.GetInt32(1),
+                        Aerolineas = AerolineasDAL.ObtenerAerolineasPorId(reader.GetInt32(1)),
                         Capacidad = reader.GetInt32(2)
 
                     });
@@ -76,7 +79,7 @@ namespace Parcial3_Aeropuerto.Models
 
                 MySqlCommand comando = new MySqlCommand(sql, con);
 
-                comando.Parameters.AddWithValue("@id_aerolinea", aviones.Id_aerolinea);
+                comando.Parameters.AddWithValue("@id_aerolinea", aviones.Aerolineas.Id_aerolinea);
                 comando.Parameters.AddWithValue("@capacidad", aviones.Capacidad);
 
                 resultado = comando.ExecuteNonQuery();
@@ -97,7 +100,7 @@ namespace Parcial3_Aeropuerto.Models
 
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
-                comando.Parameters.AddWithValue("@id_aerolinea", aviones.Id_aerolinea);
+                comando.Parameters.AddWithValue("@id_aerolinea", aviones.Aerolineas.Id_aerolinea);
                 comando.Parameters.AddWithValue("@capacidad", aviones.Capacidad);
                 comando.Parameters.AddWithValue("@id_avion", aviones.Id_avion);
                 resultado = comando.ExecuteNonQuery();
@@ -124,9 +127,8 @@ namespace Parcial3_Aeropuerto.Models
                 if (reader.Read())
                 {
 
-
                     aviones.Id_avion = reader.GetInt32(0);
-                    aviones.Id_aerolinea = reader.GetInt32(1);
+                    aviones.Aerolineas = AerolineasDAL.ObtenerAerolineasPorId(reader.GetInt32(1));
                     aviones.Capacidad = reader.GetInt32(2);
 
                 }

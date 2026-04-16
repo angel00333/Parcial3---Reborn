@@ -1,4 +1,4 @@
-﻿@model Parcial3_Aeropuerto.Models.Pasajero
+﻿@model Parcial3_Aeropuerto.EN.Pasajero
 
 @{
     Layout = null;
@@ -15,11 +15,6 @@
             <div class="modal-body">
                 <form asp-action="Create" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                    <div class="mb-3">
-                        <input asp-for="Id_pasajero" class="form-control" type="hidden"/>
-                        <span asp-validation-for="Id_pasajero" class="text-danger"></span>
-                    </div>
 
                     <div class="mb-3">
                         <label asp-for="Nombre" class="form-label"></label>

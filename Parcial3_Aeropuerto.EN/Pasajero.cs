@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Parcial3_Aeropuerto.Models
+using System.ComponentModel.DataAnnotations;
+namespace Parcial3_Aeropuerto.EN
 {
     public class Pasajero
     {
@@ -23,5 +25,18 @@ namespace Parcial3_Aeropuerto.Models
         public string Pais { get; set; } = string.Empty;
 
         public string Visa { get; set; } = string.Empty;
+
+        public Pasajero () { }
+
+        public Pasajero(int id_pasajero, string nombre, string apellido, string pasaporte, int edad, string pais, string visa)
+        {
+            Id_pasajero = id_pasajero;
+            Nombre = nombre;
+            Apellido = apellido;
+            Pasaporte = pasaporte;
+            Edad = edad;
+            Pais = pais;
+            Visa = visa;
+        }
     }
 }

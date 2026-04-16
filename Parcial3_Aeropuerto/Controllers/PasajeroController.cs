@@ -2,20 +2,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using Parcial3_Aeropuerto.Models;
 
-namespace Parcial3_Aeropuerto.Controllers
+using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.EN;
+
+namespace Parcial3_Aeropuerto.UI.Controllers
 {
     public class PasajeroController : Controller
     {
+        PasajeroBL pasajeroBL = new PasajeroBL();
         // GET: PasajeroController
         public ActionResult Pasajero(int paginas = 1, string buscar = "")
         {
             int registrosPorPagina = 5;
 
             var lista = string.IsNullOrEmpty(buscar)
-                ? PasajeroDAL.MostrarPasajeros()
-                : PasajeroDAL.BuscarPasajeros(buscar);
+                ? pasajeroBL.MostrarPasajeros()
+                : pasajeroBL.BuscarPasajeros(buscar);
 
             var totalRegistros = lista.Count();
 
@@ -53,21 +56,18 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pasajero pasajero)
         {
-            try
+            if (ModelState.IsValid)
             {
-                PasajeroDAL.AgregarPasajero(pasajero);
+                pasajeroBL.AgregarPasajero(pasajero);
                 return RedirectToAction("Pasajero");
             }
-            catch
-            {
-                return PartialView("Create");
-            }
+            return PartialView("Create", pasajero);
         }
 
         // GET: PasajeroController/Edit/5
         public ActionResult Edit(int id)
         {
-            return PartialView(PasajeroDAL.ObtenerPasajeroPorId(id));
+            return PartialView(pasajeroBL.ObtenerPasajeroPorId(id));
         }
 
         // POST: PasajeroController/Edit/5
@@ -77,7 +77,7 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             if (ModelState.IsValid)
             {
-                PasajeroDAL.ModificarPasajero(pasajero);
+                pasajeroBL.ModificarPasajero(pasajero);
                 return RedirectToAction("Pasajero");
             }
             return PartialView("Edit", pasajero);
@@ -86,7 +86,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: PasajeroController/Delete/5
         public ActionResult Delete(int id)
         {
-            return PartialView("Delete", PasajeroDAL.ObtenerPasajeroPorId(id));
+            return PartialView("Delete", pasajeroBL.ObtenerPasajeroPorId(id));
         }
 
         [HttpPost]
@@ -94,7 +94,7 @@ namespace Parcial3_Aeropuerto.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            PasajeroDAL.EliminarPasajero(id);
+            pasajeroBL.EliminarPasajero(id);
             return RedirectToAction("Pasajero");
         }
     }
