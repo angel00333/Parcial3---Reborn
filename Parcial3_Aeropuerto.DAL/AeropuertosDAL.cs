@@ -2,9 +2,9 @@
 
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MySqlConnector;
-using Parcial3_Aeropuerto.DAL;
+using Parcial3_Aeropuerto.EN;
 using System.Data;
-namespace Parcial3_Aeropuerto.EN
+namespace Parcial3_Aeropuerto.DAL
 {
     public class AeropuertosDAL
     {

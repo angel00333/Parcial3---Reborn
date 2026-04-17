@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parcial3_Aeropuerto.Models
+namespace Parcial3_Aeropuerto.EN
 {
     public class Reservas
     {

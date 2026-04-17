@@ -4,9 +4,9 @@ using System.Text;
 using System.Data;
 using MySqlConnector;
 using System.Security.Cryptography.X509Certificates;
-using Parcial3_Aeropuerto.DAL;
+using Parcial3_Aeropuerto.EN;
 
-namespace Parcial3_Aeropuerto.EN
+namespace Parcial3_Aeropuerto.DAL
 {
     public class RolDAL
     {

@@ -110,7 +110,7 @@ namespace Parcial3_Aeropuerto.DAL
 
         }
 
-        public static Aviones ObtenerAvionesPorID(int id)
+        public static Aviones ObtenerAvionesPorId(int id)
         {
             Aviones aviones = new Aviones();
             using (MySqlConnection con = ConexionSQL.Conectar())

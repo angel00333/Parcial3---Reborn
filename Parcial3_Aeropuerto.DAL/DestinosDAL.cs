@@ -73,7 +73,7 @@ namespace Parcial3_Aeropuerto.DAL
                 {
                     Destinos destinos = new Destinos();
                     destinos.Id_destino = reader.GetInt32(0);
-                    destinos.Id_aeropuerto = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
+                    destinos.Aeropuertos = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
                     destinos.Nombre_destino = reader.GetString(2);
                     lista.Add(destinos);
                 }
@@ -96,7 +96,7 @@ namespace Parcial3_Aeropuerto.DAL
                 if (reader.Read())
                 {
                     destinos.Id_destino = reader.GetInt32(0);
-                    destinos.Id_aeropuerto = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
+                    destinos.Aeropuertos = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
                     destinos.Nombre_destino = reader.GetString(2);
                 }
                 con.Close();
@@ -119,7 +119,7 @@ namespace Parcial3_Aeropuerto.DAL
                 {
                     Destinos destinos = new Destinos();
                     destinos.Id_destino = reader.GetInt32(0);
-                    destinos.Id_aeropuerto = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
+                    destinos.Aeropuertos = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
                     destinos.Nombre_destino = reader.GetString(2);
                     lista.Add(destinos);
                 }
