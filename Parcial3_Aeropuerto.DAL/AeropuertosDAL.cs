@@ -1,9 +1,10 @@
 ﻿
-using Microsoft.AspNetCore.Authorization;
+
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MySqlConnector;
+using Parcial3_Aeropuerto.DAL;
 using System.Data;
-namespace Parcial3_Aeropuerto.Models
+namespace Parcial3_Aeropuerto.EN
 {
     public class AeropuertosDAL
     {
@@ -76,7 +77,7 @@ namespace Parcial3_Aeropuerto.Models
         //Falta obtenerDAtos por Id en adelante, solo se ha creado esto XD
 
 
-        public static Aeropuertos ObtenerAerolineasPorId(int id)
+        public static Aeropuertos ObtenerAeropuertosPorId(int id)
         {
             Aeropuertos aeropuertos = new Aeropuertos();
             using (MySqlConnection con = ConexionSQL.Conectar())

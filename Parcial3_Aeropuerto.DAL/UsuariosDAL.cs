@@ -1,8 +1,12 @@
-﻿using Humanizer;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Humanizer;
 using MySqlConnector;
+using Parcial3_Aeropuerto.DAL;
 using System.Collections.Specialized;
 using System.Data; //libreria para conectar con mysql
-namespace Parcial3_Aeropuerto.Models
+namespace Parcial3_Aeropuerto.EN
 {
     public class UsuariosDAL
     {

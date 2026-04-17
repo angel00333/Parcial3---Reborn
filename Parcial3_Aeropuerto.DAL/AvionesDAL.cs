@@ -6,8 +6,8 @@ using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
 using MySqlConnector;
 using System.Data;
-using Parcial3_Aeropuerto.DAL; //libreria para conectar con mysql
-namespace Parcial3_Aeropuerto.EN
+using Parcial3_Aeropuerto.EN; //libreria para conectar con mysql
+namespace Parcial3_Aeropuerto.DAL
 {
     public class AvionesDAL
     {

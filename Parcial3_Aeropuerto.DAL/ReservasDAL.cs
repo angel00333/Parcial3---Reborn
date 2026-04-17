@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using MySqlConnector;
+using Parcial3_Aeropuerto.DAL;
 using System.Data;
 
 namespace Parcial3_Aeropuerto.Models

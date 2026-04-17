@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Data;
 using MySqlConnector;
 using System.Security.Cryptography.X509Certificates;
+using Parcial3_Aeropuerto.DAL;
 
-namespace Parcial3_Aeropuerto.Models
+namespace Parcial3_Aeropuerto.EN
 {
     public class RolDAL
     {
