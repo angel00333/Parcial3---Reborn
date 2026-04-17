@@ -82,7 +82,7 @@ namespace Parcial3_Aeropuerto.DAL
             return roles;
         }
 
-        public static int InsertarRoles(Rol roles)
+        public static int AgregarRoles(Rol roles)
         {
             int resultado = 0;
             using (MySqlConnection con = ConexionSQL.Conectar())

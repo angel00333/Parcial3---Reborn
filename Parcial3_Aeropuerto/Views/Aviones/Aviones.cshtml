@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Parcial3_Aeropuerto.Models.Aviones>
+﻿@model IEnumerable<Parcial3_Aeropuerto.EN.Aviones>
 
 @{
     ViewData["Title"] = "Aviones";
@@ -44,7 +44,7 @@
                 @Html.DisplayNameFor(model => model.Id_avion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Id_aerolinea)
+                @Html.DisplayNameFor(model => model.Aerolineas.Id_aerolinea)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Capacidad)
@@ -61,7 +61,7 @@
                 @Html.DisplayFor(modelItem => item.Id_avion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_aerolinea)
+                @Html.DisplayFor(modelItem => item.Aerolineas.Id_aerolinea)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Capacidad)

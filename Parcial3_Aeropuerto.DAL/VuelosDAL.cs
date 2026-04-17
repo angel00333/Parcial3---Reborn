@@ -79,7 +79,8 @@ namespace Parcial3_Aeropuerto.DAL
                 string sql = "SELECT * FROM vuelos";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
-                using (MySqlDataReader reader = comando.ExecuteReader()) {
+                using (MySqlDataReader reader = comando.ExecuteReader())
+                {
                     while (reader.Read())
                     {
                         Vuelos vuelos = new Vuelos();
@@ -100,7 +101,7 @@ namespace Parcial3_Aeropuerto.DAL
             }
         }
 
-        public static Vuelos ObtenerVueloPorId (int id)
+        public static Vuelos ObtenerVueloPorId(int id)
         {
             Vuelos vuelos = new Vuelos();
             using (MySqlConnection con = ConexionSQL.Conectar())
@@ -128,6 +129,36 @@ namespace Parcial3_Aeropuerto.DAL
                 }
             }
 
+        }
+
+        public static List<Vuelos> BuscarVuelos(string criterio)
+        {
+            List<Vuelos> tvuelos = new List<Vuelos>();
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+                string sql = "SELECT * FROM Vuelos WHERE Id_vuelo LIKE @C OR Id_avion LIKE @C OR Id_destino LIKE @C OR Cantidad_pasajeros LIKE @C OR Fecha LIKE @C OR Tiempo_estimado LIKE @C OR Estado LIKE @C OR Hora_inicio LIKE @C";
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.Parameters.AddWithValue("@C", "%" + criterio + "%");
+                using (MySqlDataReader reader = comando.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Vuelos vuelos = new Vuelos();
+                        vuelos.Id_vuelo = reader.GetInt32(0);
+                        vuelos.Aviones = AvionesDAL.ObtenerAvionesPorId(reader.GetInt32(1));
+                        vuelos.Destinos = DestinosDAL.ObtenerDestinoPorId(reader.GetInt32(2));
+                        vuelos.Cantidad_pasajeros = reader.GetInt32(3);
+                        vuelos.Fecha = DateOnly.FromDateTime(reader.GetDateTime(4));
+                        vuelos.Tiempo_estimado = reader.GetDateTime(5);
+                        vuelos.Estado = reader.GetString(6);
+                        vuelos.Hora_inicio = TimeOnly.FromTimeSpan(reader.GetTimeSpan(7));
+                        tvuelos.Add(vuelos);
+                    }
+                    con.Close();
+                    return tvuelos;
+                }
+            }
         }
     }
 }

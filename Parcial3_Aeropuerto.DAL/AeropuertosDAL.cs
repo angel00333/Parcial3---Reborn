@@ -57,7 +57,7 @@ namespace Parcial3_Aeropuerto.DAL
             return aeropuertos;
         }
 
-        public static int InsertarAeropuertos(Aeropuertos aeropuertos)
+        public static int AgregarAeropuertos(Aeropuertos aeropuertos)
         {
             int resultado = 0;
             using (MySqlConnection con = ConexionSQL.Conectar())

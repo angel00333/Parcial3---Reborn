@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Parcial3_Aeropuerto.Models;
+
+using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.EN;
 
 namespace Parcial3_Aeropuerto.Controllers
 {
     public class ReservasController : Controller
     {
+        ReservasBL reservasBL = new ReservasBL();
         // GET: ReservasController
         public ActionResult Reservas()
         {
-            return View(ReservasDAL.MostrarReservas());
+            return View(reservasBL.MostrarReservas());
         }
 
         // GET: ReservasController/Details/5

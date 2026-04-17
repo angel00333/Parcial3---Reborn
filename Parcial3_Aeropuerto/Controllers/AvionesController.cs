@@ -2,34 +2,37 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Operations;
 using MySqlConnector;
-using Parcial3_Aeropuerto.Models; // Agrega esta línea para incluir el espacio de nombres de tu modelo
+using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.EN; // Agrega esta línea para incluir el espacio de nombres de tu modelo
 
 namespace Parcial3_Aeropuerto.Controllers
 {
     public class AvionesController : Controller
     {
+        AerolineasBL aerolineasBL = new AerolineasBL();
+        AvionesBL avionesBL = new AvionesBL();
         // GET: Aviones
         public ActionResult Aviones(string buscar)
         {
             if (string.IsNullOrEmpty(buscar))
             {
-                return View(AvionesDAL.MostrarAviones());
+                return View(avionesBL.MostrarAviones());
             }
-            var resultado = AvionesDAL.BuscarAviones(buscar);
+            var resultado = avionesBL.BuscarAviones(buscar);
             return View(resultado);
         }
 
         // GET: Aviones/Details/5
         public ActionResult Details(int id)
         {
-            return View(AvionesDAL.ObtenerAvionesPorID(id));
+            return View(avionesBL.ObtenerAvionesPorId(id));
         }
 
         // GET: Aviones/Create
         public ActionResult Create()
         {
             //Se extrae la vista de Aerolineas hacia aviones/ GET
-            ViewBag.Aerolineas = AerolineasDAL.MostrarAerolineas();
+            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
             return View();
         }
 
@@ -41,7 +44,7 @@ namespace Parcial3_Aeropuerto.Controllers
             ModelState.Remove("Id_avion");
             if (ModelState.IsValid)
             {
-                AvionesDAL.InsertarAviones(aviones);
+                avionesBL.AgregarAviones(aviones);
                 return RedirectToAction("Aviones");
             }
             return View();
@@ -50,7 +53,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(AvionesDAL.ObtenerAvionesPorID(id));
+            return View(avionesBL.ObtenerAvionesPorId(id));
         }
 
         // POST: Aviones/Edit/5
@@ -60,7 +63,7 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             if (ModelState.IsValid)
             {
-                AvionesDAL.ModificarAviones(aviones);
+                avionesBL.ModificarAviones(aviones);
                 return RedirectToAction("Aviones");
             }
             return View();
@@ -69,7 +72,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(AvionesDAL.ObtenerAvionesPorID(id));
+            return View(avionesBL.ObtenerAvionesPorId(id));
 
         }
 
@@ -78,9 +81,7 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Aviones aviones)
         {
-           
-               
-                AvionesDAL.EliminarAviones(aviones.Id_avion);
+            avionesBL.EliminarAviones(aviones.Id_avion);
             return RedirectToAction("Aviones");
 
         }

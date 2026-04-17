@@ -66,7 +66,7 @@ namespace Parcial3_Aeropuerto.DAL
 
         }
 
-        public static int InsertarAviones(Aviones aviones)
+        public static int AgregarAviones(Aviones aviones)
         {
             //Ajustamos la estructura pues es  un inser, por ende se extrae del Model_el nombre y se agrega el Id_aeroliena.
             int resultado = 0;

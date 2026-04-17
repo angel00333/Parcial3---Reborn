@@ -4,19 +4,23 @@ using Parcial3_Aeropuerto.Models;
 using System.Data;
 using MySqlConnector;
 
+using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.EN;
+
 namespace Parcial3_Aeropuerto.Controllers
 {
     public class AerolineasController : Controller
     {
+        AerolineasBL aerolineasBL = new AerolineasBL();
         // GET: AerolieasController
         public ActionResult Aerolineas(string buscar)
         {
             if (string.IsNullOrEmpty(buscar))
             {
-                return View(AerolineasDAL.MostrarAerolineas());
+                return View(aerolineasBL.MostrarAerolineas());
             }
 
-            var resultado = AerolineasDAL.BuscarAerolineas(buscar);
+            var resultado = aerolineasBL.BuscarAerolineas(buscar);
             return View(resultado);
 
         }
@@ -41,7 +45,7 @@ namespace Parcial3_Aeropuerto.Controllers
             ModelState.Remove("Id_aerolinea");
             if (ModelState.IsValid)
             {
-                AerolineasDAL.InsertarAerolineas(aerolineas);
+                aerolineasBL.AgregarAerolineas(aerolineas);
                 return RedirectToAction("Aerolineas");
             }
 
@@ -52,7 +56,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AerolieasController/Edit/5
         public ActionResult Edit(int id)
         {
-            var aerolineas = AerolineasDAL.ObtenerAerolineasPorId(id);
+            var aerolineas = aerolineasBL.ObtenerAerolineasPorId(id);
             return View(aerolineas);
         }
 
@@ -62,7 +66,7 @@ namespace Parcial3_Aeropuerto.Controllers
         public ActionResult Edit(Aerolineas aerolineas)
         {
             if (ModelState.IsValid) {
-                AerolineasDAL.ModificarAerolineas(aerolineas);
+                aerolineasBL.ModificarAerolineas(aerolineas);
                 return RedirectToAction("Aerolineas");
 
                             
@@ -74,7 +78,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AerolieasController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(AerolineasDAL.ObtenerAerolineasPorId(id));
+            return View(aerolineasBL.ObtenerAerolineasPorId(id));
         }
 
         // POST: AerolieasController/Delete/5
@@ -82,7 +86,7 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Aerolineas aerolineas)
         {
-          AerolineasDAL.EliminarAerolineas(aerolineas.Id_aerolinea);
+          aerolineasBL.EliminarAerolineas(aerolineas.Id_aerolinea);
             return RedirectToAction("Aerolineas");
         }
     }

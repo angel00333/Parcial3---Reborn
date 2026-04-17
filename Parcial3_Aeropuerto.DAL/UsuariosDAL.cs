@@ -69,7 +69,7 @@ namespace Parcial3_Aeropuerto.EN
 
 
 
-        public static int InsertarUsuarios(Usuarios usuarios)
+        public static int AgregarUsuarios(Usuarios usuarios)
         {
             int resultado = 0;
             using (MySqlConnection con = ConexionSQL.Conectar())
@@ -155,11 +155,6 @@ namespace Parcial3_Aeropuerto.EN
                 con.Close();
             }
             return resultado;
-
-
-
-
-
         }
 
     }

@@ -10,9 +10,9 @@ namespace Parcial3_Aeropuerto.EN
         public int Id_aerolinea { get; set; }
 
         [Required(ErrorMessage = "El nombre de la aero linea es requerido")]
-        public string Nombre_aerolinea { get; set; }=string.Empty; //Permite que el valor entre vacio sin restriccion.
+        public string Nombre_aerolinea { get; set; } = string.Empty; //Permite que el valor entre vacio sin restriccion.
 
-        public Aerolineas () {}
+        public Aerolineas() { }
 
         public Aerolineas(int id_aerolinea, string nombre_aerolinea)
         {
@@ -20,4 +20,5 @@ namespace Parcial3_Aeropuerto.EN
             Nombre_aerolinea = nombre_aerolinea;
 
         }
+    }
 }

@@ -4,14 +4,19 @@ using Parcial3_Aeropuerto.Models;
 using MySqlConnector;
 using System.Data;
 
+using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.EN;
+
 namespace Parcial3_Aeropuerto.Controllers
 {
     public class UsuariosController : Controller
     {
+        RolBL rolBL = new RolBL();
+        UsuariosBL usuariosBL = new UsuariosBL();
         // GET: UsuariosController
         public ActionResult Usuarios(string buscar)
         {
-            return View(UsuariosDAL.MostrarUsuarios());
+            return View(usuariosBL.MostrarUsuarios());
         }
 
         // GET: UsuariosController/Details/5
@@ -23,7 +28,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: UsuariosController/Create
         public ActionResult Create()
         {
-            ViewBag.Roles = RolDAL.MostrarRoles();
+            ViewBag.Roles = rolBL.MostrarRoles();
             return View();
         }
 
@@ -35,7 +40,7 @@ namespace Parcial3_Aeropuerto.Controllers
             ModelState.Remove("Id_usuario");
             if (ModelState.IsValid)
             {
-                UsuariosDAL.InsertarUsuarios(usuarios);
+                usuariosBL.AgregarUsuario(usuarios);
                 return RedirectToAction("Usuarios");
             }
 

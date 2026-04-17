@@ -59,7 +59,7 @@ namespace Parcial3_Aeropuerto.DAL
         }
 
 
-        public static int InsertarAerolineas(Aerolineas aerolineas)
+        public static int AgregarAerolineas(Aerolineas aerolineas)
         {
             int resultado = 0;
             using (MySqlConnection con = ConexionSQL.Conectar())

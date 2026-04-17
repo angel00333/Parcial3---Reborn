@@ -4,14 +4,18 @@ using Parcial3_Aeropuerto.Models;
 using MySqlConnector;
 using System.Data;
 
+using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.EN;
+
 namespace Parcial3_Aeropuerto.Controllers
 {
     public class RolesController : Controller
     {
+        RolBL rolBL = new RolBL();
         // GET: RolesController
         public ActionResult Roles(string buscar )
         {
-            return View(RolDAL.MostrarRoles());
+            return View(rolBL.MostrarRoles());
         }
 
         // GET: RolesController/Details/5
@@ -34,7 +38,7 @@ namespace Parcial3_Aeropuerto.Controllers
             ModelState.Remove("Id_rol");
             if (ModelState.IsValid)
             {
-                RolDAL.InsertarRoles(roles);
+                rolBL.AgregarRol(roles);
                 return RedirectToAction("Roles");
             }
             return View();
@@ -44,7 +48,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: RolesController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(RolDAL.ObtenerRolesPorId(id));
+            return View(rolBL.ObtenerRolPorId(id));
         }
 
         // POST: RolesController/Edit/5
@@ -55,7 +59,7 @@ namespace Parcial3_Aeropuerto.Controllers
             ModelState.Remove("Id_rol");
             if (ModelState.IsValid)
             {
-                RolDAL.ModificarRoles(roles);
+                rolBL.ModificarRol(roles);
                 return RedirectToAction("Roles");
 
             }
@@ -65,7 +69,7 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: RolesController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(RolDAL.ObtenerRolesPorId(id));
+            return View(rolBL.ObtenerRolPorId(id));
         }
 
         // POST: RolesController/Delete/5
@@ -73,7 +77,7 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Rol roles)
         {
-          RolDAL.EliminarRoles(roles.Id_rol);
+            rolBL.EliminarRol(roles.Id_rol);
             return RedirectToAction("Roles");
         }
     }
