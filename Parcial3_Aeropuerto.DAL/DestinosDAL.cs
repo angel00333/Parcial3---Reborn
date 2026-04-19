@@ -61,7 +61,7 @@ namespace Parcial3_Aeropuerto.DAL
 
         public static List<Destinos> MostrarDestinos()
         {
-            List<Destinos> lista = new List<Destinos>();
+            List<Destinos> tdestinos = new List<Destinos>();
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
@@ -75,11 +75,11 @@ namespace Parcial3_Aeropuerto.DAL
                     destinos.Id_destino = reader.GetInt32(0);
                     destinos.Aeropuertos = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
                     destinos.Nombre_destino = reader.GetString(2);
-                    lista.Add(destinos);
+                    tdestinos.Add(destinos);
                 }
                 con.Close();
             }
-            return lista;
+            return tdestinos;
         }
 
         public static Destinos ObtenerDestinoPorId(int id)
@@ -107,7 +107,7 @@ namespace Parcial3_Aeropuerto.DAL
 
         public static List<Destinos> BuscarDestinos(string criterio)
         {
-            List<Destinos> lista = new List<Destinos>();
+            List<Destinos> tdestinos = new List<Destinos>();
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
@@ -121,10 +121,10 @@ namespace Parcial3_Aeropuerto.DAL
                     destinos.Id_destino = reader.GetInt32(0);
                     destinos.Aeropuertos = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
                     destinos.Nombre_destino = reader.GetString(2);
-                    lista.Add(destinos);
+                    tdestinos.Add(destinos);
                 }
                 con.Close();
-                return lista;
+                return tdestinos;
             }
             
         }
