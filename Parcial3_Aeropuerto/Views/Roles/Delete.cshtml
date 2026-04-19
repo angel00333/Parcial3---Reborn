@@ -1,56 +1,41 @@
 ﻿@model Parcial3_Aeropuerto.EN.Rol
-
 @{
-    ViewData["Title"] = "Delete";
+    Layout = null;
 }
 
-<h1>Delete</h1>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-    
-<div class="container mt-5">
-    <div class="card shadow">
-
-            <div class="card-header bg-danger text-white">
-                <h4 class="mb-0">Eliminar Registro</h4>
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Eliminar Rol</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-        <div class="card-body">
+            <div class="modal-body">
+                <p class="fw-bold">¿Estás seguro de eliminar a:</p>
+                <p class="text-secondary">@Model.Nombre_rol</p>
 
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> Esta acción no se puede deshacer.
+                </div>
 
+                <form asp-action="Delete" method="post" class="form-eliminar">
+                    <input type="hidden" name="id" asp-for="@Model.Id_rol" />
 
-                    <h5 class="text-danger mb-4">
-                        ¿Estás seguro de eliminar este registro?
-                    </h5>
-
-                    <h4>Rol</h4>
-                    <hr />
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Id_rol)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Id_rol)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Nombre_rol)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Nombre_rol)
-                        </dd>
-                    </dl>
-
-                    <form asp-action="Delete" method="post" class="form-eliminar">
-                        <input type="hidden" asp-for="Id_rol" />
-        
-                        <input type="submit" value="Eliminar" class="btn btn-danger" />
-                        <a asp-action="Roles" class="btn btn-secondary">Cancelar</a>
-                    </form>
-
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                    </div>
+                </form>
             </div>
+
         </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     document.querySelectorAll(".form-eliminar").forEach(form => {
     form.addEventListener("submit", function (e) {
@@ -58,26 +43,27 @@
 
     Swal.fire({
     title: "¿Estás seguro?",
+    text: "Esta información no se recueperará",
     icon: "warning",
     iconColor: "#FB0700",
     showCancelButton: true,
     confirmButtonText: "Sí, eliminar",
-    confirmButtonColor: "#F46958",
-    cancelButtonColor: "#6c757d",
+    confirmButtonColor: "#dc3545",
+    cancelButtonText: "Cancelar",
+    cancelButtonColor: "#6c757d"
     }).then((result) => {
     if (result.isConfirmed) {
 
-    // 🔥 alerta con tiempo
     Swal.fire({
     title: "Eliminado",
     text: "Se eliminó correctamente",
     icon: "success",
-    iconColor: "#37FB00",
-    timer: 1050, //Temporixador XD
+    iconColor: "#28a745",
+    timer: 1200,
     timerProgressBar: true,
     showConfirmButton: false
     }).then(() => {
-    form.submit(); // se envía después del tiempo xd
+    form.submit();
     });
 
     }
@@ -85,6 +71,3 @@
     });
     });
 </script>
-
-
-

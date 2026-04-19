@@ -69,15 +69,16 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: RolesController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(rolBL.ObtenerRolPorId(id));
+            return PartialView(rolBL.ObtenerRolPorId(id));
         }
 
         // POST: RolesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Rol roles)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-            rolBL.EliminarRol(roles.Id_rol);
+            rolBL.EliminarRol(id);
             return RedirectToAction("Roles");
         }
     }

@@ -10,7 +10,7 @@
     <a href="javascript:void(0)" class="btn btn-primary" onclick="mostrarCreate()"><img class="acciones" src="~/css/imgs/iconosacciones/agregar.png" /></a>
 </p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -32,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.Nombre_rol)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id_rol }) |
-       
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id_rol })
+                    <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_rol); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
+
+                    <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_rol);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
             </td>
         </tr>
 }
@@ -44,19 +44,28 @@
   <div id="modalContainer"></div>
 
     <script>
+
         function mostrarCreate() {
-           
-            $.get('/Roles/Create', function (data) {
-               
-                $('#modalContainer').html(data);
-            
-                var modalElem = document.getElementById('Create');
-                if (modalElem) {
-                    var modal = new bootstrap.Modal(modalElem);
-                    modal.show();
-                } else {
-                    console.error("No se encontró un elemento con ID 'Create' en la vista parcial.");
-                }
-            });
-        }
+        $.get('/Roles/Create', function (data) {
+            $('#modalContainer').html(data);
+            var modal = new bootstrap.Modal(document.getElementById('createModal'));
+            modal.show();
+        });
+    }
+
+    function mostrarEdit(id) {
+    $.get('/Roles/Edit?id=' + id, function (data) {
+        $('#modalContainer').html(data);
+        var modal = new bootstrap.Modal(document.getElementById('editModal'));
+        modal.show();
+    });
+}
+
+function mostrarDelete(id) {
+        $.get('/Roles/Delete?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+            var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            modal.show();
+        });
+    }
     </script>
