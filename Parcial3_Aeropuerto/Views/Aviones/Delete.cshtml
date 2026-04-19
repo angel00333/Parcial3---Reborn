@@ -1,58 +1,46 @@
 ﻿@model Parcial3_Aeropuerto.EN.Aviones
 
 @{
-    ViewData["Title"] = "Eliminar Avión";
+    Layout = null;
 }
 
-<div class="container mt-5">
-    <div class="card shadow">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Eliminar Avión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
-        <div class="card-header bg-danger text-white">
-            <h4 class="mb-0">Eliminar Registro</h4>
-        </div>
+            <div class="modal-body">
+                <h5 class="text-danger mb-4">¿Estás seguro de eliminar este registro?</h5>
+                
+                <dl class="row">
+                    <dt class="col-sm-4">ID Avión</dt>
+                    <dd class="col-sm-8">@Model.Id_avion</dd>
 
-        <div class="card-body">
+                    <dt class="col-sm-4">Aerolínea</dt>
+                    <dd class="col-sm-8">@Model.Id_aerolinea</dd> @* O Nombre_aerolinea si lo tienes *@
 
-            <h5 class="text-danger mb-4">
-                ¿Estás seguro de eliminar este registro?
-            </h5>
+                    <dt class="col-sm-4">Capacidad</dt>
+                    <dd class="col-sm-8">@Model.Capacidad</dd>
+                </dl>
 
-            <dl class="row">
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Id_avion)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Id_avion)
-                </dd>
-
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Aerolineas.Id_aerolinea)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Aerolineas.Id_aerolinea)
-                </dd>
-
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Capacidad)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Capacidad)
-                </dd>
-            </dl>
-
-            <form asp-action="Delete" method="post" class="form-eliminar">
-                <input type="hidden" asp-for="Id_avion" />
-
-                <div class="mt-4 d-flex gap-2">
-                    <button type="submit" class="btn btn-danger">
-                        Eliminar
-                    </button>
-
-                    <a asp-action="Aviones" class="btn btn-secondary">
-                        Cancelar
-                    </a>
+                <div class="alert alert-warning py-2" role="alert">
+                    Esta acción no se puede deshacer.
                 </div>
-            </form>
+            </div>
+
+            <div class="modal-footer">
+                <form asp-action="Delete" method="post" class="form-eliminar-avion">
+                 
+                    <input type="hidden" name="id" value="@Model.Id_avion" />
+                    
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                </form>
+            </div>
 
         </div>
     </div>
@@ -62,13 +50,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-document.querySelectorAll(".form-eliminar").forEach(form => {
+document.querySelectorAll(".form-eliminar-avion").forEach(form => {
     form.addEventListener("submit", function (e) {
         e.preventDefault();
 
         Swal.fire({
             title: "¿Estás seguro?",
-            text: "Esta acción no se puede deshacer",
+            text: "Esta información no se recuperará",
             icon: "warning",
             iconColor: "#FB0700",
             showCancelButton: true,
