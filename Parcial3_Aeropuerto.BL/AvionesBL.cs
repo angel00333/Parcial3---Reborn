@@ -38,5 +38,7 @@ namespace Parcial3_Aeropuerto.BL
         {
             return AvionesDAL.ObtenerAvionesPorId(id);
         }
+
+        public AerolineasBL aerolineasBL = new AerolineasBL();
     }
 }

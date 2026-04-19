@@ -13,7 +13,7 @@
             </div>
 
             <div class="modal-body">
-                <form asp-action="Create" method="post">
+                <form asp-action="Create" method="post" id="form-crear-pasajero">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="mb-3">
@@ -61,6 +61,38 @@
         </div>
     </div>
 </div>
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+                        
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Usamos una función para asegurar que el evento se pegue al formulario correcto
+    (function() {
+    const formulario = document.getElementById("form-crear-pasajero");
+        
+    if (formulario) {
+    formulario.addEventListener("submit", function (e) {
+    e.preventDefault(); // Detenemos el refresco de página
+
+    Swal.fire({
+    title: "¡Excelente!",
+    text: "El pasajero se agregó correctamente",
+    icon: "success",
+    iconColor: "#198754",
+    timer: 2000,
+    showConfirmButton: false,
+    timerProgressBar: true
+    }).then(() => {
+    // Solo enviamos cuando la alerta termina
+    formulario.submit();
+    });
+    });
+    }
+    })();
+</script>
+
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }

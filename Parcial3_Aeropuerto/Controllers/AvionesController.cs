@@ -12,14 +12,31 @@ namespace Parcial3_Aeropuerto.Controllers
         AerolineasBL aerolineasBL = new AerolineasBL();
         AvionesBL avionesBL = new AvionesBL();
         // GET: Aviones
-        public ActionResult Aviones(string buscar)
+        public ActionResult Aviones(int paginas = 1, string buscar= "")
         {
-            if (string.IsNullOrEmpty(buscar))
+            int registrosPorPagina = 5;
+
+            var lista = string.IsNullOrEmpty(buscar)
+                ? avionesBL.MostrarAviones()
+                : avionesBL.BuscarAviones(buscar);
+
+            var totalRegistros = lista.Count();
+
+            var aviones = lista
+                .OrderBy(a => a.Id_avion)
+                .Skip((paginas -1 )* registrosPorPagina)
+                .Take( registrosPorPagina )
+                .ToList();
+            var modelo = new Paginacion<Aviones>
+
             {
-                return View(avionesBL.MostrarAviones());
-            }
-            var resultado = avionesBL.BuscarAviones(buscar);
-            return View(resultado);
+                Items = aviones,
+                PaginaActual=paginas,
+                TotalPaginas=(int)Math.Ceiling((double) totalRegistros/registrosPorPagina)
+            };
+
+            ViewBag.Buscar = buscar;
+            return View("Aviones", modelo);
         }
 
         // GET: Aviones/Details/5
@@ -32,7 +49,7 @@ namespace Parcial3_Aeropuerto.Controllers
         public ActionResult Create()
         {
             //Se extrae la vista de Aerolineas hacia aviones/ GET
-            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
+            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas ();
             return View();
         }
 
@@ -47,6 +64,7 @@ namespace Parcial3_Aeropuerto.Controllers
                 avionesBL.AgregarAviones(aviones);
                 return RedirectToAction("Aviones");
             }
+            
             return View();
         }
 
@@ -79,9 +97,10 @@ namespace Parcial3_Aeropuerto.Controllers
         // POST: Aviones/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Aviones aviones)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-            avionesBL.EliminarAviones(aviones.Id_avion);
+            avionesBL.EliminarAviones(id);
             return RedirectToAction("Aviones");
 
         }

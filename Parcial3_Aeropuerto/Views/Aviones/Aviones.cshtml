@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Parcial3_Aeropuerto.EN.Aviones>
+﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Aviones>
+
 
 @{
     ViewData["Title"] = "Aviones";
@@ -36,26 +37,17 @@
 
 
 
-
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_avion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Aerolineas.Id_aerolinea)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Capacidad)
-            </th>
-            <th>
-                Acciones
-            </th>
+            <th>ID Avion</th>
+            <th> ID Aerolinea</th>
+            <th> Capacidad</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+
+@foreach (var item in Model.Items) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id_avion)
@@ -67,33 +59,69 @@
                 @Html.DisplayFor(modelItem => item.Capacidad)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.Id_avion }) 
-                 @Html.ActionLink("Detalle", "Details", new { id = item.Id_avion }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Editar", "Edit", new { id=item.Id_avion }) |
+                 @Html.ActionLink("Detalle", "Details", new { id = item.Id_avion }, new { @class = "btn btn-primary" })|
                 @Html.ActionLink("Eliminar", "Delete", new { id=item.Id_avion })
 
-
+                    <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_avion);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
 
             </td>
         </tr>
 }
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        @if (Model.PaginaActual > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Aviones" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                <a class="page-link" asp-action="Aviones" asp-route-paginas="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.PaginaActual < Model.TotalPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Aviones" asp-route-paginas="@(Model.PaginaActual + 1)">Siguiente</a>
+            </li>
+        }
+    </ul>
+</nav>
+
 <div id="modalContainer"></div>
 
 <script>
-    function mostrarCreate() {
-        
-        $.get('/Aviones/Create', function (data) {
-           
-            $('#modalContainer').html(data);
-    
-            var modalElem = document.getElementById('Create');
-            if (modalElem) {
-                var modal = new bootstrap.Modal(modalElem);
+        function mostrarCreate() {
+            $.get('/Aviones/Create', function (data) {
+                $('#modalContainer').html(data);
+                var modal = new bootstrap.Modal(document.getElementById('createModal'));
                 modal.show();
-            } else {
-                console.error("No se encontró un elemento con ID 'Create' en la vista parcial.");
-            }
+            });
+        }
+
+              function mostrarEdit(id) {
+        $.get('/Aviones/Edit?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+
+            var modal = new bootstrap.Modal(document.getElementById('editModal'));
+            modal.show();
         });
     }
+
+        function mostrarDelete(id) {
+            $.get('/Aviones/Delete?id=' + id, function (data) {
+                $('#modalContainer').html(data);
+
+                var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                modal.show();
+            });
+        }
 </script>
+

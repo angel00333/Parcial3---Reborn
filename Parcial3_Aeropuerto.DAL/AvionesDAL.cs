@@ -27,7 +27,7 @@ namespace Parcial3_Aeropuerto.DAL
                 {
                     Aviones aviones = new Aviones();
                     aviones.Id_avion = reader.GetInt32(0);
-                    aviones.Aerolineas = AerolineasDAL.ObtenerAerolineasPorId(reader.GetInt32(1));
+                    aviones.Id_aerolinea = reader.GetInt32(1);
                     aviones. Capacidad = reader.GetInt32(2);                   
                     avioneslist.Add(aviones);
                 }
@@ -53,7 +53,7 @@ namespace Parcial3_Aeropuerto.DAL
                     avioneslist.Add(new Aviones
                     {
                         Id_avion = reader.GetInt32(0),
-                        Aerolineas = AerolineasDAL.ObtenerAerolineasPorId(reader.GetInt32(1)),
+                        Id_aerolinea = reader.GetInt32(1),
                         Capacidad = reader.GetInt32(2)
 
                     });
@@ -79,7 +79,7 @@ namespace Parcial3_Aeropuerto.DAL
 
                 MySqlCommand comando = new MySqlCommand(sql, con);
 
-                comando.Parameters.AddWithValue("@id_aerolinea", aviones.Aerolineas.Id_aerolinea);
+                comando.Parameters.AddWithValue("@id_aerolinea", aviones.Id_aerolinea);
                 comando.Parameters.AddWithValue("@capacidad", aviones.Capacidad);
 
                 resultado = comando.ExecuteNonQuery();
@@ -100,7 +100,7 @@ namespace Parcial3_Aeropuerto.DAL
 
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
-                comando.Parameters.AddWithValue("@id_aerolinea", aviones.Aerolineas.Id_aerolinea);
+                comando.Parameters.AddWithValue("@id_aerolinea", aviones.Id_aerolinea);
                 comando.Parameters.AddWithValue("@capacidad", aviones.Capacidad);
                 comando.Parameters.AddWithValue("@id_avion", aviones.Id_avion);
                 resultado = comando.ExecuteNonQuery();
@@ -128,9 +128,10 @@ namespace Parcial3_Aeropuerto.DAL
                 {
 
                     aviones.Id_avion = reader.GetInt32(0);
-                    aviones.Aerolineas = AerolineasDAL.ObtenerAerolineasPorId(reader.GetInt32(1));
+                    aviones.Id_aerolinea = reader.GetInt32(1);
                     aviones.Capacidad = reader.GetInt32(2);
-
+                    
+                  
                 }
                 con.Close();
             }
