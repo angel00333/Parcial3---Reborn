@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySqlConnector;
+using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.DAL;
+using Parcial3_Aeropuerto.EN;
 using Parcial3_Aeropuerto.Models;
 using System.Data;
-using MySqlConnector;
-
-using Parcial3_Aeropuerto.BL;
-using Parcial3_Aeropuerto.EN;
 
 namespace Parcial3_Aeropuerto.Controllers
 {
@@ -13,15 +13,32 @@ namespace Parcial3_Aeropuerto.Controllers
     {
         AeropuertosBL aeropuertosBL = new AeropuertosBL();
         // GET: AeropuertosController
-        public ActionResult Aeropuertos(string buscar)
+        public ActionResult Aeropuertos( int paginas,  string buscar = "")
         {
-            if (string.IsNullOrEmpty(buscar))
-            {
-                return View(aeropuertosBL.MostrarAeropuertos());
-            }
-            var resultado = aeropuertosBL.BuscarAeropuertos(buscar);
-            return View(resultado);
+            int registrosPorPagina = 5;
 
+            var lista = string.IsNullOrEmpty(buscar)
+                ? aeropuertosBL.MostrarAeropuertos()
+                : aeropuertosBL.BuscarAeropuertos(buscar);
+
+            var totalRegistros = lista.Count();
+
+            var aeropuertos = lista
+                .OrderBy(p => p.Id_aeropuerto)
+                .Skip((paginas - 1) * registrosPorPagina)
+                .Take(registrosPorPagina)
+                .ToList();
+
+            var modelo = new Paginacion<Aeropuertos>
+            {
+                Items = aeropuertos,
+                PaginaActual = paginas,
+                TotalPaginas = (int)Math.Ceiling((double)totalRegistros / registrosPorPagina)
+            };
+
+            ViewBag.Buscar = buscar;
+
+            return View("Aeropuertos", modelo);
 
 
         }
@@ -83,9 +100,11 @@ namespace Parcial3_Aeropuerto.Controllers
         // POST: AeropuertosController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Aeropuertos aeropuertos)
+        [ActionName("Delete")]
+
+        public ActionResult DeleteConfirmed(int id)
         {
-            aeropuertosBL.EliminarAeropuertos(aeropuertos.Id_aeropuerto);
+            aeropuertosBL.EliminarAeropuertos(id);
             return RedirectToAction("Aeropuertos");
 
         }

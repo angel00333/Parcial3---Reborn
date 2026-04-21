@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Parcial3_Aeropuerto.EN.Aeropuertos>
+﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Aeropuertos>
+
 
 @{
     ViewData["Title"] = "Aeropuertos";
@@ -36,57 +37,79 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_aeropuerto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre_aeropuerto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pais)
-            </th>
-            <th>
-                Acciones
-            </th>
+          
+           <th>ID Aeropuertos</th>
+           <th>Nombre Aeropuerto</th>
+           <th>País</th>
+           <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model.Items) {
         <tr>
+            <td>@item.Id_aeropuerto</td>
+            <td>@item.Nombre_aeropuerto</td>
+            <td>@item.Pais</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_aeropuerto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre_aeropuerto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pais)
-            </td>
-            <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id_aeropuerto }) |
-                     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id_aeropuerto })
-            </td>
+                    <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_aeropuerto); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
+
+                    <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_aeropuerto);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
+
+                    <a class="btn btn-primary btn-sm"><img class="acciones" src="~/css/imgs/iconosacciones/detalle.png" /></a>
+                </td>
         </tr>
 }
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        @if (Model.PaginaActual > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Pasajero" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                <a class="page-link" asp-action="Aeropuertos" asp-route-paginas="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.PaginaActual < Model.TotalPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Aeropuertos" asp-route-paginas="@(Model.PaginaActual + 1)">Siguiente</a>
+            </li>
+        }
+    </ul>
+</nav>
     <div id="modalContainer"></div>
 
-    <script>
-        function mostrarCreate() {
-           
-            $.get('/Aeropuertos/Create', function (data) {
-               
-                $('#modalContainer').html(data);
-            
-                var modalElem = document.getElementById('Create');
-                if (modalElem) {
-                    var modal = new bootstrap.Modal(modalElem);
-                    modal.show();
-                } else {
-                    console.error("No se encontró un elemento con ID 'Create' en la vista parcial.");
-                }
-            });
-        }
-    </script>
+
+<script>
+    function mostrarCreate() {
+        $.get('/Aeropuertos/Create', function (data) {
+            $('#modalContainer').html(data);
+            var modal = new bootstrap.Modal(document.getElementById('CreateModal'));
+            modal.show();
+        });
+    }
+
+    function mostrarEdit(id) {
+        $.get('/Aeropuertos/Edit?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+            var modal = new bootstrap.Modal(document.getElementById('EditModal'));
+            modal.show();
+        });
+    } 
+
+    function mostrarDelete(id) {
+        $.get('/Aeropuertos/Delete?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+            var modal = new bootstrap.Modal(document.getElementById('DeleteModal'));
+            modal.show();
+        });
+    }
+</script>

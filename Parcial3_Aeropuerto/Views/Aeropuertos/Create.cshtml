@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-<div class="modal fade" id="Create" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content shadow-lg border-0">
             <div class="modal-header bg-primary text-white">
@@ -45,26 +45,36 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    (function () {
-        const formulario = document.getElementById("form-create-aeropuerto");
+        $(document).on("submit", "#form-create-aeropuerto", function (e) {
 
-        if (formulario) {
-            formulario.addEventListener("submit", function (e) {
-                e.preventDefault();
+        e.preventDefault();
+        if (!this.checkValidity()) return;
+                $.post('/Aeropuertos/Create', $(this).serialize(), (res) => {
 
-                Swal.fire({
-                    title: "¡Excelente!",
-                    text: "Guardando los datos del aeropuerto...",
-                    icon: "success",
-                    timer: 1500,
-                    showConfirmButton: false,
-                    timerProgressBar: true
-                }).then(() => {
-                    formulario.submit();
-                });
+            if (res.includes("modal-body")) {
+                $("#modalContainer").html(res);
+                new bootstrap.Modal($("#createModal")[0]).show();
+                return;
+            }
+
+            Swal.fire({
+                title: "¡Guardado!",
+                text: "El pasajero se registró correctamente",
+                icon: "success",
+                color: "#30FA00",
+                iconColor: "#30FA00",
+                timer: 1500,
+                showConfirmButton: false,
+                confirmButtonColor: "#0136FA"
             });
-        }
-    })();
+
+             bootstrap.Modal.getInstance($("#createModal")[0]).hide();
+
+            setTimeout(() => {
+             location.reload();
+            }, 1500); // timepo de alerta.
+        });
+    });
 </script>
 
 @{

@@ -59,7 +59,8 @@ namespace Parcial3_Aeropuerto.UI.Controllers
             if (ModelState.IsValid)
             {
                 pasajeroBL.AgregarPasajero(pasajero);
-                return RedirectToAction("Pasajero");
+             
+                return RedirectToAction("Pasajero", new Pasajero());
             }
             return PartialView("Create", pasajero);
         }

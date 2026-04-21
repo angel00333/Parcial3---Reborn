@@ -9,9 +9,14 @@ namespace Parcial3_Aeropuerto.EN
     {
         public int Id_aeropuerto { get; set; }
 
+
+
+        [Required(ErrorMessage = "El nombre de la aeropuerto es obligatorio")]
+
         public string Nombre_aeropuerto { get; set; } = string.Empty;
 
-        public string Pais { get; set; } = string.Empty;
+        [Required(ErrorMessage = "El campo pais es obligatorio")]
+         public string Pais { get; set; } = string.Empty;
 
         public Aeropuertos () { }
 

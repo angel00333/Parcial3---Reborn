@@ -16,8 +16,8 @@
                     <input asp-for="Id_aerolinea" type="hidden" />
 
                     <div class="mb-3">
-                        <label asp-for="Nombre_aerolinea" class="form-label"></label>
-                        <input asp-for="Nombre_aerolinea" class="form-control" />
+                        <label asp-for="Nombre_aerolinea" class="form-label" ></label>
+                        <input asp-for="Nombre_aerolinea" class="form-control"  />
                         <span asp-validation-for="Nombre_aerolinea" class="text-danger"></span>
                     </div>
 
@@ -37,9 +37,21 @@
         // CORRECCIÓN: El ID del form debe coincidir con el del HTML arriba
         const formulario = document.getElementById("form-create-aerolinea");
         
+        
         if (formulario) {
             formulario.addEventListener("submit", function (e) {
                 e.preventDefault();
+                const nombre = formulario.querySelector('input[name="Nombre_aerolinea"]').value;
+           
+                if(nombre.trim()==""){
+                    Swal.fire({
+                        title: "Campo obligatorio",
+                        text: "Por favor, escribe el nombre de la aerolínea.",
+                        icon: "warning",
+                        confirmButtonColor: "#0d6efd"
+                    });
+                    return;
+                }
 
                 Swal.fire({
                     title: "¡Logrado!",
@@ -53,7 +65,7 @@
                     formulario.submit();
                 });
             });
-        }
+        } 
     })();
 </script>
 

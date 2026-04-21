@@ -6,43 +6,51 @@
 
 <h1>Delete</h1>
 
-<h3>Estas seguro de eliminar este registro?</h3>
-<div>
-    <h4>Aerolineas</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id_aeropuerto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id_aeropuerto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre_aeropuerto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre_aeropuerto)
-        </dd>
-          <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pais)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pais)
-        </dd>
+<div class="modal fade" id="DeleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Eliminar Aeropuerto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
-    </dl>
-    
-    <form asp-action="Delete" method="post" class="form-eliminar">
-        <input type="hidden" asp-for="Id_aeropuerto" />
-        
-        <input type="submit" value="Eliminar" class="btn btn-danger" />
-        <a asp-action="Aeropuertos" class="btn btn-secondary">Cancelar</a>
-    </form>
+            <div class="modal-body">
+                <h5 class="text-danger mb-4">¿Estás seguro de eliminar este registro?</h5>
+                
+                <dl class="row">
+                    <dt class="col-sm-4">ID Aeropuerto</dt>
+                    <dd class="col-sm-8">@Model.Id_aeropuerto</dd>
+
+                    <dt class="col-sm-4">Nombre Aeropuerto</dt>
+                    <dd class="col-sm-8">@Model.Nombre_aeropuerto</dd> @* O Nombre_aerolinea si lo tienes *@
+
+                    <dt class="col-sm-4">País</dt>
+                    <dd class="col-sm-8">@Model.Pais</dd>
+                </dl>
+
+                <div class="alert alert-warning py-2" role="alert">
+                    Esta acción no se puede deshacer.
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <form asp-action="Delete" method="post" class="form-eliminar-aeropuerto">
+                 
+                    <input type="hidden" name="id" value="@Model.Id_aeropuerto" />
+                    
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.querySelectorAll(".form-eliminar").forEach(form => {
+    document.querySelectorAll(".form-eliminar-aeropuerto").forEach(form => {
     form.addEventListener("submit", function (e) {
     e.preventDefault();
 

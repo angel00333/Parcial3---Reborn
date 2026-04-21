@@ -68,29 +68,37 @@
                         
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Usamos una función para asegurar que el evento se pegue al formulario correcto
-    (function() {
-    const formulario = document.getElementById("form-crear-pasajero");
-        
-    if (formulario) {
-    formulario.addEventListener("submit", function (e) {
-    e.preventDefault(); // Detenemos el refresco de página
+    $(document).on("submit", "#form-crear-pasajero", function (e) {
+            e.preventDefault();
 
-    Swal.fire({
-    title: "¡Excelente!",
-    text: "El pasajero se agregó correctamente",
-    icon: "success",
-    iconColor: "#198754",
-    timer: 2000,
-    showConfirmButton: false,
-    timerProgressBar: true
-    }).then(() => {
-    // Solo enviamos cuando la alerta termina
-    formulario.submit();
+        if (!this.checkValidity()) return;
+
+        $.post('/Pasajero/Create', $(this).serialize(), (res) => {
+
+            if (res.includes("modal-body")) {
+                $("#modalContainer").html(res);
+                new bootstrap.Modal($("#createModal")[0]).show();
+                return;
+            }
+
+            Swal.fire({
+                title: "¡Guardado!",
+                text: "El pasajero se registró correctamente",
+                icon: "success",
+                color: "#30FA00",
+                iconColor: "#30FA00",
+                timer: 1500,
+                showConfirmButton: false,
+                confirmButtonColor: "#0136FA"
+            });
+
+            bootstrap.Modal.getInstance($("#createModal")[0]).hide();
+
+            setTimeout(() => {
+            location.reload();
+            }, 1500); // 🔥 espera que termine la alerta
+        });
     });
-    });
-    }
-    })();
 </script>
 
 @{
