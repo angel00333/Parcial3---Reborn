@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var usuario = Context.Session.GetString("Usuario");
+    var rol = Context.Session.GetString("Rol");
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,19 +30,39 @@
                 Aeropuerto El Sauce
             </h2>
 
-            <nav class="menu-derecha">
-                <div class="footer-boton">
-                    <img src="~/css/imgs/iconosbotones/usuarios.png" />
-                    <a class="btn btn-outline-light mx-2"
-                       asp-controller="Usuarios" asp-action="Usuarios">Usuarios</a>
-                </div>
+            @if (!string.IsNullOrEmpty(usuario))
+            {
+                @if (rol == "Usuario")
+                {
+                <nav class="menu-derecha">
+                    <div>
+                        <a asp-controller="Login" asp-action="CerrarSesion">Cerrar sesión</a>
+                    </div>
+                </nav>
+                }
 
-                <div class="footer-boton">
-                    <img src="~/css/imgs/iconosbotones/roles.png" />
-                    <a class="btn btn-outline-light mx-2"
-                       asp-controller="Roles" asp-action="Roles">Roles</a>
-                </div>
-            </nav>
+                @if (rol == "Administrador")
+                {
+                    <nav class="menu-derecha">
+                        <div class="footer-boton">
+                            <img src="~/css/imgs/iconosbotones/usuarios.png" />
+                            <a class="btn btn-outline-light mx-2"
+                               asp-controller="Usuarios" asp-action="Usuarios">Usuarios</a>
+                        </div>
+
+                        <div class="footer-boton">
+                            <img src="~/css/imgs/iconosbotones/roles.png" />
+                            <a class="btn btn-outline-light mx-2"
+                               asp-controller="Roles" asp-action="Roles">Roles</a>
+                        </div>
+
+                        <div>
+                            <a asp-controller="Login" asp-action="CerrarSesion">Cerrar sesión</a>
+                        </div>
+                    </nav>
+                }
+            }
+                    
         </div>
     </header>
 

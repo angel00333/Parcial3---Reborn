@@ -30,16 +30,14 @@ namespace Parcial3_Aeropuerto.Controllers
         // POST: ReservasController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Reservas reservas)
         {
-            try
+            if(ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                reservasBL.AgregarReservas(reservas);
+                return RedirectToAction("Reservas");
             }
-            catch
-            {
-                return View();
-            }
+            return View(reservas);
         }
 
         // GET: ReservasController/Edit/5

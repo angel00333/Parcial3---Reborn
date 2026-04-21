@@ -16,6 +16,19 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: UsuariosController
         public ActionResult Usuarios(string buscar)
         {
+            var usuario = HttpContext.Session.GetString("Usuario");
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (string.IsNullOrEmpty(usuario))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            if (rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
             return View(usuariosBL.MostrarUsuarios());
         }
 

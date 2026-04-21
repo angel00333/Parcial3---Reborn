@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Parcial3_Aeropuerto.DAL\Parcial3_Aeropuerto.DAL.csproj" />
     <ProjectReference Include="..\Parcial3_Aeropuerto.EN\Parcial3_Aeropuerto.EN.csproj" />
   </ItemGroup>
