@@ -12,7 +12,11 @@ namespace Parcial3_Aeropuerto.EN
         [Required(ErrorMessage = "El campo Capacidad es obligatorio")]
         public int Capacidad { get; set; }
 
-        public int Id_aerolinea { get; set; } //agradado
+
+        [Required(ErrorMessage = "Seleccione una aerolínea")]
+        public int? Id_aerolinea { get; set; }
+
+
         public string Nombre_aerolinea { get; set; } = string.Empty;
         //SE hace el mmado del nombre de la aerolinea
 

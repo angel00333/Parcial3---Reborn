@@ -100,6 +100,7 @@
         function mostrarCreate() {
             $.get('/Aviones/Create', function (data) {
                 $('#modalContainer').html(data);
+
                 var modal = new bootstrap.Modal(document.getElementById('createModal'));
                 modal.show();
             });

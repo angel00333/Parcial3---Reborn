@@ -20,18 +20,19 @@
                     <div class="mb-3">
                         <label class="form-label fw-bold">Aerolínea</label>
 
-                        <select asp-for="Id_aerolinea" class="form-control">
-                            <option value="">-- Seleccione una aerolínea --</option>
+                        <input list="aerolineasOptions" id="aerolineaInput" class="form-control"
 
+                               placeholder="Escribe para buscar..." autocomplete="off" required>
+
+                        <input type="hidden" asp-for="Id_aerolinea" id="Id_aerolinea_hidden">
+                        <span asp-validation-for="Id_aerolinea" class="text-danger"></span>
+                        <datalist id="aerolineasOptions">
                             @foreach (var aero in ViewBag.Aerolineas)
                             {
-                                <option value="@aero.Id_aerolinea">
-                                    @aero.Nombre_aerolinea
-                                </option>
+                                <option data-id="@aero.Id_aerolinea" value="@aero.Nombre_aerolinea"></option>
                             }
-                        </select>
+                        </datalist>
                     </div>
-
                     <div class="mb-3">
                         <label asp-for="Capacidad" class="form-label">Capacidad</label>
                         <input asp-for="Capacidad" class="form-control" required />
@@ -49,30 +50,69 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    // Usamos una función para asegurar que el evento se pegue al formulario correcto
-    (function() {
+    (function () {
     const formulario = document.getElementById("form-crear-avion");
-        
+    const hiddenInput = document.getElementById("Id_aerolinea_hidden");
+
     if (formulario) {
     formulario.addEventListener("submit", function (e) {
-    e.preventDefault(); // Detenemos el refresco de página
+
+    // 🔥 Validación HTML (Capacidad, required, etc)
+    if (!formulario.checkValidity()) {
+    e.preventDefault();
+    formulario.reportValidity();
+    return;
+    }
+
+    const idAero = hiddenInput.value;
+
+    // 🔥 Validación del datalist (Aerolínea)
+    if (!idAero) {
+    e.preventDefault();
+
+    hiddenInput.setCustomValidity("Seleccione una aerolínea válida");
+    hiddenInput.reportValidity();
+
+    return;
+    } else {
+    hiddenInput.setCustomValidity(""); // limpiar error
+    }
+
+    // 🔥 SweetAlert solo si todo está correcto
+    e.preventDefault();
 
     Swal.fire({
     title: "¡Excelente!",
     text: "El avión se agregó correctamente",
     icon: "success",
-    iconColor: "#198754",
-    timer: 2000,
-    showConfirmButton: false,
-    timerProgressBar: true
+    timer: 1500,
+    showConfirmButton: false
     }).then(() => {
-    // Solo enviamos cuando la alerta termina
     formulario.submit();
     });
     });
     }
     })();
+</script>
+
+<script>
+    document.getElementById('aerolineaInput').addEventListener('input', function (e) {
+    var input = e.target;
+    var options = document.getElementById('aerolineasOptions').options;
+    var hiddenInput = document.getElementById('Id_aerolinea_hidden');
+
+    hiddenInput.value = "";
+    hiddenInput.setCustomValidity(""); 
+
+    for (var i = 0; i < options.length; i++) {
+    if (options[i].value === input.value) {
+    hiddenInput.value = options[i].getAttribute('data-id');
+    break;
+    }
+    }
+    });
 </script>
 
 @{
