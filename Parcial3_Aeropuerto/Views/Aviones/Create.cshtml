@@ -1,118 +1,95 @@
 ﻿@model Parcial3_Aeropuerto.EN.Aviones
+
 @{
     Layout = null;
 }
 
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet"> @*Toco usar la libreria TomSelect para poder darle estilacho_NM*@
 
-            <div class="modal-header">
-                <h5 class="modal-title">Registrar Nuevo Avión</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="modalAvionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+
+            <div class="modal-header text-white" style="background: linear-gradient(135deg, #0d6efd, #203C73);">
+                <h5 class="modal-title fw-bold" id="modalAvionLabel">
+                    <i class="bi bi-airplane-engines-fill me-2"></i> Registrar Nuevo Avión
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+
+            <div class="modal-body p-4">
                 <form asp-action="Create" method="post" id="form-crear-avion">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                 
+
                     <input asp-for="Id_avion" type="hidden" />
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Aerolínea</label>
+                        <label asp-for="Id_aerolinea" class="form-label fw-bold">Aerolínea</label>
 
-                        <input list="aerolineasOptions" id="aerolineaInput" class="form-control"
+                        <select asp-for="Id_aerolinea"
+                                id="Id_aerolinea"
+                                class="form-select"
+                                placeholder="Seleccione o busque una aerolínea"
+                                required>
+                            <option value=""></option>
 
-                               placeholder="Escribe para buscar..." autocomplete="off" required>
-
-                        <input type="hidden" asp-for="Id_aerolinea" id="Id_aerolinea_hidden">
-                        <span asp-validation-for="Id_aerolinea" class="text-danger"></span>
-                        <datalist id="aerolineasOptions">
                             @foreach (var aero in ViewBag.Aerolineas)
                             {
-                                <option data-id="@aero.Id_aerolinea" value="@aero.Nombre_aerolinea"></option>
+                                <option value="@aero.Id_aerolinea">@aero.Nombre_aerolinea</option>
                             }
-                        </datalist>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Capacidad" class="form-label">Capacidad</label>
-                        <input asp-for="Capacidad" class="form-control" required />
-                        <span asp-validation-for="Capacidad" class="text-danger"></span>
+                        </select>
+
+                        <span asp-validation-for="Id_aerolinea" class="text-danger small"></span>
                     </div>
 
-                    <div class="modal-footer px-0 pb-0">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar Avión</button>
+                    <div class="mb-4">
+                        <label asp-for="Capacidad" class="form-label fw-bold">Capacidad</label>
+
+                        <input asp-for="Capacidad"
+                               class="form-control"
+                               placeholder="Escriba la cantidad de 25 a 853" />
+
+                        <span asp-validation-for="Capacidad" class="text-danger small"></span>
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0 pt-3">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="btn btn-primary px-4">
+                            Guardar Avión
+                        </button>
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script> @*Es la funcion del TomSelect*@
 
 <script>
-    (function () {
-    const formulario = document.getElementById("form-crear-avion");
-    const hiddenInput = document.getElementById("Id_aerolinea_hidden");
+    setTimeout(() => {
+    const select = document.querySelector("#Id_aerolinea");
 
-    if (formulario) {
-    formulario.addEventListener("submit", function (e) {
-
-    // 🔥 Validación HTML (Capacidad, required, etc)
-    if (!formulario.checkValidity()) {
-    e.preventDefault();
-    formulario.reportValidity();
-    return;
-    }
-
-    const idAero = hiddenInput.value;
-
-    // 🔥 Validación del datalist (Aerolínea)
-    if (!idAero) {
-    e.preventDefault();
-
-    hiddenInput.setCustomValidity("Seleccione una aerolínea válida");
-    hiddenInput.reportValidity();
-
-    return;
-    } else {
-    hiddenInput.setCustomValidity(""); // limpiar error
-    }
-
-    // 🔥 SweetAlert solo si todo está correcto
-    e.preventDefault();
-
-    Swal.fire({
-    title: "¡Excelente!",
-    text: "El avión se agregó correctamente",
-    icon: "success",
-    timer: 1500,
-    showConfirmButton: false
-    }).then(() => {
-    formulario.submit();
+    if (select && !select.tomselect) {
+    const ts = new TomSelect("#Id_aerolinea", {
+    create: false,
+    allowEmptyOption: true,
+    maxOptions: 1000,
+    searchField: ["text"],
+    placeholder: "",
+    openOnFocus: true,
+    hideSelected: false
     });
-    });
-    }
-    })();
-</script>
 
-<script>
-    document.getElementById('aerolineaInput').addEventListener('input', function (e) {
-    var input = e.target;
-    var options = document.getElementById('aerolineasOptions').options;
-    var hiddenInput = document.getElementById('Id_aerolinea_hidden');
-
-    hiddenInput.value = "";
-    hiddenInput.setCustomValidity(""); 
-
-    for (var i = 0; i < options.length; i++) {
-    if (options[i].value === input.value) {
-    hiddenInput.value = options[i].getAttribute('data-id');
-    break;
+    ts.clear(true);
+    ts.settings.placeholder = "Seleccione o busque una aerolínea";
+    ts.inputState();
     }
-    }
-    });
+    }, 200);
 </script>
 
 @{

@@ -4,38 +4,84 @@
     Layout = null;
 }
 
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="editModalLabel">Editar Rol</h5>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+
+            <div class="modal-header text-white" style="background: linear-gradient(135deg, #0d6efd, #203C73);">
+                <h5 class="modal-title fw-bold" id="editModalLabel">Editar Avión</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input  type="hidden" asp-for="Id_avion" />
-            <div class="form-group">
-                <label asp-for="Id_aerolinea" class="control-label"></label>
-                <input asp-for="Id_aerolinea" class="form-control" />
-                <span asp-validation-for="Id_aerolinea" class="text-danger"></span>
+            <div class="modal-body p-4">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input type="hidden" asp-for="Id_avion" />
+
+                    <div class="mb-3">
+                        <label asp-for="Id_aerolinea" class="form-label fw-bold">Aerolínea</label>
+
+                        <select asp-for="Id_aerolinea"
+                                id="Id_aerolinea_edit"
+                                class="form-select"
+                                placeholder="Seleccione o busque una aerolínea"
+                                required>
+                            <option value=""></option>
+
+                            @foreach (var aero in ViewBag.Aerolineas)
+                            {
+                                <option value="@aero.Id_aerolinea">@aero.Nombre_aerolinea</option>
+                            }
+                        </select>
+
+                        <span asp-validation-for="Id_aerolinea" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Capacidad" class="form-label fw-bold">Capacidad</label>
+
+                        <input asp-for="Capacidad"
+                               class="form-control"
+                               placeholder="Escriba la capacidad del avión" />
+
+                        <span asp-validation-for="Capacidad" class="text-danger small"></span>
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0 pt-3">
+                        <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                        <a asp-action="Aviones" class="btn btn-secondary px-4">Lista Aviones</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Capacidad" class="control-label"></label>
-                <input asp-for="Capacidad" class="form-control" />
-                <span asp-validation-for="Capacidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-                <a asp-action="Aviones" class="btn btn-secondary">Lista Aviones</a>
-            </div>
-        </form>
-            </div>
+
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+
+<script>
+    setTimeout(() => {
+    const select = document.querySelector("#Id_aerolinea_edit");
+
+    if (select && !select.tomselect) {
+    const ts = new TomSelect("#Id_aerolinea_edit", {
+    create: false,
+    allowEmptyOption: true,
+    maxOptions: 1000,
+    searchField: ["text"],
+    placeholder: "Seleccione o busque una aerolínea",
+    openOnFocus: true,
+    hideSelected: false
+    });
+
+    ts.inputState();
+    }
+    }, 200);
+</script>
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

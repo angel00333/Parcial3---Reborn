@@ -40,8 +40,8 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID Avion</th>
-            <th> ID Aerolinea</th>
+            <th>IDAvion</th>
+            <th> Aerolinea</th>
             <th> Capacidad</th>
         </tr>
     </thead>
@@ -124,4 +124,21 @@
             });
         }
 </script>
+ @*LLamo la fucnion de alerta desde aquí por motivos de compatibilidad de validación_NG*@
+@if (TempData["MensajeExito"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        Swal.fire({
+        title: "¡Excelente!",
+        text: '@Html.Raw(TempData["MensajeExito"])',
+        icon: "success",
+        color: "#30FA00",
+        iconColor: "#30FA00",
+        timer: 1500,
+        showConfirmButton: false
+        });
+    </script>
+}
 

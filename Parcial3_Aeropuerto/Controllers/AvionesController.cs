@@ -59,18 +59,32 @@ namespace Parcial3_Aeropuerto.Controllers
         public ActionResult Create(Aviones aviones)
         {
             ModelState.Remove("Id_avion");
+
+            string capacidadTexto = Request.Form["Capacidad"].ToString();  //Nos sirve para capturar el valor ingresado_NM.
+
+            if (!string.IsNullOrWhiteSpace(capacidadTexto) && //Revisa si el valor inicia con Zero ML.
+                capacidadTexto.Length > 1 &&
+                capacidadTexto.StartsWith("0"))
+            {
+                ModelState.AddModelError("Capacidad", "");
+            }
+
             if (ModelState.IsValid)
             {
                 avionesBL.AgregarAviones(aviones);
+                TempData["MensajeExito"] = "El avión se agregó correctamente";
                 return RedirectToAction("Aviones");
             }
-            
+
+            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
             return View();
         }
 
         // GET: Aviones/Edit/5
         public ActionResult Edit(int id)
         {
+
+            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
             return View(avionesBL.ObtenerAvionesPorId(id));
         }
 
