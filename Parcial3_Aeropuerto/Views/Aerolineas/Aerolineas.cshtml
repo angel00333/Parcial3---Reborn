@@ -117,25 +117,16 @@
 @if (TempData["SMSExito"] != null)
 {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script>
-        $("#form-crear-aerolinea").on("submit", function (e) {
-
-        if (!$(this).valid()) {
-        return;
-        }
-
-        e.preventDefault();
-
         Swal.fire({
-        title: "¡Logrado!",
-        text: "La aerolínea se guardó correctamente",
+        title: "¡Excelente!",
+        text: '@Html.Raw(TempData["SMSExito"])',
         icon: "success",
+        color: "#000000",
+        iconColor: "#25E17A",
         timer: 1500,
         showConfirmButton: false
-        }).then(() => {
-        this.submit();
-        });
         });
     </script>
+    
 }

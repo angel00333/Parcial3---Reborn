@@ -61,7 +61,7 @@ namespace Parcial3_Aeropuerto.Controllers
             if (ModelState.IsValid)
             {
                 aerolineasBL.AgregarAerolineas(aerolineas);
-                TempData["SMSExito"] = "La aerolínea se guardó correctamente";
+                TempData["SMSExito"] = "La aerolinea se guardó correctamente";
                 return RedirectToAction("Aerolineas");
             }
 

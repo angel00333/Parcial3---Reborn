@@ -12,11 +12,15 @@ namespace Parcial3_Aeropuerto.EN
 
 
         [Required(ErrorMessage = "El nombre de la aeropuerto es obligatorio")]
+        [RegularExpression(@"^[A-Za-zÁÉÍÓÚáéíóúÑñ\s\.]+$",
+         ErrorMessage = "El nombre del aeropuerto solo debe contener letras")]
 
         public string Nombre_aeropuerto { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El campo pais es obligatorio")]
-         public string Pais { get; set; } = string.Empty;
+        [RegularExpression(@"^[A-Za-zÁÉÍÓÚáéíóúÑñ\s\.]+$",
+         ErrorMessage = "El nombre del país solo debe contener letras")]
+        public string Pais { get; set; } = string.Empty;
 
         public Aeropuertos () { }
 
