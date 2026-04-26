@@ -13,29 +13,30 @@ namespace Parcial3_Aeropuerto.Controllers
     {
         AerolineasBL aerolineasBL = new AerolineasBL();
         // GET: AerolieasController
-        public ActionResult Aerolineas(int paginas = 1, string buscar="")
+        public ActionResult Aerolineas(int paginas = 1, string buscar = "")
         {
-            int registroPorPaginas = 5;
+            int registroPorPagina = 5;
+
             var lista = string.IsNullOrEmpty(buscar)
                 ? aerolineasBL.MostrarAerolineas()
                 : aerolineasBL.BuscarAerolineas(buscar);
+
             var totalRegistros = lista.Count();
 
             var aerolineas = lista
                 .OrderBy(a => a.Id_aerolinea)
-                .Skip((paginas - 1) * registroPorPaginas)
-                .Take(registroPorPaginas)
+                .Skip((paginas - 1) * registroPorPagina)
+                .Take(registroPorPagina)
                 .ToList();
 
             var modelo = new Paginacion<Aerolineas>
             {
                 Items = aerolineas,
                 PaginaActual = paginas,
-                TotalPaginas = (int)Math.Ceiling((double)totalRegistros / registroPorPaginas)
+                TotalPaginas = (int)Math.Ceiling((double)totalRegistros / registroPorPagina)
             };
             ViewBag.Buscar = buscar;
-            return View( "Aerolineas", modelo);
-
+            return View("Aerolineas", modelo);
 
         }
 
@@ -60,6 +61,7 @@ namespace Parcial3_Aeropuerto.Controllers
             if (ModelState.IsValid)
             {
                 aerolineasBL.AgregarAerolineas(aerolineas);
+                TempData["SMSExito"] = "La aerolínea se guardó correctamente";
                 return RedirectToAction("Aerolineas");
             }
 
