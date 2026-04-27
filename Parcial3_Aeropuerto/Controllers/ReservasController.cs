@@ -35,51 +35,44 @@ namespace Parcial3_Aeropuerto.Controllers
             if(ModelState.IsValid)
             {
                 reservasBL.AgregarReservas(reservas);
-                return RedirectToAction("Reservas");
+                return RedirectToAction("Reservas", new Reservas());
             }
-            return View(reservas);
+            return View("Create", reservas);
         }
 
         // GET: ReservasController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(reservasBL.ObtenerReservasPorId(id));
         }
 
         // POST: ReservasController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Reservas reservas)
         {
-            try
+            if(ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                reservasBL.ModificarReservas(reservas);
+                return RedirectToAction("Reservas");
             }
-            catch
-            {
-                return View();
-            }
+            return View(reservas);
         }
 
         // GET: ReservasController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(reservasBL.ObtenerReservasPorId(id));
         }
 
         // POST: ReservasController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            reservasBL.EliminarReservas(id);
+            return RedirectToAction("Reservas");
         }
     }
 }
