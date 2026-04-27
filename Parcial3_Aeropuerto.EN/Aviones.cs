@@ -10,10 +10,10 @@ namespace Parcial3_Aeropuerto.EN
         public int Id_avion { get; set; }
 
         [Required(ErrorMessage = "El campo Capacidad es obligatorio")]
-        public int Capacidad { get; set; }
+        [Range(25, 853, ErrorMessage = "La capacidad debe estar entre 25 y 853 pasajeros")]
+        public int? Capacidad { get; set; }
 
-
-        [Required(ErrorMessage = "Seleccione una aerolínea")]
+        [Required(ErrorMessage = "Seleccione una aerolínea válida")]
         public int? Id_aerolinea { get; set; }
 
 

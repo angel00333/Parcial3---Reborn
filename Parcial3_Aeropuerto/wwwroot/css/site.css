@@ -277,6 +277,33 @@ footer nav {
     --bs-btn-disabled-bg: #0d6efd;
     --bs-btn-disabled-border-color: #203c73;
 }
+/*Maistrou de detalle mis compas'! Ejejejeje*/
+/* Color del borde */
+:root {
+    --borde-tomselect: #0B2AEF;
+}
+
+/* Campo principal que se muestra_NM*/
+.ts-control {
+    border: 1px solid var(--borde-tomselect) !important;
+    border-radius: 8px !important;
+    min-height: 45px;
+}
+
+/* Menú desplegable, el modal del detalle_NM */
+.ts-dropdown {
+    margin-top: 4px !important;
+    border: 2px solid var(--borde-tomselect) !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+}
+
+    /* Opción activa o al pasar el mouse, esto es mas chulo' _NM*/
+    .ts-dropdown .option:hover,
+    .ts-dropdown .active {
+        background-color: #203C73 !important;
+        color: white !important;
+    }
 
 .bg-primary {
     --bs-bg-opacity: 1;

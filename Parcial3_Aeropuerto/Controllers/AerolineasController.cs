@@ -13,15 +13,30 @@ namespace Parcial3_Aeropuerto.Controllers
     {
         AerolineasBL aerolineasBL = new AerolineasBL();
         // GET: AerolieasController
-        public ActionResult Aerolineas(string buscar)
+        public ActionResult Aerolineas(int paginas = 1, string buscar = "")
         {
-            if (string.IsNullOrEmpty(buscar))
-            {
-                return View(aerolineasBL.MostrarAerolineas());
-            }
+            int registroPorPagina = 5;
 
-            var resultado = aerolineasBL.BuscarAerolineas(buscar);
-            return View(resultado);
+            var lista = string.IsNullOrEmpty(buscar)
+                ? aerolineasBL.MostrarAerolineas()
+                : aerolineasBL.BuscarAerolineas(buscar);
+
+            var totalRegistros = lista.Count();
+
+            var aerolineas = lista
+                .OrderBy(a => a.Id_aerolinea)
+                .Skip((paginas - 1) * registroPorPagina)
+                .Take(registroPorPagina)
+                .ToList();
+
+            var modelo = new Paginacion<Aerolineas>
+            {
+                Items = aerolineas,
+                PaginaActual = paginas,
+                TotalPaginas = (int)Math.Ceiling((double)totalRegistros / registroPorPagina)
+            };
+            ViewBag.Buscar = buscar;
+            return View("Aerolineas", modelo);
 
         }
 
@@ -46,6 +61,7 @@ namespace Parcial3_Aeropuerto.Controllers
             if (ModelState.IsValid)
             {
                 aerolineasBL.AgregarAerolineas(aerolineas);
+                TempData["SMSExito"] = "La aerolinea se guardó correctamente";
                 return RedirectToAction("Aerolineas");
             }
 
@@ -84,9 +100,10 @@ namespace Parcial3_Aeropuerto.Controllers
         // POST: AerolieasController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Aerolineas aerolineas)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-          aerolineasBL.EliminarAerolineas(aerolineas.Id_aerolinea);
+          aerolineasBL.EliminarAerolineas(id);
             return RedirectToAction("Aerolineas");
         }
     }

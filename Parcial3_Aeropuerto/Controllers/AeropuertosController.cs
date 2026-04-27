@@ -65,6 +65,7 @@ namespace Parcial3_Aeropuerto.Controllers
             if (ModelState.IsValid)
             {
                 aeropuertosBL.AgregarAeropuertos(aeropuertos);
+                TempData["SMSExito"] = "El aeropuerto se agregó correctamente";
                 return RedirectToAction("Aeropuertos");
             }
 

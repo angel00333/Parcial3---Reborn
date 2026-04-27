@@ -10,6 +10,8 @@ namespace Parcial3_Aeropuerto.EN
         public int Id_aerolinea { get; set; }
 
         [Required(ErrorMessage = "El nombre de la aero linea es requerido")]
+        [RegularExpression(@"^[A-Za-zÁÉÍÓÚáéíóúÑñ\s\.]+$",
+         ErrorMessage = "El nombre de la aerolínea solo debe contener letras")]
         public string Nombre_aerolinea { get; set; } = string.Empty; //Permite que el valor entre vacio sin restriccion.
 
         public Aerolineas() { }

@@ -1,33 +1,37 @@
 ﻿@model Parcial3_Aeropuerto.EN.Aerolineas
 
 @{
-    ViewData["Title"] = "Edit";
+    Layout = null;
 }
-
-<h1>Edit</h1>
-
-<h4>Aerolineas</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-3">
-                <label asp-for="Id_aerolinea" class="control-label"></label>
-                <input asp-for="Id_aerolinea" class="form-control" />
-                <span asp-validation-for="Id_aerolinea" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Nombre_aerolinea" class="control-label"></label>
-                <input asp-for="Nombre_aerolinea" class="form-control" />
-                <span asp-validation-for="Nombre_aerolinea" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-success">Actualizar Datos</button>
-                <a asp-action="Aerolineas" class="btn btn-secondary">Regresar a la Lista</a>
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editModalLabel">Editar Aerolineas</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-        </form>
+            <div class="modal-body">
+                <form asp-action="Edit" asp-controller="Aerolineas" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input asp-for="Id_aerolinea" type="hidden" />
+
+                    <div class="form-group">
+                        <label asp-for="Nombre_aerolinea" class="control-label"></label>
+                        <input asp-for="Nombre_aerolinea" class="form-control" />
+                        <span asp-validation-for="Nombre_aerolinea" class="text-danger"></span>
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0">
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
