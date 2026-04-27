@@ -85,6 +85,51 @@ body {
     gap: 15px;
 }
 
+.user-izquierda {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 14px;
+    border-radius: 12px;
+}
+
+
+.usericon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.usertext {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 👈 clave */
+    line-height: 1.2;
+}
+
+.usertext .nombre {
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+.usertext .rol {
+        color: #cfd8dc;
+        font-size: 12px;
+}
+
+.cerrarsesion {
+    background-color: transparent;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
 .footer-boton {
     display: flex;
     align-items: center;
@@ -231,4 +276,9 @@ footer nav {
     --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: #0d6efd;
     --bs-btn-disabled-border-color: #203c73;
+}
+
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: rgb(32 60 115) !important;
 }

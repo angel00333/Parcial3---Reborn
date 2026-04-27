@@ -35,10 +35,21 @@
                 @if (rol == "Usuario")
                 {
                 <nav class="menu-derecha">
-                    <div>
-                        <a asp-controller="Login" asp-action="CerrarSesion">Cerrar sesión</a>
+                    <div class="cerrarsesion">
+                        <a class="btn btn-outline-light mx-2" asp-controller="Login" asp-action="CerrarSesion">Cerrar sesión</a>
                     </div>
                 </nav>
+
+                <div class="user-izquierda">
+                
+                    <img class="usericon" src="~/css/imgs/users/usuario.png" />
+
+                    <div class="usertext">
+                                <span class="nombre">@usuario</span>
+                                <span class="rol">@rol</span>
+                    </div>
+                               
+                </div>
                 }
 
                 @if (rol == "Administrador")
@@ -56,10 +67,21 @@
                                asp-controller="Roles" asp-action="Roles">Roles</a>
                         </div>
 
-                        <div>
-                            <a asp-controller="Login" asp-action="CerrarSesion">Cerrar sesión</a>
+                        <div class="cerrarsesion">
+                            <a class="btn btn-outline-light mx-2" asp-controller="Login" asp-action="CerrarSesion">Cerrar sesión</a>
                         </div>
                     </nav>
+
+                    <div class="user-izquierda">
+
+                        <img class="usericon" src="~/css/imgs/users/administrador.png" />
+
+                        <div class="usertext">
+                            <span class="nombre">@usuario</span>
+                            <span class="rol">@rol</span>
+                        </div>
+
+                    </div>
                 }
             }
                     

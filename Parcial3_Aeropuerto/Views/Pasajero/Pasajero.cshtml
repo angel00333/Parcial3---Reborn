@@ -1,4 +1,10 @@
 ﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Pasajero>
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var usuario = Context.Session.GetString("Usuario");
+    var rol = Context.Session.GetString("Rol");
+}
 
 @{
     ViewData["Title"] = "Pasajero";
@@ -59,10 +65,15 @@
                 <td>@item.Pais</td>
                 <td>@item.Visa</td>
             <td>
-                    <a href="javascript:void(0);"class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_pasajero); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png"/></a>
+                <a href="javascript:void(0);"class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_pasajero); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png"/></a>
 
-                <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_pasajero);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png"/></a>
-
+    @if (!string.IsNullOrEmpty(usuario))
+    {
+          @if(rol == "Administrador")
+          {
+              <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_pasajero);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png"/></a>
+          }
+    }
                 <a class="btn btn-primary btn-sm"><img class="acciones" src="~/css/imgs/iconosacciones/detalle.png"/></a>
             </td>
         </tr>

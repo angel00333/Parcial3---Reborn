@@ -8,6 +8,22 @@ namespace Parcial3_Aeropuerto.Controllers
     {
         public IActionResult Index()
         {
+            string Saludo = "";
+            DateTime HoraActual = DateTime.Now;
+            if (HoraActual.Hour < 12)
+            {
+                Saludo = "Buenos días";
+            }
+            else if (HoraActual.Hour < 18)
+            {
+                Saludo = "Buenas tardes";
+            }
+            else
+            {
+                Saludo = "Buenas noches";
+            }
+
+            ViewBag.Saludo = Saludo;
             return View();
         }
 
