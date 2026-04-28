@@ -8,6 +8,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
     public class DestinosController : Controller
     {
         DestinosBL destinosBL = new DestinosBL();
+        AerolineasBL aerolineasBL = new AerolineasBL();
         // GET: DestinosController
         public ActionResult Destinos(int paginas, string buscar = "")
         {
@@ -57,9 +58,9 @@ namespace Parcial3_Aeropuerto.UI.Controllers
             if(ModelState.IsValid)
             {
                 destinosBL.AgregarDestino(destinos);
-                return RedirectToAction("Destinos");
+                return RedirectToAction("Destinos", new Destinos());
             }
-            return View("Destinos", destinos);
+            return View("Create", destinos);
         }
 
         // GET: DestinosController/Edit/5
@@ -84,7 +85,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: DestinosController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View("Delete", destinosBL.ObtenerDestinosPorId(id));
+            return View(destinosBL.ObtenerDestinosPorId(id));
         }
 
         // POST: DestinosController/Delete/5

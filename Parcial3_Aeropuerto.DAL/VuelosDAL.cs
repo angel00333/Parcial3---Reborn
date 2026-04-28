@@ -19,8 +19,8 @@ namespace Parcial3_Aeropuerto.DAL
                 string sql = "INSERT INTO vuelos (id_vuelo, id_avion, id_destino, cantidad_pasajeros, fecha, tiempo_estimado, estado, hora_inicio) VALUES (@id_vuelo, @id_avion, @id_destino, @cantidad_pasajeros, @fecha, @tiempo_estimado, @estado, @hora_inicio)";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@id_vuelo", vuelos.Id_vuelo);
-                comando.Parameters.AddWithValue("@id_avion", vuelos.Aviones.Id_avion);
-                comando.Parameters.AddWithValue("@id_destino", vuelos.Destinos.Id_destino);
+                comando.Parameters.AddWithValue("@id_avion", vuelos.Id_avion);
+                comando.Parameters.AddWithValue("@id_destino", vuelos.Id_destino);
                 comando.Parameters.AddWithValue("@cantidad_pasajeros", vuelos.Cantidad_pasajeros);
                 comando.Parameters.AddWithValue("@fecha", vuelos.Fecha);
                 comando.Parameters.AddWithValue("@tiempo_estimado", vuelos.Tiempo_estimado);
@@ -41,8 +41,8 @@ namespace Parcial3_Aeropuerto.DAL
                 string sql = "UPDATE vuelos SET id_avion = @id_avion, id_destino = @id_destino, cantidad_pasajeros = @cantidad_pasajeros, fecha = @fecha, tiempo_estimado = @tiempo_estimado, estado = @estado, hora_inicio = @hora_inicio WHERE id_vuelo = @id_vuelo";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@id_vuelo", vuelos.Id_vuelo);
-                comando.Parameters.AddWithValue("@id_avion", vuelos.Aviones.Id_avion);
-                comando.Parameters.AddWithValue("@id_destino", vuelos.Destinos.Id_destino);
+                comando.Parameters.AddWithValue("@id_avion", vuelos.Id_avion);
+                comando.Parameters.AddWithValue("@id_destino", vuelos.Id_destino);
                 comando.Parameters.AddWithValue("@cantidad_pasajeros", vuelos.Cantidad_pasajeros);
                 comando.Parameters.AddWithValue("@fecha", vuelos.Fecha);
                 comando.Parameters.AddWithValue("@tiempo_estimado", vuelos.Tiempo_estimado);
@@ -85,8 +85,8 @@ namespace Parcial3_Aeropuerto.DAL
                     {
                         Vuelos vuelos = new Vuelos();
                         vuelos.Id_vuelo = reader.GetInt32(0);
-                        vuelos.Aviones = AvionesDAL.ObtenerAvionesPorId(reader.GetInt32(1));
-                        vuelos.Destinos = DestinosDAL.ObtenerDestinoPorId(reader.GetInt32(2));
+                        vuelos.Id_avion = reader.GetInt32(1);
+                        vuelos.Id_destino = reader.GetInt32(2);
                         vuelos.Cantidad_pasajeros = reader.GetInt32(3);
                         vuelos.Fecha = DateOnly.FromDateTime(reader.GetDateTime(4));
                         vuelos.Tiempo_estimado = reader.GetDateTime(5);
@@ -116,8 +116,8 @@ namespace Parcial3_Aeropuerto.DAL
                     if (reader.Read())
                     {
                         vuelos.Id_vuelo = reader.GetInt32(0);
-                        vuelos.Aviones = AvionesDAL.ObtenerAvionesPorId(reader.GetInt32(1));
-                        vuelos.Destinos = DestinosDAL.ObtenerDestinoPorId(reader.GetInt32(2));
+                        vuelos.Id_avion = reader.GetInt32(1);
+                        vuelos.Id_destino = reader.GetInt32(2);
                         vuelos.Cantidad_pasajeros = reader.GetInt32(3);
                         vuelos.Fecha = DateOnly.FromDateTime(reader.GetDateTime(4));
                         vuelos.Tiempo_estimado = reader.GetDateTime(5);
@@ -146,8 +146,8 @@ namespace Parcial3_Aeropuerto.DAL
                     {
                         Vuelos vuelos = new Vuelos();
                         vuelos.Id_vuelo = reader.GetInt32(0);
-                        vuelos.Aviones = AvionesDAL.ObtenerAvionesPorId(reader.GetInt32(1));
-                        vuelos.Destinos = DestinosDAL.ObtenerDestinoPorId(reader.GetInt32(2));
+                        vuelos.Id_avion = reader.GetInt32(1);
+                        vuelos.Id_destino = reader.GetInt32(2);
                         vuelos.Cantidad_pasajeros = reader.GetInt32(3);
                         vuelos.Fecha = DateOnly.FromDateTime(reader.GetDateTime(4));
                         vuelos.Tiempo_estimado = reader.GetDateTime(5);

@@ -1,0 +1,34 @@
+﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Destinos>
+
+@{
+    ViewData["Title"] = "Destinos";
+}
+
+<h1>Destinos</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id_destino</th>
+            <th>Id_aeropuerto</th>
+            <th>Nombre_destino</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Items) {
+        <tr>
+            <td>@item.Id_destino</td>
+            <td>@item.Id_aeropuerto</td>
+            <td>@item.Nombre_destino</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

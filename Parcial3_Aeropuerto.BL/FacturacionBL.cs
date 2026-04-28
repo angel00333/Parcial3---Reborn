@@ -13,6 +13,20 @@ namespace Parcial3_Aeropuerto.BL
             return FacturacionDAL.ModificarFacturacion(facturacion);
         }
 
-        
+        public int EliminarFacturacion(int id)
+        {
+            return FacturacionDAL.EliminarFacturacion(id);
+
+        }
+
+        public Facturacion ObtenerFacturacionPorId(int id)
+        {
+            return FacturacionDAL.ObtenerFacturacionPorId(id);
+        }
+
+        public List<Facturacion> MostrarFacturaciones()
+        {
+            return FacturacionDAL.MostrarFacturaciones();
+        }   
     }
 }

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Parcial3_Aeropuerto.EN.Vuelos>
+
+@{
+    ViewData["Title"] = "Vuelos";
+}
+
+<h1>Vuelos</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_vuelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_avion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_destino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad_pasajeros)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tiempo_estimado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_vuelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_avion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_destino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad_pasajeros)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tiempo_estimado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
