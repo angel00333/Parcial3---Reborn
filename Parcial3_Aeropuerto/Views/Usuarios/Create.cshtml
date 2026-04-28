@@ -24,12 +24,9 @@
 
                     <div class="mb-3">
                         <label asp-for="Contraseña" class="form-label">Contraseña</label>
-                        <div class="input-group">
-                            <input asp-for="Contraseña" type="password" id="txtPassword" class="form-control" required />
-                            <button class="btn btn-outline-secondary" type="button" id="btnTogglePassword">
-                                <i class="bi bi-eye"></i> Ver
-                            </button>
-                        </div>
+
+                        <input asp-for="Contraseña" type="password" class="form-control" required />
+
                         <span asp-validation-for="Contraseña" class="text-danger"></span>
                     </div>
 
@@ -58,45 +55,6 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    // Usamos una función para asegurar que el evento se pegue al formulario correcto
-    (function() {
-    const formulario = document.getElementById("form-crear-usuario");
-        
-    if (formulario) {
-    formulario.addEventListener("submit", function (e) {
-    e.preventDefault(); // Detenemos el refresco de página
-
-    Swal.fire({
-    title: "¡Excelente!",
-    text: "El avión se agregó correctamente",
-    icon: "success",
-    iconColor: "#198754",
-    timer: 2000,
-    showConfirmButton: false,
-    timerProgressBar: true
-    }).then(() => {
-    // Solo enviamos cuando la alerta termina
-    formulario.submit();
-    });
-    });
-    }
-    })();
-
-
-    //Librebria+Ver+Contra XD
-    document.getElementById("btnTogglePassword").addEventListener("click", function () {
-    const passwordInput = document.getElementById("txtPassword");
-    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-    passwordInput.setAttribute("type", type);
-    
-    // Opcional: Cambiar el texto del botón
-    this.textContent = type === "password" ? "Ver" : "Ocultar";
-    });
-</script>
-
 
 
 

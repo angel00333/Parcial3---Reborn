@@ -54,6 +54,7 @@ namespace Parcial3_Aeropuerto.Controllers
             if (ModelState.IsValid)
             {
                 usuariosBL.AgregarUsuario(usuarios);
+                TempData["SMSExito"] = "El avión se agregó correctamente";
                 return RedirectToAction("Usuarios");
             }
 
@@ -64,22 +65,21 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: UsuariosController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(usuariosBL.ObtenerUsuarioPorId(id));
         }
 
         // POST: UsuariosController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Usuarios usuarios)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                usuariosBL.ModificarUsuario(usuarios);
+                TempData["SMSExito"] = "El usuario se modificó correctamente";
+                return RedirectToAction("Usuarios");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: UsuariosController/Delete/5
