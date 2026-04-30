@@ -44,33 +44,44 @@
                 @Html.DisplayFor(modelItem => item.Id_rol)
             </td>
           
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+                <td>
+                    <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_usuario); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
+
+                    <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_usuario);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
+                </td>
         </tr>
 }
     </tbody>
 </table>
+
 <div id="modalContainer"></div>
 
+
 <script>
-    function mostrarCreate() {
-           
-        $.get('/Usuarios/Create', function (data) {
-               
-            $('#modalContainer').html(data);
-            
-            var modalElem = document.getElementById('Create');
-            if (modalElem) {
-                var modal = new bootstrap.Modal(modalElem);
+
+            function mostrarCreate() {
+            $.get('/Usuarios/Create', function (data) {
+                $('#modalContainer').html(data);
+                var modal = new bootstrap.Modal(document.getElementById('CreateModal'));
                 modal.show();
-            } else {
-                console.error("No se encontró un elemento con ID 'Create' en la vista parcial.");
-            }
+            });
+        }
+
+        function mostrarEdit(id) {
+        $.get('/Usuarios/Edit?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+            var modal = new bootstrap.Modal(document.getElementById('editModal'));
+            modal.show();
         });
     }
+
+    function mostrarDelete(id) {
+            $.get('/Usuarios/Delete?id=' + id, function (data) {
+                $('#modalContainer').html(data);
+                var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                modal.show();
+            });
+        }
 </script>
 
 @*LLamo la fucnion de alerta desde aquí por motivos de compatibilidad de validación_NG*@
@@ -81,7 +92,7 @@
     <script>
         Swal.fire({
         title: "¡Excelente!",
-        text: '@Html.Raw(TempData["MensajeExito"])',
+        text: '@Html.Raw(TempData["SMSExito"])',
         icon: "success",
         color: "#000000",
         iconColor: "#25E17A",

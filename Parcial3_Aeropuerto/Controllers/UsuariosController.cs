@@ -50,21 +50,24 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Usuarios usuarios)
         {
+
             ModelState.Remove("Id_usuario");
+
             if (ModelState.IsValid)
             {
                 usuariosBL.AgregarUsuario(usuarios);
-                TempData["SMSExito"] = "El avión se agregó correctamente";
+                TempData["SMSExito"] = "El usuario se agregó correctamente";
                 return RedirectToAction("Usuarios");
             }
-
-          return View();
+           ViewBag.Roles= rolBL.MostrarRoles();
+            return View();
 
         }
 
         // GET: UsuariosController/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewBag.Roles = rolBL.MostrarRoles();
             return View(usuariosBL.ObtenerUsuarioPorId(id));
         }
 
@@ -85,22 +88,17 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: UsuariosController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(usuariosBL.ObtenerUsuarioPorId(id));
         }
 
         // POST: UsuariosController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            usuariosBL.EliminarUsuario(id);
+            return RedirectToAction("Usuarios");
         }
     }
 }

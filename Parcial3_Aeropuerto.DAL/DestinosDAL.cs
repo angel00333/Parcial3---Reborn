@@ -15,9 +15,9 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "INSERT INTO Destinos (Id_destino, Id_aeropuerto, Nombre_destino) VALUES (@Id_destino, @Id_aeropuerto, @Nombre_destino)";
+                string sql = "INSERT INTO Destinos ( Id_aeropuerto, Nombre_destino) VALUES ( @Id_aeropuerto, @Nombre_destino)";
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.Parameters.AddWithValue("@Id_destino", destinos.Id_destino);
+               
                 comando.Parameters.AddWithValue("@Id_aeropuerto", destinos.Id_aeropuerto);
                 comando.Parameters.AddWithValue("@Nombre_destino", destinos.Nombre_destino);
                 resultado = comando.ExecuteNonQuery();
@@ -33,7 +33,7 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "UPDATE Destinos SET Id_aeropuerto = @Id_aeropuerto, Nombre_destino = @Nombre_destino WHERE Id_destino = @Id_destino";
+                string sql = "UPDATE Destinos SET Nombre_destino = @Nombre_destino WHERE Id_destino = @Id_destino";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@Id_destino", destinos.Id_destino);
                 comando.Parameters.AddWithValue("@Id_aeropuerto", destinos.Id_aeropuerto);

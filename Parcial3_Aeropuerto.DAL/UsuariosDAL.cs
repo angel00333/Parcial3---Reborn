@@ -17,7 +17,7 @@ namespace Parcial3_Aeropuerto.EN
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "SELECT * FROM Usuarios";
+                string sql = "SELECT * FROM usuarios";
 
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
@@ -29,7 +29,7 @@ namespace Parcial3_Aeropuerto.EN
                         Id_usuario = reader.GetInt32(0),
                         Nombre_usuario = reader.GetString(1),
                         Contraseña = reader.GetString(2),
-                        Id_rol = reader.GetInt32(3),
+                       Id_rol = reader.GetInt32(3),
                        
                     };
                     Usuariolist.Add(usuario);
@@ -38,7 +38,6 @@ namespace Parcial3_Aeropuerto.EN
             }
             return Usuariolist;
         }
-
 
         public static List<Usuarios> BuscarUsuarios(string criterio)
         {
@@ -96,13 +95,13 @@ namespace Parcial3_Aeropuerto.EN
         public static Usuarios ObtenerUsuarioPorId(int id)
         {
             Usuarios usuario = new Usuarios();
-            using (MySqlConnection con = new MySqlConnection())
+            using (MySqlConnection con = ConexionSQL.Conectar ())
             {
                 con.Open();
-                string sql = "SELECT  FROM Usuarios WHERE Id_usuario=@id_ususario";
+                string sql = "SELECT * FROM Usuarios WHERE Id_usuario=@id_usuario";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
-                comando.Parameters.AddWithValue("@Id_aeropuerto", id);
+                comando.Parameters.AddWithValue("@Id_usuario", id);
                 IDataReader reader = comando.ExecuteReader();
 
                 if (reader.Read())
@@ -111,7 +110,7 @@ namespace Parcial3_Aeropuerto.EN
                     usuario.Nombre_usuario = reader.GetString(1);
                     usuario.Contraseña = reader.GetString(2);
                     usuario.Id_rol = reader.GetInt32(3);
-                    usuario.Nombre_rol = reader.GetString(4);
+                   
                 }
                 con.Close();
             }
@@ -122,7 +121,7 @@ namespace Parcial3_Aeropuerto.EN
         public static int ModificarUsuarios(Usuarios usuarios)
         {
             int resultado = 0;
-            using (MySqlConnection con = new MySqlConnection())
+            using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
                 string sql = "UPDATE usuarios SET Nombre_usuario=@Nombre_usuario, Contraseña=@Contraseña, Id_rol=@Id_rol WHERE Id_usuario=@Id_usuario";
@@ -147,7 +146,7 @@ namespace Parcial3_Aeropuerto.EN
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "DELETE FROM Usuario WHERE Id_usuario=@Id_usuario";
+                string sql = "DELETE FROM Usuarios WHERE Id_usuario=@Id_usuario";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.CommandType = CommandType.Text;
                 comando.Parameters.AddWithValue("@Id_usuario", id);

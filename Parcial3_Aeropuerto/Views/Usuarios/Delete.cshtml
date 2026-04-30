@@ -1,0 +1,73 @@
+﻿@model Parcial3_Aeropuerto.EN.Usuarios
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Eliminar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="fw-bold">¿Estás seguro de eliminar a:</p>
+                <p class="text-secondary">@Model.Nombre_usuario @Model.Id_rol</p>
+
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> Esta acción no se puede deshacer.
+                </div>
+
+                <form asp-action="Delete" method="post" class="form-eliminar">
+                    <input type="hidden" name="id" asp-for="@Model.Id_usuario" />
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.querySelectorAll(".form-eliminar").forEach(form => {
+    form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    Swal.fire({
+    title: "¿Estás seguro?",
+    text: "Esta información no se recueperará",
+    icon: "warning",
+    iconColor: "#FB0700",
+    showCancelButton: true,
+    confirmButtonText: "Sí, eliminar",
+    confirmButtonColor: "#dc3545",
+    cancelButtonText: "Cancelar",
+    cancelButtonColor: "#6c757d"
+    }).then((result) => {
+    if (result.isConfirmed) {
+
+    Swal.fire({
+    title: "Eliminado",
+    text: "Se eliminó correctamente",
+    icon: "success",
+    iconColor: "#28a745",
+    timer: 1200,
+    timerProgressBar: true,
+    showConfirmButton: false
+    }).then(() => {
+    form.submit();
+    });
+
+    }
+    });
+    });
+    });
+</script>
