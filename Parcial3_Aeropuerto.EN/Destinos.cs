@@ -7,7 +7,7 @@ namespace Parcial3_Aeropuerto.EN
 {
     public class Destinos
     {
-        public int Id_destino { get; set; }
+        public int? Id_destino { get; set; }
 
         [Required(ErrorMessage = "El campo Id_aeropuerto es obligatorio.")]
         public int? Id_aeropuerto { get; set; }

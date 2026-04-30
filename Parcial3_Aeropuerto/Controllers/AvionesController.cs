@@ -58,17 +58,6 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Aviones aviones)
         {
-            ModelState.Remove("Id_avion");
-
-            string capacidadTexto = Request.Form["Capacidad"].ToString();  //Nos sirve para capturar el valor ingresado_NM.
-
-            if (!string.IsNullOrWhiteSpace(capacidadTexto) && //Revisa si el valor inicia con Zero ML.
-                capacidadTexto.Length > 1 &&
-                capacidadTexto.StartsWith("0"))
-            {
-                ModelState.AddModelError("Capacidad", "");
-            }
-
             if (ModelState.IsValid)
             {
                 avionesBL.AgregarAviones(aviones);

@@ -13,8 +13,7 @@
             <div class="modal-body">
                 <form asp-action="Create" method="post" id="form-create-aerolinea">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input asp-for="Id_aerolinea" type="hidden" />
-
+                   
                     <div class="mb-3">
                         <label asp-for="Nombre_aerolinea" class="form-label" ></label>
                         <input asp-for="Nombre_aerolinea" class="form-control"  />

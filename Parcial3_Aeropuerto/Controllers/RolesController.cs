@@ -69,7 +69,7 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Rol roles)
         {
-            ModelState.Remove("Id_rol");
+           
             if (ModelState.IsValid)
             {
                 rolBL.ModificarRol(roles);

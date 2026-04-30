@@ -51,7 +51,7 @@ namespace Parcial3_Aeropuerto.Controllers
         public ActionResult Create(Usuarios usuarios)
         {
 
-            ModelState.Remove("Id_usuario");
+     
 
             if (ModelState.IsValid)
             {

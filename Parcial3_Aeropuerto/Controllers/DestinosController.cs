@@ -57,7 +57,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Destinos destinos)
         {
-            ModelState.Remove("Id_destino");
+           
             if (ModelState.IsValid)
             {
                 destinosBL.AgregarDestino(destinos);

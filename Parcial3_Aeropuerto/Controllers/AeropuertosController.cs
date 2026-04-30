@@ -61,7 +61,6 @@ namespace Parcial3_Aeropuerto.Controllers
         public ActionResult Create(Aeropuertos aeropuertos)
         {
 
-            ModelState.Remove("Id_aeropuerto");
             if (ModelState.IsValid)
             {
                 aeropuertosBL.AgregarAeropuertos(aeropuertos);
