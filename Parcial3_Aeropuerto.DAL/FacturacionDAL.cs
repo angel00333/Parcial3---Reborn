@@ -16,7 +16,7 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "UPDATE Facturacion SET Id_Facturacion = @Id_Facturacion, Fecha = @Fecha, Monto = @Monto";
+                string sql = "UPDATE Facturacion SET Fecha = @Fecha, Monto = @Monto WHERE Id_Facturacion = @Id_Facturacion";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@Id_Facturacion", facturacion.Id_Facturacion);
                 comando.Parameters.AddWithValue("@Fecha", facturacion.Fecha);
@@ -59,6 +59,7 @@ namespace Parcial3_Aeropuerto.DAL
                     facturacion.Fecha = DateOnly.FromDateTime(reader.GetDateTime(1));
                     facturacion.Monto = reader.GetDouble(2);
 
+                    Facturaciones.Add(facturacion);
                 }
                 con.Close();
                 return Facturaciones;
@@ -72,7 +73,7 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "SELECT * FROM Facturacion WHERE Id_Facturacion = @Facturacion";
+                string sql = "SELECT * FROM Facturacion WHERE Id_Facturacion = @Id_Facturacion";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@Id_Facturacion", id);
                 comando.CommandType = CommandType.Text;

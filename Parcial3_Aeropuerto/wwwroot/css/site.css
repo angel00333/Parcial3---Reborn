@@ -48,6 +48,7 @@ body {
   text-align: start;
 }
 
+/*Footer y header color*/
 .bg-dark {
     --bs-bg-opacity: 1;
     background-color: rgb(32 60 115) !important;
@@ -308,4 +309,69 @@ footer nav {
 .bg-primary {
     --bs-bg-opacity: 1;
     background-color: rgb(32 60 115) !important;
+}
+
+/*Fondo card*/
+.card {
+    border-radius: 15px;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+        transform: translateY(-4px);
+ }
+
+.card-title {
+    color: white;
+    font-weight: bold;
+}
+
+.card-fondo {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    min-height: 250px;
+}
+
+.fondo-overlay {
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 0.375rem;
+    height: 100%;
+}
+
+/*Texto de la card*/
+.card-text-En {
+    color: green;
+    font-size: 14px;
+}
+
+.card-text-Curso {
+    color: green;
+    font-size: 14px;
+}
+
+.card-text-Finalizado {
+    color: red;
+    font-size: 14px;
+}
+/* IMÁGENES SEGÚN ID_DESTINO */
+.destino-1 {
+    background-image: url('/css/imgs/destinos/Brazil.png');
+}
+
+.destino-2 {
+    background-image: url('/css/imgs/destinos/Estados_Unidos.png');
+}
+
+.destino-3 {
+    background-image: url('/css/imgs/destinos/El_Salvador.png');
+}
+
+.destino-4 {
+    background-image: url('/imagenes/destinos/destino-4.png');
+}
+
+.destino-5 {
+    background-image: url('/imagenes/destinos/destino-5.png');
 }

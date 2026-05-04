@@ -88,8 +88,8 @@ namespace Parcial3_Aeropuerto.DAL
                         vuelos.Id_avion = reader.GetInt32(1);
                         vuelos.Id_destino = reader.GetInt32(2);
                         vuelos.Cantidad_pasajeros = reader.GetInt32(3);
-                        vuelos.Fecha = DateOnly.FromDateTime(reader.GetDateTime(4));
-                        vuelos.Tiempo_estimado = reader.GetDateTime(5);
+                        vuelos.Fecha = reader.GetDateOnly(4);
+                        vuelos.Tiempo_estimado = TimeOnly.FromTimeSpan(reader.GetTimeSpan(5));
                         vuelos.Estado = reader.GetString(6);
                         vuelos.Hora_inicio = TimeOnly.FromTimeSpan(reader.GetTimeSpan(7));
                         tvuelos.Add(vuelos);
@@ -119,8 +119,8 @@ namespace Parcial3_Aeropuerto.DAL
                         vuelos.Id_avion = reader.GetInt32(1);
                         vuelos.Id_destino = reader.GetInt32(2);
                         vuelos.Cantidad_pasajeros = reader.GetInt32(3);
-                        vuelos.Fecha = DateOnly.FromDateTime(reader.GetDateTime(4));
-                        vuelos.Tiempo_estimado = reader.GetDateTime(5);
+                        vuelos.Fecha = reader.GetDateOnly(4);
+                        vuelos.Tiempo_estimado = TimeOnly.FromTimeSpan(reader.GetTimeSpan(5));
                         vuelos.Estado = reader.GetString(6);
                         vuelos.Hora_inicio = TimeOnly.FromTimeSpan(reader.GetTimeSpan(7));
                     }
@@ -137,7 +137,7 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "SELECT * FROM Vuelos WHERE Id_vuelo LIKE @C OR Id_avion LIKE @C OR Id_destino LIKE @C OR Cantidad_pasajeros LIKE @C OR Fecha LIKE @C OR Tiempo_estimado LIKE @C OR Estado LIKE @C OR Hora_inicio LIKE @C";
+                string sql = @"SELECT v.Id_vuelo, v.Id_avion, v.Id_destino, v.Cantidad_pasajeros, v.Fecha, v.Tiempo_estimado, v.Estado, v.Hora_inicio FROM Vuelos v INNER JOIN Destinos d ON v.Id_destino = d.Id_destino WHERE d.Nombre_destino LIKE @C;";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@C", "%" + criterio + "%");
                 using (MySqlDataReader reader = comando.ExecuteReader())
@@ -150,7 +150,7 @@ namespace Parcial3_Aeropuerto.DAL
                         vuelos.Id_destino = reader.GetInt32(2);
                         vuelos.Cantidad_pasajeros = reader.GetInt32(3);
                         vuelos.Fecha = DateOnly.FromDateTime(reader.GetDateTime(4));
-                        vuelos.Tiempo_estimado = reader.GetDateTime(5);
+                        vuelos.Tiempo_estimado = TimeOnly.FromTimeSpan(reader.GetTimeSpan(5));
                         vuelos.Estado = reader.GetString(6);
                         vuelos.Hora_inicio = TimeOnly.FromTimeSpan(reader.GetTimeSpan(7));
                         tvuelos.Add(vuelos);

@@ -1,0 +1,292 @@
+﻿@model Parcial3_Aeropuerto.EN.ReservasP
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 30px;
+            color: #000;
+            background: #fff;
+        }
+
+        .factura {
+            width: 850px;
+            margin: 20px auto;
+            padding: 25px;
+            border: 1px solid #000;
+            page-break-inside: avoid;
+        }
+
+        .encabezado {
+            display: table;
+            width: 100%;
+            border-bottom: 1px solid #000;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .empresa {
+            display: table-cell;
+            width: 53%;
+            vertical-align: top;
+            padding-left: 10px;
+        }
+
+            .empresa h2 {
+                margin: 0;
+                font-size: 22px;
+            }
+
+            .empresa p {
+                margin: 4px 0;
+                font-size: 13px;
+            }
+
+        .datos-factura {
+            display: table-cell;
+            width: 35%;
+            text-align: right;
+            vertical-align: top;
+        }
+
+            .datos-factura h1 {
+                margin: 0;
+                font-size: 24px;
+            }
+
+            .datos-factura p {
+                margin: 5px 0;
+                font-size: 14px;
+            }
+
+        .seccion {
+            margin-top: 20px;
+        }
+
+            .seccion h3 {
+                font-size: 16px;
+                margin-bottom: 8px;
+                border-bottom: 1px solid #000;
+                padding-bottom: 4px;
+            }
+
+        .info-cliente {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .info-cliente td {
+                padding: 6px;
+                font-size: 14px;
+            }
+
+        .detalle {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+            .detalle th,
+            .detalle td {
+                border: 1px solid #000;
+                padding: 8px;
+                font-size: 13px;
+                text-align: center;
+            }
+
+            .detalle th {
+                font-weight: bold;
+                background: #fff;
+            }
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        .totales {
+            width: 300px;
+            margin-left: auto;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+            .totales td {
+                border: 1px solid #000;
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .totales .label {
+                font-weight: bold;
+                text-align: right;
+            }
+
+        .total {
+            font-weight: bold;
+        }
+
+        .firma {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .firma-linea {
+            width: 250px;
+            border-top: 1px solid #000;
+            margin: 0 auto 5px auto;
+        }
+
+        .pie {
+            margin-top: 25px;
+            border-top: 1px solid #000;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .logo {
+            display: table-cell;
+            width: 12%;
+            vertical-align: top;
+            text-align: left;
+        }
+
+            .logo img {
+                width: 85px;
+                height: auto;
+            }
+    </style>
+</head>
+
+<body>
+
+    @foreach (var item in Model.Reservas)
+    {
+        var pasajero = Model.Pasajero.FirstOrDefault(p => p.Id_pasajero == item.Id_pasajero);
+        var vuelo = Model.Vuelos.FirstOrDefault(v => v.Id_vuelo == item.Id_vuelo);
+        var avion = vuelo != null ? Model.Aviones.FirstOrDefault(a => a.Id_avion == vuelo.Id_avion) : null;
+        var aerolinea = avion != null ? Model.Aerolineas.FirstOrDefault(ae => ae.Id_aerolinea == avion.Id_aerolinea) : null;
+        var destino = vuelo != null ? Model.Destinos.FirstOrDefault(d => d.Id_destino == vuelo.Id_destino) : null;
+
+        double subtotal = item.Costo;
+        double total = item.Costo;
+
+        <div class="factura">
+
+            <div class="encabezado">
+
+                <div class="logo">
+                    <img src="~/css/imgs/logofactura.png" />
+                </div>
+
+                <div class="empresa">
+                    <h2>AEROPUERTO EL SAUCE</h2>
+                    <p>Sonsonate, El Salvador</p>
+                    <p>Tel: 2301-5678</p>
+                    <p>Factura por servicio de reservación aérea</p>
+                </div>
+
+                <div class="datos-factura">
+                    <h1>FACTURA</h1>
+                    <p><strong>No.:</strong> @item.Id_reserva</p>
+                    <p><strong>Fecha:</strong> @item.Fecha</p>
+                    <p><strong>Tipo:</strong> Ordinaria</p>
+                </div>
+
+            </div>
+
+            <div class="seccion">
+                <h3>Datos del Cliente</h3>
+
+                <table class="info-cliente">
+                    <tr>
+                        <td>
+                            <strong>Cliente:</strong>
+                            @(pasajero != null ? pasajero.Nombre + " " + pasajero.Apellido : "Sin pasajero")
+                        </td>
+                        <td>
+                            <strong>ID Pasajero:</strong>
+                            @(pasajero != null ? pasajero.Id_pasajero.ToString() : "N/A")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Destino:</strong>
+                            @(destino != null ? destino.Nombre_destino : "Sin destino")
+                        </td>
+                        <td>
+                            <strong>Vuelo:</strong>
+                            @(vuelo != null ? vuelo.Id_vuelo.ToString() : "N/A")
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="seccion">
+                <h3>Detalle</h3>
+
+                <table class="detalle">
+                    <thead>
+                        <tr>
+                            <th>Cantidad</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Aerolínea</th>
+                            <th>Precio Unitario</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="text-left">
+                                Reserva de boleto aéreo hacia
+                                @(destino != null ? destino.Nombre_destino : "Sin destino")
+                            </td>
+                            <td>@item.Fecha</td>
+                            <td>@(vuelo != null ? vuelo.Hora_inicio.ToString() : "N/A")</td>
+                            <td>@(aerolinea != null ? aerolinea.Nombre_aerolinea : "N/A")</td>
+                            <td>$@item.Costo.ToString("0.00")</td>
+                            <td>$@item.Costo.ToString("0.00")</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="totales">
+                    <tr>
+                        <td class="label">Subtotal</td>
+                        <td>$@subtotal.ToString("0.00")</td>
+                    </tr>
+                    <tr>
+                        <td class="label total">TOTAL</td>
+                        <td class="total">$@total.ToString("0.00")</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="firma">
+                <div class="firma-linea"></div>
+                <p>Firma / Sello autorizado</p>
+            </div>
+
+            <div class="pie">
+                Gracias por preferir Aeropuerto El Sauce.
+            </div>
+
+        </div>
+    }
+
+</body>
+</html>

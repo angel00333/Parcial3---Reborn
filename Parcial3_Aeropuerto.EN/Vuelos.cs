@@ -23,7 +23,7 @@ namespace Parcial3_Aeropuerto.EN
 
         [Required(ErrorMessage = "El tiempo estimado es obligatorio.")]
         [DataType(DataType.Time, ErrorMessage = "El tiempo estimado debe ser una hora válida.")]
-        public DateTime Tiempo_estimado { get; set; }
+        public TimeOnly Tiempo_estimado { get; set; }
 
         public string Estado { get; set; } = string.Empty;
 
@@ -31,7 +31,7 @@ namespace Parcial3_Aeropuerto.EN
 
         public Vuelos () { }
 
-        public Vuelos(int id_vuelo, int id_avion, int id_destino, int cantidad_pasajeros, DateOnly fecha, DateTime tiempo_estimado, string estado, TimeOnly hora_inicio)
+        public Vuelos(int id_vuelo, int id_avion, int id_destino, int cantidad_pasajeros, DateOnly fecha, TimeOnly tiempo_estimado, string estado, TimeOnly hora_inicio)
         {
             Id_vuelo = id_vuelo;
             Id_avion = id_avion;

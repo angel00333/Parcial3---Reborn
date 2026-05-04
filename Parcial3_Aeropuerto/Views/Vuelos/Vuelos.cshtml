@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Parcial3_Aeropuerto.EN.Vuelos>
+﻿@model Parcial3_Aeropuerto.EN.VuelosD
 
 @{
     ViewData["Title"] = "Vuelos";
@@ -7,59 +7,96 @@
 <h1>Vuelos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a href="javascript:void(0)" class="btn btn-primary" onclick="mostrarCreate()"><img class="acciones" src="~/css/imgs/iconosacciones/agregar.png" /></a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_vuelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_avion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_destino)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cantidad_pasajeros)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tiempo_estimado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_vuelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_avion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_destino)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cantidad_pasajeros)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tiempo_estimado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<form asp-action="Vuelos" method="get" class="d-flex shadow-sm">
+    <div class="input-group">
+        <span class="input-group-text bg-white border-end-0">
+            <i class="bi bi-search text-muted"></i>
+        </span>
+        <input type="text" name="buscar" class="form-control border-start-0"
+               placeholder="Buscar por nombre del destino..." value="@ViewData["buscar"]" />
+
+        <button type="submit" class="btn btn-primary">
+            Buscar
+        </button>
+
+        @if (!string.IsNullOrEmpty(Context.Request.Query["buscar"]))
+        {
+            <a asp-action="Vuelos" class="btn btn-outline-primary">Limpiar</a>
+        }
+
+    </div>
+</form>
+<div class="container mt-4">
+    <div class="row g-3">
+        @foreach (var item in Model.Vuelos)
+        {
+            var destino = Model.Destinos.FirstOrDefault(dest => dest.Id_destino == item.Id_destino);
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card card-fondo destino-@item.Id_destino text-white h-100 shadow-sm border-0">
+                    <div class="card-body d-flex flex-column justify-content-end fondo-overlay">
+                        <h5 class="card-title mb-3">
+                            @destino?.Nombre_destino @item.Id_avion
+                        </h5>
+                        <p class="card-text mb-1">
+                            <strong>Id:</strong> @item.Id_vuelo
+                        </p>
+                        <p class="card-text mb-1">
+                            <strong>Cantidad_pasajeros:</strong> @item.Cantidad_pasajeros
+                        </p>
+                        <p class="card-text mb-1">
+                            <strong>Fecha:</strong> @item.Fecha
+                        </p>
+                        <p class="card-text mb-1">
+                            <strong>Tiempo_estimado:</strong> @item.Tiempo_estimado
+                        </p>
+                        <p class="card-text mb-3">
+                            <strong>Hora_inicio:</strong> @item.Hora_inicio
+                        </p>
+                        <p class="card-text mb-3">
+                            <strong>Estado:</strong> <span class="card-text-@item.Estado">@item.Estado</span>
+                        </p>
+
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_vuelo); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
+                            <a class="btn btn-primary btn-sm"><img class="acciones" src="~/css/imgs/iconosacciones/detalle.png" /></a>
+                            <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_vuelo);"><img class="acciones" src="~/css/imgs/iconosacciones/eliminar.png" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div id="modalContainer"></div>
+
+<script>
+    function mostrarCreate() {
+        $.get('/Vuelos/Create', function (data) {
+            $('#modalContainer').html(data);
+            var modal = new bootstrap.Modal(document.getElementById('createModal'));
+            modal.show();
+        });
+    }
+
+                 function mostrarEdit(id) {
+        $.get('/Vuelos/Edit?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+
+            var modal = new bootstrap.Modal(document.getElementById('editModal'));
+            modal.show();
+        });
+    }
+
+        function mostrarDelete(id) {
+            $.get('/Vuelos/Delete?id=' + id, function (data) {
+                $('#modalContainer').html(data);
+
+                var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                modal.show();
+            });
+        }
+</script>

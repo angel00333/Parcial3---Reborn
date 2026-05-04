@@ -52,7 +52,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: FacturacionController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(facturacionBL.EliminarFacturacion(id));
+            return View(facturacionBL.ObtenerFacturacionPorId(id));
         }
 
         // POST: FacturacionController/Delete/5

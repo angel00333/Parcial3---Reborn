@@ -2,13 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 
 using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.DAL;
 using Parcial3_Aeropuerto.EN;
+using Rotativa.AspNetCore;
 
 namespace Parcial3_Aeropuerto.Controllers
 {
     public class ReservasController : Controller
     {
         ReservasBL reservasBL = new ReservasBL();
+        PasajeroBL pasajerosBL = new PasajeroBL();
+        AerolineasBL aerolineasBL = new AerolineasBL();
+        VuelosBL vuelosBL = new VuelosBL();
+        AvionesBL avionesBL = new AvionesBL();
+        DestinosBL destinosBL = new DestinosBL();
         // GET: ReservasController
         public ActionResult Reservas()
         {
@@ -74,5 +81,28 @@ namespace Parcial3_Aeropuerto.Controllers
             reservasBL.EliminarReservas(id);
             return RedirectToAction("Reservas");
         }
+
+        public IActionResult Pdf(int id)
+        {
+            var reserva = reservasBL.ObtenerReservasPorId(id);
+
+            var modelo = new ReservasP
+            {
+                Reservas = new List<Reservas> { reserva },
+                Pasajero = pasajerosBL.MostrarPasajeros(),
+                Aerolineas = aerolineasBL.MostrarAerolineas(),
+                Vuelos = vuelosBL.MostrarVuelos(),
+                Aviones = avionesBL.MostrarAviones(),
+                Destinos = destinosBL.MostrarDestinos()
+            };
+
+            return new ViewAsPdf("Pdf", modelo)
+            {
+                FileName = "RegistroReserva.pdf",
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+                PageSize = Rotativa.AspNetCore.Options.Size.A4
+            };
+        }
+
     }
 }

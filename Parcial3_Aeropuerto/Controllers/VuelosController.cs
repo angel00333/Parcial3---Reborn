@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-using Parcial3_Aeropuerto.EN;
 using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.DAL;
+using Parcial3_Aeropuerto.EN;
 namespace Parcial3_Aeropuerto.UI.Controllers
 {
     public class VuelosController : Controller
@@ -12,9 +12,24 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         DestinosBL destinosBL = new DestinosBL();
 
         // GET: VuelosController
-        public ActionResult Vuelos()
+        public ActionResult Vuelos(string buscar="")
         {
-            return View(vuelosBL.MostrarVuelos());
+            var lista = string.IsNullOrEmpty(buscar)
+                ? vuelosBL.MostrarVuelos()
+                : vuelosBL.BuscarVuelos(buscar);
+
+            var totalRegistros = lista.Count();
+
+
+            VuelosD vuelosD = new VuelosD
+            {
+                Vuelos = lista,
+                Destinos = destinosBL.MostrarDestinos()
+            };
+            ViewBag.Buscar = buscar;
+            return View("Vuelos", vuelosD);
+
+
         }
 
         // GET: VuelosController/Details/5
@@ -64,7 +79,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: VuelosController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(vuelosBL.ObtenerVuelosPorId);
+            return View(vuelosBL.ObtenerVuelosPorId(id));
         }
 
         // POST: VuelosController/Delete/5

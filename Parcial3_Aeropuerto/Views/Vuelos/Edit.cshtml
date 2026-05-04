@@ -1,58 +1,65 @@
 ﻿@model Parcial3_Aeropuerto.EN.Vuelos
 
 @{
-    ViewData["Title"] = "Edit";
+    Layout = null;
 }
 
-<h1>Edit</h1>
-
-<h4>Vuelos</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id_vuelo" class="control-label"></label>
-                <input asp-for="Id_vuelo" class="form-control" />
-                <span asp-validation-for="Id_vuelo" class="text-danger"></span>
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editModalLabel">Editar Vuelo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label asp-for="Id_avion" class="control-label"></label>
+            <div class="modal-body">
+        <form asp-action="Edit" asp-controller="Vuelos" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id_vuelo" type="hidden" />
+            <div class="mb-3">
+                <label asp-for="Id_avion" class="form-label"></label>
                 <input asp-for="Id_avion" class="form-control" />
                 <span asp-validation-for="Id_avion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Id_destino" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Id_destino" class="form-label"></label>
                 <input asp-for="Id_destino" class="form-control" />
                 <span asp-validation-for="Id_destino" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Cantidad_pasajeros" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Cantidad_pasajeros" class="form-label"></label>
                 <input asp-for="Cantidad_pasajeros" class="form-control" />
                 <span asp-validation-for="Cantidad_pasajeros" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Tiempo_estimado" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Tiempo_estimado" class="form-label"></label>
                 <input asp-for="Tiempo_estimado" class="form-control" />
                 <span asp-validation-for="Tiempo_estimado" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Fecha" class="form-label"></label>
+                <input asp-for="Fecha" class="form-control" type="date"/>
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Estado" class="form-label"></label>
                 <input asp-for="Estado" class="form-control" />
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="mb-3">
+                <label asp-for="Hora_inicio" class="form-label"></label>
+                <input asp-for="Hora_inicio" class="form-control" type="time" />
+                <span asp-validation-for="Hora_inicio" class="text-danger"></span>
             </div>
-        </form>
+                <div class="modal-footer px-0 pb-0">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }

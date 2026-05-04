@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.Id_vuelo)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Costo)
             </th>
             <th>
@@ -42,6 +45,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Id_vuelo)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Costo)
             </td>
@@ -49,11 +55,17 @@
                 @Html.DisplayFor(modelItem => item.Id_usuario)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id_reserva  }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.Id_reserva  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id_reserva  }, new {img = "~/css/imgs/iconosacciones/eliminar.png"})
+               
+                    <a asp-action="Pdf" asp-route-id="@item.Id_reserva" class="btn btn-danger btn-sm" "><img class="acciones" src="~/css/imgs/iconosacciones/pdf.png" /></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<script>
+    
+</script>
