@@ -103,7 +103,15 @@ namespace Parcial3_Aeropuerto.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-          aerolineasBL.EliminarAerolineas(id);
+            if (aerolineasBL.AerolineaTieneAviones(id))
+            {
+                TempData["SMSError"] = "No se puede eliminar esta aerolínea porque tiene aviones relacionados.";
+                return RedirectToAction("Aerolineas");
+            }
+
+            aerolineasBL.EliminarAerolineas(id);
+            TempData["SMSExito"] = "La aerolínea se eliminó correctamente.";
+
             return RedirectToAction("Aerolineas");
         }
     }

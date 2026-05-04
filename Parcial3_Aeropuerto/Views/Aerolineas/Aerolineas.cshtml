@@ -130,3 +130,39 @@
     </script>
     
 }
+@{
+    var smsExito = TempData["SMSExito"]?.ToString();
+    var smsError = TempData["SMSError"]?.ToString();
+}
+
+@if (!string.IsNullOrWhiteSpace(smsError))
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        Swal.fire({
+        title: "No se puede eliminar",
+        text: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(smsError)),
+        icon: "warning",
+        color: "#000000",
+        iconColor: "#F5650C",
+        confirmButtonText: "Entendido"
+        });
+    </script>
+}
+else if (!string.IsNullOrWhiteSpace(smsExito))
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        Swal.fire({
+        title: "¡Excelente!",
+        text: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(smsExito)),
+        icon: "success",
+        color: "#000000",
+        iconColor: "#25E17A",
+        timer: 1500,
+        showConfirmButton: false
+        });
+    </script>
+}

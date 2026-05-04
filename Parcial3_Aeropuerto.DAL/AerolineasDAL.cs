@@ -126,5 +126,26 @@ namespace Parcial3_Aeropuerto.DAL
             return aerolineas;
 
         }
+
+        public static bool AerolineaTieneAviones(int id)
+        {
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+
+                string sql = "SELECT COUNT(*) FROM Aviones WHERE Id_aerolinea = @Id_aerolinea";
+
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.Parameters.AddWithValue("@Id_aerolinea", id);
+
+                int cantidad = Convert.ToInt32(comando.ExecuteScalar());
+
+                return cantidad > 0;
+            }
+        }
+
+
+
+
     }
 }
