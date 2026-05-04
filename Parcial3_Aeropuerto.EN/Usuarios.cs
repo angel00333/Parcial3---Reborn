@@ -10,16 +10,19 @@ namespace Parcial3_Aeropuerto.EN
     {
         public int Id_usuario { get; set; }
 
+
         [Required(ErrorMessage = "El campo Nombre de Usuario es obligatorio")]
-        public string Nombre_usuario { get; set; } = string.Empty;
+        public string Nombre_usuario { get; set; } 
+
 
         [Required(ErrorMessage = "El campo Contraseña de Usuario es obligatorio")]
-        public string Contraseña { get; set; } = string.Empty;
+        public string Contraseña { get; set; }
 
-        [Required(ErrorMessage = "El campo id_Rol es obligatorio")]
-        public int Id_rol { get; set; }
 
-        public string Nombre_rol { get; set; }= string.Empty;
+        [Required(ErrorMessage = "El debe seleccionar Rol es obligatorio")]
+        public int? Id_rol { get; set; } 
+     
+        public string Nombre_rol { get; set; } = string.Empty;
 
         public Usuarios() { }
 

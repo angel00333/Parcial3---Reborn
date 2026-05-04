@@ -7,8 +7,9 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 {
     public class DestinosController : Controller
     {
+        AeropuertosBL aeropuertosBL = new AeropuertosBL();
+
         DestinosBL destinosBL = new DestinosBL();
-        AerolineasBL aerolineasBL = new AerolineasBL();
         // GET: DestinosController
         public ActionResult Destinos(int paginas, string buscar = "")
         {
@@ -47,6 +48,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: DestinosController/Create
         public ActionResult Create()
         {
+            ViewBag.Aeropuertos = aeropuertosBL.MostrarAeropuertos();
             return View();
         }
 
@@ -55,17 +57,21 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Destinos destinos)
         {
-            if(ModelState.IsValid)
+           
+            if (ModelState.IsValid)
             {
                 destinosBL.AgregarDestino(destinos);
-                return RedirectToAction("Destinos", new Destinos());
+                TempData["SMSExito"] = "El usuario se agregó correctamente";
+                return RedirectToAction("Destinos");
             }
-            return View("Create", destinos);
+            ViewBag.Aeropuertos = aeropuertosBL.MostrarAeropuertos();
+            return View();
         }
 
         // GET: DestinosController/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewBag.Aeropuertos = aeropuertosBL.MostrarAeropuertos();
             return View(destinosBL.ObtenerDestinosPorId(id));
         }
 
@@ -77,6 +83,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
             if(ModelState.IsValid)
             {
                 destinosBL.ModificarDestino(destinos);
+                TempData["SMSExito"] = "El usuario se modificó correctamente";
                 return RedirectToAction("Destinos");
             }
             return View("Edit", destinos);

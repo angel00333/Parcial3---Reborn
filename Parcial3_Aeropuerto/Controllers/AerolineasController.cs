@@ -57,7 +57,7 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Aerolineas aerolineas)
         {
-            ModelState.Remove("Id_aerolinea");
+          
             if (ModelState.IsValid)
             {
                 aerolineasBL.AgregarAerolineas(aerolineas);

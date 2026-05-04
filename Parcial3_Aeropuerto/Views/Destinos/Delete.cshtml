@@ -1,17 +1,16 @@
-﻿@model Parcial3_Aeropuerto.EN.Aeropuertos
+﻿@model Parcial3_Aeropuerto.EN.Destinos
+
 
 @{
-    ViewData["Title"] = "Delete";
+    Layout = null;
 }
 
-<h1>Delete</h1>
-
-<div class="modal fade" id="DeleteModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title">Eliminar Aeropuerto</h5>
+                <h5 class="modal-title">¿Eliminar Destinos?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -19,14 +18,14 @@
                 <h5 class="text-danger mb-4">¿Estás seguro de eliminar este registro?</h5>
                 
                 <dl class="row">
-                    <dt class="col-sm-4">ID Aeropuerto</dt>
-                    <dd class="col-sm-8">@Model.Id_aeropuerto</dd>
+                    <dt class="col-sm-4">ID Avión</dt>
+                    <dd class="col-sm-8">@Model.Id_destino</dd>
 
-                    <dt class="col-sm-4">Aeropuerto</dt>
-                    <dd class="col-sm-8">@Model.Nombre_aeropuerto</dd> @* O Nombre_aerolinea si lo tienes *@
+                    <dt class="col-sm-4">Aerolínea</dt>
+                    <dd class="col-sm-8">@Model.Id_aeropuerto</dd> @* O Nombre_aerolinea si lo tienes *@
 
-                    <dt class="col-sm-4">País</dt>
-                    <dd class="col-sm-8">@Model.Pais</dd>
+                    <dt class="col-sm-4">Destino</dt>
+                    <dd class="col-sm-8">@Model.Nombre_destino</dd>
                 </dl>
 
                 <div class="alert alert-warning py-2" role="alert">
@@ -35,9 +34,9 @@
             </div>
 
             <div class="modal-footer">
-                <form asp-action="Delete" method="post" class="form-eliminar-aeropuerto">
+                <form asp-action="Delete" method="post" class="form-eliminar-destino">
                  
-                    <input type="hidden" name="id" value="@Model.Id_aeropuerto" />
+                    <input type="hidden" name="id" value="@Model.Id_destino" />
                     
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
@@ -48,34 +47,37 @@
     </div>
 </div>
 
+<!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    document.querySelectorAll(".form-eliminar-aeropuerto").forEach(form => {
+    document.querySelectorAll(".form-eliminar-destino").forEach(form => {
     form.addEventListener("submit", function (e) {
     e.preventDefault();
 
     Swal.fire({
     title: "¿Estás seguro?",
+    text: "Esta información no se recuperará",
     icon: "warning",
     iconColor: "#FB0700",
     showCancelButton: true,
     confirmButtonText: "Sí, eliminar",
-    confirmButtonColor: "#F46958",
-    cancelButtonColor: "#6c757d",
+    confirmButtonColor: "#dc3545",
+    cancelButtonText: "Cancelar",
+    cancelButtonColor: "#6c757d"
     }).then((result) => {
     if (result.isConfirmed) {
 
-    // 🔥 alerta con tiempo
     Swal.fire({
     title: "Eliminado",
     text: "Se eliminó correctamente",
     icon: "success",
-    iconColor: "#37FB00",
-    timer: 1050, //Temporixador XD
+    iconColor: "#28a745",
+    timer: 1200,
     timerProgressBar: true,
     showConfirmButton: false
     }).then(() => {
-    form.submit(); // se envía después del tiempo xd
+    form.submit();
     });
 
     }

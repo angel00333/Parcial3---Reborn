@@ -1,105 +1,104 @@
 ﻿@model Parcial3_Aeropuerto.EN.Usuarios
+
 @{
     Layout = null;
 }
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet"> @*Toco usar la libreria TomSelect para poder darle estilacho_NM*@
 
-<div class="modal fade" id="Create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Registrar Nuevo Avión</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="modalRolLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+
+            <div class="modal-header text-white" style="background: linear-gradient(135deg, #0d6efd, #203C73);">
+                <h5 class="modal-title fw-bold" id="modalAvionLabel">
+                    <i class="bi bi-airplane-engines-fill me-2"></i> Registrar Nuevo Usuario
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form asp-action="Create" method="post" id="form-crear-usuario">
+
+            <div class="modal-body p-4">
+                <form asp-action="Create" method="post" id="form-crear-rol">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                  
-                    <input asp-for="Id_usuario" type="hidden" />
+                    <div class="mb-4">
+                        <label asp-for="Nombre_usuario" class="form-label fw-bold">Nombre de Usuario</label>
 
-                    
-                    <div class="mb-3">
-                        <label asp-for="Nombre_usuario" class="form-label">Nombre de Usuario</label>
-                        <input asp-for="Nombre_usuario" class="form-control" required />
+                        <input asp-for="Nombre_usuario"
+                               class="form-control" />
+
+                        <span asp-validation-for="Nombre_usuario" class="text-danger small"></span>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Contraseña" class="form-label">Contraseña</label>
-                        <div class="input-group">
-                            <input asp-for="Contraseña" type="password" id="txtPassword" class="form-control" required />
-                            <button class="btn btn-outline-secondary" type="button" id="btnTogglePassword">
-                                <i class="bi bi-eye"></i> Ver
-                            </button>
-                        </div>
-                        <span asp-validation-for="Contraseña" class="text-danger"></span>
+                    <div class="mb-4">
+                        <label asp-for="Contraseña" class="form-label fw-bold">Contraseña</label>       
+                        <input asp-for="Contraseña"
+                               class="form-control" />
+
+                        <span asp-validation-for="Contraseña" class="text-danger small"></span>
                     </div>
 
+
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Aerolínea</label>
+                        <label asp-for="Id_rol" class="form-label fw-bold">Roles</label>
 
-                        <select asp-for="Id_rol" class="form-control">
-                            <option value="">--|Seleccione un Rol XD| --</option>
+                        <select asp-for="Id_rol"
+                                id="Id_rol"
+                                class="form-select"
+                                placeholder="Seleccione o busque una rol"
+                                >
+                            <option value=""></option>
 
-                            @foreach (var rl in ViewBag.Roles)
+                            @foreach (var rol in ViewBag.Roles)
                             {
-                                <option value="@rl.Id_rol">
-                                    @rl.Nombre_rol
-                                </option>
+                                <option value="@rol.Id_rol">@rol.Nombre_rol</option>
                             }
                         </select>
-                    </div>
 
+                        <span asp-validation-for="Id_rol" class="text-danger small"></span>
+                    </div>  
 
-                    <div class="modal-footer px-0 pb-0">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+                    <div class="modal-footer px-0 pb-0 pt-3">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="btn btn-primary px-4">
+                            Guardar Avión
+                        </button>
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script> @*Es la funcion del TomSelect*@
 <script>
-    // Usamos una función para asegurar que el evento se pegue al formulario correcto
-    (function() {
-    const formulario = document.getElementById("form-crear-usuario");
-        
-    if (formulario) {
-    formulario.addEventListener("submit", function (e) {
-    e.preventDefault(); // Detenemos el refresco de página
+    setTimeout(() => {
+    const select = document.querySelector("#Id_rol");
 
-    Swal.fire({
-    title: "¡Excelente!",
-    text: "El avión se agregó correctamente",
-    icon: "success",
-    iconColor: "#198754",
-    timer: 2000,
-    showConfirmButton: false,
-    timerProgressBar: true
-    }).then(() => {
-    // Solo enviamos cuando la alerta termina
-    formulario.submit();
+    if (select && !select.tomselect) {
+    const ts = new TomSelect("#Id_rol", {
+    create: false,
+    allowEmptyOption: true,
+    maxOptions: 1000,
+    searchField: ["text"],
+    placeholder: "",
+    openOnFocus: true,
+    hideSelected: false
     });
+    ts.clear(true);
+    ts.settings.placeholder = "Seleccione o busque un rol....";
+    ts.inputState();
+
+    ts.on("change", function () {
+    $("#Id_rol").valid();
     });
     }
-    })();
-
-
-    //Librebria+Ver+Contra XD
-    document.getElementById("btnTogglePassword").addEventListener("click", function () {
-    const passwordInput = document.getElementById("txtPassword");
-    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-    passwordInput.setAttribute("type", type);
-    
-    // Opcional: Cambiar el texto del botón
-    this.textContent = type === "password" ? "Ver" : "Ocultar";
-    });
+    }, 200);
 </script>
-
-
-
-
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -5,16 +5,16 @@
 }
 
 <h1>Destinos</h1>
-
 <p>
-    <a asp-action="Create">Create New</a>
+    <a href="javascript:void(0)" class="btn btn-primary" onclick="mostrarCreate()"><img class="acciones" src="~/css/imgs/iconosacciones/agregar.png" /></a>
 </p>
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Id_destino</th>
-            <th>Id_aeropuerto</th>
-            <th>Nombre_destino</th>
+            <th>Id destino</th>
+            <th>Id aeropuerto</th>
+            <th>Nombre del destino</th>
         </tr>
     </thead>
     <tbody>
@@ -23,12 +23,87 @@
             <td>@item.Id_destino</td>
             <td>@item.Id_aeropuerto</td>
             <td>@item.Nombre_destino</td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+            
+                    <td>
+                        <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_destino); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
+
+                        <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_destino);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
+                    </td>
+            
         </tr>
 }
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        @if (Model.PaginaActual > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Destinos" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                <a class="page-link" asp-action="Destinos" asp-route-paginas="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.PaginaActual < Model.TotalPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Destinos" asp-route-paginas="@(Model.PaginaActual + 1)">Siguiente</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+<div id="modalContainer"></div>
+
+<script>
+
+        function mostrarCreate() {
+            $.get('/Destinos/Create', function (data) {
+                $('#modalContainer').html(data);
+                var modal = new bootstrap.Modal(document.getElementById('createModal'));
+                modal.show();
+            });
+        }
+
+        function mostrarEdit(id) {
+            $.get('/Destinos/Edit?id=' + id, function (data) {
+                $('#modalContainer').html(data);
+                var modal = new bootstrap.Modal(document.getElementById('editModal'));
+                modal.show();
+            });
+        }
+
+        function mostrarDelete(id) {
+                $.get('/Destinos/Delete?id=' + id, function (data) {
+                    $('#modalContainer').html(data);
+                    var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                    modal.show();
+                });
+        }
+</script>
+
+@*LLamo la fucnion de alerta desde aquí por motivos de compatibilidad de validación_NG*@
+@if (TempData["SMSExito"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        Swal.fire({
+        title: "¡Excelente!",
+        text: '@Html.Raw(TempData["SMSExito"])',
+        icon: "success",
+        color: "#000000",
+        iconColor: "#25E17A",
+        timer: 1500,
+        showConfirmButton: false
+        });
+    </script>
+}
+
+

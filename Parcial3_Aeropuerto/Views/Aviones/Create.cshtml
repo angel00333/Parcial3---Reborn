@@ -21,16 +21,14 @@
                 <form asp-action="Create" method="post" id="form-crear-avion">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <input asp-for="Id_avion" type="hidden" />
+                   
 
                     <div class="mb-3">
-                        <label asp-for="Id_aerolinea" class="form-label fw-bold">Aerolínea</label>
+                        <label asp-for="Id_aerolinea" class="form-label fw-bold">Id Destino</label>
 
                         <select asp-for="Id_aerolinea"
-                                id="Id_aerolinea"
-                                class="form-select"
-                                placeholder="Seleccione o busque una aerolínea"
-                                required>
+                                id="Id_aerolineax"
+                                class="form-select">
                             <option value=""></option>
 
                             @foreach (var aero in ViewBag.Aerolineas)
@@ -72,10 +70,10 @@
 
 <script>
     setTimeout(() => {
-    const select = document.querySelector("#Id_aerolinea");
+    const select = document.querySelector("#Id_aerolineax");
 
     if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_aerolinea", {
+    const ts = new TomSelect("#Id_aerolineax", {
     create: false,
     allowEmptyOption: true,
     maxOptions: 1000,
@@ -84,10 +82,13 @@
     openOnFocus: true,
     hideSelected: false
     });
-
     ts.clear(true);
     ts.settings.placeholder = "Seleccione o busque una aerolínea";
     ts.inputState();
+
+    ts.on("change", function () {
+    $("#Id_aerolineax").valid();
+    });
     }
     }, 200);
 </script>
