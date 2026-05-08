@@ -24,11 +24,13 @@
                    
 
                     <div class="mb-3">
-                        <label asp-for="Id_aerolinea" class="form-label fw-bold">Id Destino</label>
+                        <label asp-for="Id_aerolinea" class="form-label fw-bold">Aerolínea</label>
 
-                        <select asp-for="Id_aerolinea" id="Id_aerolineax" class="form-select">
-                            <option value=""></option>
-                            @foreach (var aero in ViewBag.Aerolineas)
+                        <select asp-for="Id_aerolinea"
+                                asp-items="ViewBag.Id_aerolinea"
+                                id="Id_aerolineax"
+                                class="form-select">
+                            <option value="">Seleccione o busque una aerolínea</option>
                             {
                                 <option value="@aero.Id_aerolinea">@aero.Nombre_aerolinea</option>
                             }
@@ -69,27 +71,25 @@
     setTimeout(() => {
     const select = document.querySelector("#Id_aerolineax");
 
-    if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_aerolineax", {
-    create: false,
-    allowEmptyOption: true,
-    maxOptions: 1000,
-    searchField: ["text"],
-    placeholder: "",
-    openOnFocus: true,
-    hideSelected: false
-    });
-    ts.clear(true);
-    ts.settings.placeholder = "Seleccione o busque una aerolínea";
-    ts.inputState();
+        if (select && !select.tomselect) {
+            const ts = new TomSelect("#Id_aerolineax", {
+            create: false,
+            allowEmptyOption: false,
+            maxOptions: 1000,
+            searchField: ["text"],
+            placeholder: "Seleccione o busque una aerolínea",
+            openOnFocus: true,
+            hideSelected: false
+        });
 
-    ts.on("change", function () {
-    $("#Id_aerolineax").valid();
-    });
-    }
+        ts.clear(true);
+
+        ts.on("change", function () {
+         $("#Id_aerolineax").valid();
+         });
+        }
     }, 200);
 </script>
-
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }

@@ -25,16 +25,10 @@
                         <label asp-for="Id_aerolinea" class="form-label fw-bold">Aerolínea</label>
 
                         <select asp-for="Id_aerolinea"
-                                id="Id_aerolinea_edit"
-                                class="form-select"
-                                placeholder="Seleccione o busque una aerolínea"
-                                required>
-                            <option value=""></option>
-
-                            @foreach (var aero in ViewBag.Aerolineas)
-                            {
-                                <option value="@aero.Id_aerolinea">@aero.Nombre_aerolinea</option>
-                            }
+                                asp-items="ViewBag.Id_aerolinea"
+                                id="aerolineaTS"
+                                class="form-select">
+                            <option value="">Seleccione o busque una aerolínea</option>
                         </select>
 
                         <span asp-validation-for="Id_aerolinea" class="text-danger small"></span>
@@ -65,12 +59,12 @@
 
 <script>
     setTimeout(() => {
-    const select = document.querySelector("#Id_aerolinea_edit");
+    const select = document.querySelector("#aerolineaTS");
 
     if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_aerolinea_edit", {
+    const ts = new TomSelect("#aerolineaTS", {
     create: false,
-    allowEmptyOption: true,
+    allowEmptyOption: false,
     maxOptions: 1000,
     searchField: ["text"],
     placeholder: "Seleccione o busque una aerolínea",
@@ -78,11 +72,12 @@
     hideSelected: false
     });
 
-    ts.inputState();
+    ts.on("change", function () {
+    $("#aerolineaTS").valid();
+    });
     }
     }, 200);
 </script>
-
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }

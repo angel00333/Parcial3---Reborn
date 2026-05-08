@@ -19,19 +19,14 @@
                 <form asp-action="Create" method="post" id="form-crear-destino">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     
-
                     <div class="mb-3">
-                        <label asp-for="Id_aeropuerto" class="form-label fw-bold">Id Destino</label>
+                        <label asp-for="Id_aeropuerto" class="form-label fw-bold">Aerolínea</label>
 
                         <select asp-for="Id_aeropuerto"
-                                id="Id_aeropuertox"
+                                asp-items="ViewBag.Id_aeropuerto"
+                                id="Id_aerolineax"
                                 class="form-select">
-                            <option value=""></option>
-
-                            @foreach (var aero in ViewBag.Aeropuertos)
-                            {
-                                <option value="@aero.Id_aeropuerto">@aero.Nombre_aeropuerto</option>
-                            }
+                            <option value="">Seleccione o busque una aerolínea</option>
                         </select>
 
                         <span asp-validation-for="Id_aeropuerto" class="text-danger small"></span>
@@ -67,24 +62,23 @@
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script> @*Es la funcion del TomSelect*@
 <script>
     setTimeout(() => {
-    const select = document.querySelector("#Id_aeropuertox");
+    const select = document.querySelector("#Id_aerolineax");
 
     if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_aeropuertox", {
+    const ts = new TomSelect("#Id_aerolineax", {
     create: false,
-    allowEmptyOption: true,
+    allowEmptyOption: false,
     maxOptions: 1000,
     searchField: ["text"],
-    placeholder: "",
+    placeholder: "Seleccione o busque una aerolínea",
     openOnFocus: true,
     hideSelected: false
     });
+
     ts.clear(true);
-    ts.settings.placeholder = "Seleccione o busque un aeropuerto....";
-    ts.inputState();
 
     ts.on("change", function () {
-    $("#Id_aeropuertox").valid();
+    $("#Id_aerolineax").valid();
     });
     }
     }, 200);

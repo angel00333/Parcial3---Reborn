@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Rendering; //Para usar SelectList
 using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.DAL;
 using Parcial3_Aeropuerto.EN;
 namespace Parcial3_Aeropuerto.UI.Controllers
 {
@@ -48,30 +49,31 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: DestinosController/Create
         public ActionResult Create()
         {
-            ViewBag.Aeropuertos = aeropuertosBL.MostrarAeropuertos();
+            ViewBag.Id_aeropuerto = new SelectList(aeropuertosBL.MostrarAeropuertos(), "Id_aeropuerto", "Nombre_aeropuerto");
             return View();
         }
 
         // POST: DestinosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Destinos destinos)
+        public ActionResult Create(Destinos destinos, int Id_aeropuerto)
         {
-           
+
             if (ModelState.IsValid)
             {
+                destinos.Aeropuertos = new Aeropuertos{Id_aeropuerto = Id_aeropuerto};
                 destinosBL.AgregarDestino(destinos);
                 TempData["SMSExito"] = "El usuario se agregó correctamente";
                 return RedirectToAction("Destinos");
             }
-            ViewBag.Aeropuertos = aeropuertosBL.MostrarAeropuertos();
+            ViewBag.Id_aeropuerto = new SelectList(aeropuertosBL.MostrarAeropuertos(), "Id_aeropuerto", "Nombre_aeropuerto", Id_aeropuerto);
             return View();
         }
 
         // GET: DestinosController/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.Aeropuertos = aeropuertosBL.MostrarAeropuertos();
+            ViewBag.Id_aeropuerto = new SelectList(aeropuertosBL.MostrarAeropuertos(), "Id_aeropuerto", "Nombre_aeropuerto", destinosBL.ObtenerDestinosPorId(id).Aeropuertos.Id_aeropuerto );
             return View(destinosBL.ObtenerDestinosPorId(id));
         }
 
@@ -86,6 +88,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
                 TempData["SMSExito"] = "El usuario se modificó correctamente";
                 return RedirectToAction("Destinos");
             }
+            ViewBag.Id_aeropuerto = new SelectList(aeropuertosBL.MostrarAeropuertos(), "Id_aeropuerto", "Nombre_aeropuerto", destinos.Aeropuertos.Id_aeropuerto);
             return View("Edit", destinos);
         }
 

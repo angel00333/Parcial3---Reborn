@@ -22,19 +22,14 @@
                         <input asp-for="Id_destino" type="hidden" />
                     </div>
                         
-
                     <div class="mb-3">
-                        <label asp-for="Id_aeropuerto" class="form-label fw-bold">Id Destino</label>
+                        <label asp-for="Id_aeropuerto" class="form-label fw-bold">Aeropuerto</label>
 
                         <select asp-for="Id_aeropuerto"
-                                id="Id_aeropuertox"
+                                asp-items="ViewBag.Id_aeropuerto"
+                                id="AeropuertoTS"
                                 class="form-select">
-                            <option value=""></option>
-
-                            @foreach (var aero in ViewBag.Aeropuertos)
-                            {
-                                <option value="@aero.Id_aeropuerto">@aero.Nombre_aeropuerto</option>
-                            }
+                            <option value="">Seleccione o busque un aeropuerto</option>
                         </select>
 
                         <span asp-validation-for="Id_aeropuerto" class="text-danger small"></span>
@@ -42,9 +37,9 @@
 
 
                     <div class="mb-4">
-                        <label asp-for="Nombre_destino" class="form-label fw-bold">Nombre Usuario</label>
+                        <label asp-for="Nombre_destino" class="form-label fw-bold">Nombre Destino</label>
 
-                        <input asp-for=" Nombre_destino"
+                        <input asp-for="Nombre_destino"
                                class="form-control" />
 
                         <span asp-validation-for="Nombre_destino" class="text-danger small"></span>
@@ -52,7 +47,7 @@
 
                     <div class="modal-footer px-0 pb-0 pt-3">
                         <button type="submit" class="btn btn-primary px-4">Guardar</button>
-                        <a asp-action="Aviones" class="btn btn-secondary px-4">Lista Aviones</a>
+                        <a asp-action="Destinos" class="btn btn-secondary px-4">Lista Destinos</a>
                     </div>
                 </form>
             </div>
@@ -62,23 +57,26 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
-
 <script>
     setTimeout(() => {
-    const select = document.querySelector("#Id_aeropuertox");
+    const select = document.querySelector("#AeropuertoTS");
 
     if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_aeropuertox", {
+    const ts = new TomSelect("#AeropuertoTS", {
     create: false,
     allowEmptyOption: true,
     maxOptions: 1000,
     searchField: ["text"],
-    placeholder: "Seleccione o busque una aerolínea",
+    placeholder: "Seleccione o busque un aeropuerto",
     openOnFocus: true,
     hideSelected: false
     });
 
-    ts.inputState();
+    // NO poner ts.clear(true) en Edit
+
+    ts.on("change", function () {
+    $("#AeropuertoTS").valid();
+    });
     }
     }, 200);
 </script>

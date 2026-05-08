@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;//alertas XD
+using System.Text;
 
 namespace Parcial3_Aeropuerto.EN
 {
@@ -17,18 +17,17 @@ namespace Parcial3_Aeropuerto.EN
         [Required(ErrorMessage = "Seleccione una aerolínea válida")]
         public int? Id_aerolinea { get; set; }
 
-
-        public string Nombre_aerolinea { get; set; } = string.Empty;
-        //SE hace el mmado del nombre de la aerolinea
-
+       
+        public Aerolineas? Aerolineas { get; set; }
+       
         public Aviones () { }
 
-        public Aviones(int id_avion, Aerolineas pAerolineas , int capacidad, int id_aerolinea, string nombre_aerolinea)
+        public Aviones(int id_avion, Aerolineas pAerolineas , int capacidad, int id_aerolinea)
         {
             Id_avion = id_avion;
             Capacidad = capacidad;
             Id_aerolinea = id_aerolinea;
-            Nombre_aerolinea = nombre_aerolinea;
+           
         }
     }
 }

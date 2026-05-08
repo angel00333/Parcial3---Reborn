@@ -33,11 +33,11 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "UPDATE Destinos SET Nombre_destino = @Nombre_destino WHERE Id_destino = @Id_destino";
+                string sql = "UPDATE Destinos SET Id_aeropuerto = @Id_aeropuerto, Nombre_destino = @Nombre_destino WHERE Id_destino = @Id_destino";
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.Parameters.AddWithValue("@Id_destino", destinos.Id_destino);
                 comando.Parameters.AddWithValue("@Id_aeropuerto", destinos.Id_aeropuerto);
                 comando.Parameters.AddWithValue("@Nombre_destino", destinos.Nombre_destino);
+                comando.Parameters.AddWithValue("@Id_destino", destinos.Id_destino);
                 resultado = comando.ExecuteNonQuery();
                 con.Close();
             }
@@ -73,7 +73,7 @@ namespace Parcial3_Aeropuerto.DAL
                 {
                     Destinos destinos = new Destinos();
                     destinos.Id_destino = reader.GetInt32(0);
-                    destinos.Id_aeropuerto = reader.GetInt32(1);
+                    destinos.Aeropuertos = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
                     destinos.Nombre_destino = reader.GetString(2);
                     tdestinos.Add(destinos);
                 }
@@ -96,7 +96,7 @@ namespace Parcial3_Aeropuerto.DAL
                 if (reader.Read())
                 {
                     destinos.Id_destino = reader.GetInt32(0);
-                    destinos.Id_aeropuerto = reader.GetInt32(1);
+                    destinos.Aeropuertos = AeropuertosDAL.ObtenerAeropuertosPorId(reader.GetInt32(1));
                     destinos.Nombre_destino = reader.GetString(2);
                 }
                 con.Close();
