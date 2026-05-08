@@ -1,57 +1,122 @@
 ﻿@model Parcial3_Aeropuerto.EN.Reservas
 
 @{
-    ViewData["Title"] = "Edit";
+    Layout = null;
 }
 
-<h1>Edit</h1>
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
 
-<h4>Reservas</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editModalLabel">Editar Reserva</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+            <form asp-action="Edit" asp-controller="Reservas" method="post">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id_reserva" class="control-label"></label>
-                <input asp-for="Id_reserva" class="form-control" />
-                <span asp-validation-for="Id_reserva" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id_pasajero" class="control-label"></label>
-                <input asp-for="Id_pasajero" class="form-control" />
-                <span asp-validation-for="Id_pasajero" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id_vuelo" class="control-label"></label>
-                <input asp-for="Id_vuelo" class="form-control" />
-                <span asp-validation-for="Id_vuelo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fecha" class="control-label"></label>
+            @Html.AntiForgeryToken()
+
+            <input asp-for="Id_reserva" type="hidden" />
+
+                    <div class="mb-3">
+                        <label asp-for="Id_pasajero" class="form-label fw-bold">Id Pasajero</label>
+
+                        <select asp-for="Id_pasajero" id="Id_pasajerox" class="form-select">
+                            <option value=""></option>
+                            @foreach (var pasajero in ViewBag.Pasajeros)
+                            {
+                                <option value="@pasajero.Id_pasajero">@pasajero.Nombre @pasajero.Apellido</option>
+                            }
+                        </select>
+
+                        <span asp-validation-for="Id_pasajero" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Id_vuelo" class="form-label fw-bold">Id Vuelo</label>
+
+                        <select asp-for="Id_vuelo" id="Id_vuelox" class="form-select">
+                            <option value=""></option>
+                            @foreach (var vuelo in ViewBag.Vuelos)
+                            {
+                                if (vuelo.Estado == "En Espera")
+                                {
+                                    var destinos = ViewBag.Destinos as List<Parcial3_Aeropuerto.EN.Destinos>;
+                                    var destino = destinos.FirstOrDefault(d => d.Id_destino == vuelo.Id_destino);
+                                    <option value="@vuelo.Id_vuelo">@vuelo.Id_vuelo - @destino.Nombre_destino | @vuelo.Fecha</option>
+                                }
+                            }
+                        </select>
+
+                        <span asp-validation-for="Id_vuelo" class="text-danger small"></span>
+                    </div>
+            <div class="mb-3">
+                <label asp-for="Fecha" class="form-label"></label>
                 <input asp-for="Fecha" class="form-control" type="date"/>
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Costo" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Costo" class="form-label"></label>
                 <input asp-for="Costo" class="form-control" />
                 <span asp-validation-for="Costo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Id_usuario" class="control-label"></label>
-                <input asp-for="Id_usuario" class="form-control" />
-                <span asp-validation-for="Id_usuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Usuario</label>
+                        <input class="form-control" value="@Context.Session.GetString("Usuario") " readonly />
+                    </div>
+            <div class="modal-footer px-0 pb-0">
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script> @*Es la funcion del TomSelect*@
+
+<script>
+    //Para los pasajeros
+    setTimeout(() => {
+    const select = document.querySelector("#Id_pasajerox");
+
+    if (select && !select.tomselect) {
+    const ts = new TomSelect("#Id_pasajerox", {
+    create: false,
+    allowEmptyOption: true,
+    maxOptions: 1000,
+    searchField: ["text"],
+    placeholder: "Seleccione o busque un pasajero",
+    openOnFocus: true,
+    hideSelected: false
+    });
+
+    ts.inputState();
+    }
+    }, 200);
+    //Para los vuelos
+    setTimeout(() => {
+    const select = document.querySelector("#Id_vuelox");
+
+    if (select && !select.tomselect) {
+    const ts = new TomSelect("#Id_vuelox", {
+    create: false,
+    allowEmptyOption: true,
+    maxOptions: 1000,
+    searchField: ["text"],
+    placeholder: "Seleccione o busque un pasajero",
+    openOnFocus: true,
+    hideSelected: false
+    });
+
+    ts.inputState();
+    }
+    }, 200);
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -17,9 +17,29 @@ namespace Parcial3_Aeropuerto.Controllers
         AvionesBL avionesBL = new AvionesBL();
         DestinosBL destinosBL = new DestinosBL();
         // GET: ReservasController
-        public ActionResult Reservas()
+        public ActionResult Reservas(int paginas, string buscar = "")
         {
-            return View(reservasBL.MostrarReservas());
+            int registrosPorPagina = 5;
+
+            var lista = string.IsNullOrEmpty(buscar)
+                ? reservasBL.MostrarReservas()
+                : reservasBL.BuscarReservas(buscar);
+
+            var totalRegistros = lista.Count();
+            var reservas = lista
+                .OrderBy(r => r.Id_reserva)
+                .Skip((paginas - 1) * registrosPorPagina)
+                .Take(registrosPorPagina)
+                .ToList();
+            var modelo = new Paginacion<Reservas>
+            {
+                Items = reservas,
+                PaginaActual = paginas,
+                TotalPaginas = (int)Math.Ceiling((double)totalRegistros / registrosPorPagina)
+            };
+
+            ViewBag.Buscar = buscar;
+            return View("Reservas", modelo);
         }
 
         // GET: ReservasController/Details/5
@@ -31,6 +51,9 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: ReservasController/Create
         public ActionResult Create()
         {
+            ViewBag.Pasajeros = pasajerosBL.MostrarPasajeros();
+            ViewBag.Vuelos = vuelosBL.MostrarVuelos();
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
             return View();
         }
 
@@ -39,17 +62,31 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Reservas reservas)
         {
-            if(ModelState.IsValid)
+            reservas.Id_usuario = HttpContext.Session.GetInt32("Id_usuario") ?? 0;
+            
+
+            ModelState.Remove("Id_usuario");
+            
+
+            if (ModelState.IsValid)
             {
                 reservasBL.AgregarReservas(reservas);
-                return RedirectToAction("Reservas", new Reservas());
+                TempData["MensajeExito"] = "Reserva creada exitosamente.";
+                return RedirectToAction("Reservas");
             }
+
+            ViewBag.Pasajeros = pasajerosBL.MostrarPasajeros();
+            ViewBag.Vuelos = vuelosBL.MostrarVuelos();
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
             return View("Create", reservas);
         }
 
         // GET: ReservasController/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewBag.Pasajeros = pasajerosBL.MostrarPasajeros();
+            ViewBag.Vuelos = vuelosBL.MostrarVuelos();
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
             return View(reservasBL.ObtenerReservasPorId(id));
         }
 
@@ -58,12 +95,21 @@ namespace Parcial3_Aeropuerto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Reservas reservas)
         {
-            if(ModelState.IsValid)
+            reservas.Id_usuario = HttpContext.Session.GetInt32("Id_usuario") ?? 0;
+
+            ModelState.Remove("Id_usuario");
+
+            if (ModelState.IsValid)
             {
                 reservasBL.ModificarReservas(reservas);
+                TempData["MensajeExito"] = "Reserva modificada exitosamente.";
                 return RedirectToAction("Reservas");
             }
-            return View(reservas);
+
+            ViewBag.Pasajeros = pasajerosBL.MostrarPasajeros();
+            ViewBag.Vuelos = vuelosBL.MostrarVuelos();
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
+            return View();
         }
 
         // GET: ReservasController/Delete/5

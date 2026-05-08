@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Parcial3_Aeropuerto.EN.Reservas>
+﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Reservas>
 
 @{
     ViewData["Title"] = "Reservas";
@@ -7,57 +7,57 @@
 <h1>Reservas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a href="javascript:void(0)" class="btn btn-primary" onclick="mostrarCreate()"><img class="acciones" src="~/css/imgs/iconosacciones/agregar.png" /></a>
 </p>
+<div class="row-md-6 mb-5">
+    <form asp-action="Reservas" method="get" class="d-flex shadow-sm">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-search text-muted"></i>
+            </span>
+            <input type="text" name="buscar" class="form-control border-start-0"
+                   placeholder="Buscar por nombre o apellido..." value="@ViewData["buscar"]" />
+
+            <button type="submit" class="btn btn-primary">
+                Buscar
+            </button>
+
+            @if (!string.IsNullOrEmpty(Context.Request.Query["buscar"]))
+            {
+                <a asp-action="Reservas" class="btn btn-outline-primary">Limpiar</a>
+            }
+
+        </div>
+    </form>
+
+
+
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_reserva)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_pasajero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_vuelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Costo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_usuario)
-            </th>
-            <th></th>
+            <th>Id Reserva</th>
+            <th>Id Pasajero</th>
+            <th>Id Vuelo</th>
+            <th>Fecha</th>
+            <th>Costo</th>
+            <th>Id Usuario</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Items) {
         <tr>
+            <td>@item.Id_reserva</td>
+            <td>@item.Id_pasajero</td>
+            <td>@item.Id_vuelo</td>
+            <td>@item.Fecha</td>
+            <td>@item.Costo</td>
+            <td>@item.Id_usuario</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_reserva)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_pasajero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_vuelo)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Costo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_usuario)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id_reserva  }) |
+                    <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_reserva); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
                 @Html.ActionLink("Details", "Details", new {  id=item.Id_reserva  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id_reserva  }, new {img = "~/css/imgs/iconosacciones/eliminar.png"})
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id_reserva  })
                
                     <a asp-action="Pdf" asp-route-id="@item.Id_reserva" class="btn btn-danger btn-sm" "><img class="acciones" src="~/css/imgs/iconosacciones/pdf.png" /></a>
             </td>
@@ -65,7 +65,48 @@
 }
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        @if (Model.PaginaActual > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Reservas" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                <a class="page-link" asp-action="Reservas" asp-route-paginas="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.PaginaActual < Model.TotalPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Reservas" asp-route-paginas="@(Model.PaginaActual + 1)">Siguiente</a>
+            </li>
+        }
+    </ul>
+</nav>
+<div id="modalContainer"></div>
 
 <script>
-    
+        function mostrarCreate() {
+            $.get('/Reservas/Create', function (data) {
+                $('#modalContainer').html(data);
+                var modal = new bootstrap.Modal(document.getElementById('createModal'));
+                modal.show();
+            });
+        }
+
+                  function mostrarEdit(id) {
+        $.get('/Reservas/Edit?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+
+            var modal = new bootstrap.Modal(document.getElementById('editModal'));
+            modal.show();
+        });
+    }
+
 </script>

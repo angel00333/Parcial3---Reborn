@@ -259,6 +259,7 @@ footer nav {
     display: flex;
     padding-left: 0;
     list-style: none;
+    margin-top: 10px;
 }
 
 /*Boton primario*/
@@ -369,7 +370,7 @@ footer nav {
 }
 
 .destino-4 {
-    background-image: url('/imagenes/destinos/destino-4.png');
+    background-image: url('/css/imgs/destinos/Argentina.png');
 }
 
 .destino-5 {

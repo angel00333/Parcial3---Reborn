@@ -12,22 +12,34 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         DestinosBL destinosBL = new DestinosBL();
 
         // GET: VuelosController
-        public ActionResult Vuelos(string buscar="")
+        public ActionResult Vuelos(int paginas = 1, string buscar="")
         {
+            int RegistrosPorPagina = 4; 
+
             var lista = string.IsNullOrEmpty(buscar)
                 ? vuelosBL.MostrarVuelos()
                 : vuelosBL.BuscarVuelos(buscar);
 
             var totalRegistros = lista.Count();
 
+            var vuelos = lista
+                .OrderBy(v => v.Id_vuelo)
+                .Skip((paginas - 1) * RegistrosPorPagina)
+                .Take(RegistrosPorPagina)
+                .ToList();
 
-            VuelosD vuelosD = new VuelosD
+            var modelo = new Paginacion<Vuelos>
             {
-                Vuelos = lista,
-                Destinos = destinosBL.MostrarDestinos()
+                Items = vuelos,
+                PaginaActual = paginas,
+                TotalPaginas = (int)Math.Ceiling((double)totalRegistros / RegistrosPorPagina)
             };
+
+            
             ViewBag.Buscar = buscar;
-            return View("Vuelos", vuelosD);
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
+
+            return View("Vuelos", modelo);
 
 
         }

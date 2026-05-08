@@ -26,11 +26,8 @@
                     <div class="mb-3">
                         <label asp-for="Id_aerolinea" class="form-label fw-bold">Id Destino</label>
 
-                        <select asp-for="Id_aerolinea"
-                                id="Id_aerolineax"
-                                class="form-select">
+                        <select asp-for="Id_aerolinea" id="Id_aerolineax" class="form-select">
                             <option value=""></option>
-
                             @foreach (var aero in ViewBag.Aerolineas)
                             {
                                 <option value="@aero.Id_aerolinea">@aero.Nombre_aerolinea</option>

@@ -1,7 +1,8 @@
-﻿@model Parcial3_Aeropuerto.EN.VuelosD
+﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Vuelos>
 
 @{
     ViewData["Title"] = "Vuelos";
+    var destinos = ViewBag.Destinos as List<Parcial3_Aeropuerto.EN.Destinos>;
 }
 
 <h1>Vuelos</h1>
@@ -31,9 +32,9 @@
 </form>
 <div class="container mt-4">
     <div class="row g-3">
-        @foreach (var item in Model.Vuelos)
+        @foreach (var item in Model.Items)
         {
-            var destino = Model.Destinos.FirstOrDefault(dest => dest.Id_destino == item.Id_destino);
+            var destino = destinos?.FirstOrDefault(dest => dest.Id_destino == item.Id_destino);
 
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card card-fondo destino-@item.Id_destino text-white h-100 shadow-sm border-0">
@@ -71,6 +72,30 @@
         }
     </div>
 </div>
+<nav>
+    <ul class="pagination">
+        @if (Model.PaginaActual > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Vuelos" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                <a class="page-link" asp-action="Vuelos" asp-route-paginas="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.PaginaActual < Model.TotalPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Vuelos" asp-route-paginas="@(Model.PaginaActual + 1)">Siguiente</a>
+            </li>
+        }
+    </ul>
+</nav>
 <div id="modalContainer"></div>
 
 <script>

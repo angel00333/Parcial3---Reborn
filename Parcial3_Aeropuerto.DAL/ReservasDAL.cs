@@ -127,9 +127,10 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "SELECT * FROM Reservas WHERE Id_pasajero LIKE @Criterio OR Id_vuelo LIKE @Criterio OR Fecha LIKE @Criterio OR Costo LIKE @Criterio OR Id_usuario LIKE @Criterio";
+                string sql = "SELECT r.Id_reserva, r.Id_pasajero, r.Id_vuelo, r.Fecha, r.Costo, r.Id_Usuario FROM Reservas r INNER JOIN Pasajeros p ON r.Id_pasajero = p.Id_pasajero WHERE p.Nombre LIKE @C OR p.Apellido LIKE @C";
+                //"SELECT * FROM Reservas WHERE Id_pasajero LIKE @C OR Id_vuelo LIKE @C OR Fecha LIKE @C OR Costo LIKE @C OR Id_usuario LIKE @C";
                 MySqlCommand comando = new MySqlCommand(sql, con);
-                comando.Parameters.AddWithValue("@Criterio", "%" + criterio + "%");
+                comando.Parameters.AddWithValue("@C", "%" + criterio + "%");
                 comando.CommandType = CommandType.Text;
                 MySqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
