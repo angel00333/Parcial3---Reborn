@@ -4,8 +4,6 @@
     Layout = null;
 }
 
-<link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
-
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -18,37 +16,19 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="Id_vuelo" type="hidden" />
-                    <div class="mb-3">
-                        <label asp-for="Id_avion" class="form-label fw-bold">Id Avion</label>
-
-                        <select asp-for="Id_avion" id="Id_avionx" class="form-select">
-                            <option value=""></option>
-                            @foreach (var avion in ViewBag.Aviones)
-                            {
-                                var aerolineas = ViewBag.Aerolineas as List<Parcial3_Aeropuerto.EN.Aerolineas>;
-                                var aerolinea = aerolineas?.FirstOrDefault(a => a.Id_aerolinea == avion.Id_aerolinea);
-                                <option value="@avion.Id_avion">Avion N°: @avion.Id_avion - Aerolinea: @aerolinea?.Nombre_aerolinea </option>
-                            }
-                        </select>
-
-                        <span asp-validation-for="Id_avion" class="text-danger small"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Id_destino" class="form-label fw-bold">Id Destino</label>
-
-                        <select asp-for="Id_destino" id="Id_destinox" class="form-select">
-                            <option value=""></option>
-                            @foreach (var destino in ViewBag.Destinos)
-                            {
-                                <option value="@destino?.Id_destino">@destino?.Nombre_destino</option>
-                            }
-                        </select>
-
-                        <span asp-validation-for="Id_destino" class="text-danger small"></span>
-                    </div>
+            <div class="mb-3">
+                <label asp-for="Id_avion" class="form-label"></label>
+                <input asp-for="Id_avion" class="form-control" />
+                <span asp-validation-for="Id_avion" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Id_destino" class="form-label"></label>
+                <input asp-for="Id_destino" class="form-control" />
+                <span asp-validation-for="Id_destino" class="text-danger"></span>
+            </div>
             <div class="mb-3">
                 <label asp-for="Cantidad_pasajeros" class="form-label"></label>
-                <input asp-for="Cantidad_pasajeros" class="form-control" readonly/>
+                <input asp-for="Cantidad_pasajeros" class="form-control" />
                 <span asp-validation-for="Cantidad_pasajeros" class="text-danger"></span>
             </div>
             <div class="mb-3">
@@ -62,17 +42,9 @@
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                 <label class="form-label">Estado</label><br />
-                 <input asp-for="Estado" class="form-check-input" type="radio" value="En Espera" />
-                 <label asp-for="Estado" class="form-check-label">En espera</label>
-
-                 <input asp-for="Estado" class="form-check-input" type="radio" value="En Curso" hidden />
-                 <label asp-for="Estado" class="form-check-label" hidden>En curso</label>
-                 <span asp-validation-for="Estado" class="text-danger" hidden></span>
-
-                 <input asp-for="Estado" class="form-check-input" type="radio" value="Finalizado" hidden />
-                 <label asp-for="Estado" class="form-check-label" hidden>Finalizado</label>
-                 <span asp-validation-for="Estado" class="text-danger" hidden></span>
+                <label asp-for="Estado" class="form-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Hora_inicio" class="form-label"></label>
@@ -87,52 +59,6 @@
         </div>
     </div>
 </div>
-</div>
-
-<script>
-    //Para los aviones
-    setTimeout(() => {
-    const select = document.querySelector("#Id_avionx");
-
-    if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_avionx", {
-    create: false,
-    allowEmptyOption: true,
-    maxOptions: 1000,
-    searchField: ["text"],
-    placeholder: "Seleccione o busque un avion,
-    openOnFocus: true,
-    hideSelected: false
-    });
-
-    ts.inputState();
-    }
-    }, 200);
-    //Para los destinos
-    setTimeout(() => {
-    const select = document.querySelector("#Id_destinox");
-
-    if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_destinox", {
-    create: false,
-    allowEmptyOption: true,
-    maxOptions: 1000,
-    searchField: ["text"],
-    placeholder: "Seleccione o busque un destino",
-    openOnFocus: true,
-    hideSelected: false
-    });
-
-    ts.inputState();
-    }
-    }, 200);
-</script>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

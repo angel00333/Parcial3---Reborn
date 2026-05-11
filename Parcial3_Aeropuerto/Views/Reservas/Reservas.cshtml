@@ -57,7 +57,7 @@
             <td>
                     <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_reserva); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
                 @Html.ActionLink("Details", "Details", new {  id=item.Id_reserva  }) |
-                    <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_reserva);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id_reserva  })
                
                     <a asp-action="Pdf" asp-route-id="@item.Id_reserva" class="btn btn-danger btn-sm" "><img class="acciones" src="~/css/imgs/iconosacciones/pdf.png" /></a>
             </td>
@@ -109,29 +109,4 @@
         });
     }
 
-    function mostrarDelete(id) {
-        $.get('/Reservas/Delete?id=' + id, function (data) {
-            $('#modalContainer').html(data);
-
-            var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
-            modal.show();
-        });
-    }
-
 </script>
-@if (TempData["MensajeExito"] != null)
-{
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        Swal.fire({
-        title: "¡Excelente!",
-        text: '@Html.Raw(TempData["MensajeExito"])',
-        icon: "success",
-        color: "#000000",
-        iconColor: "#25E17A",
-        timer: 1500,
-        showConfirmButton: false
-        });
-    </script>
-}
