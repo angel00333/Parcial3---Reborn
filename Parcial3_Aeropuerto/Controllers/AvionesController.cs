@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Operations;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using MySqlConnector;
 using Parcial3_Aeropuerto.BL;
 using Parcial3_Aeropuerto.EN; // Agrega esta línea para incluir el espacio de nombres de tu modelo
@@ -49,31 +51,32 @@ namespace Parcial3_Aeropuerto.Controllers
         public ActionResult Create()
         {
             //Se extrae la vista de Aerolineas hacia aviones/ GET
-            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas ();
+            ViewBag.Id_aerolinea = new SelectList(aerolineasBL.MostrarAerolineas(), "Id_aerolinea", "Nombre_aerolinea");
             return View();
         }
 
         // POST: Aviones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Aviones aviones)
+        public ActionResult Create(Aviones aviones, int Id_aerolinea)
         {
             if (ModelState.IsValid)
             {
+                aviones.Aerolineas = new Aerolineas { Id_aerolinea = Id_aerolinea };
                 avionesBL.AgregarAviones(aviones);
                 TempData["MensajeExito"] = "El avión se agregó correctamente";
                 return RedirectToAction("Aviones");
             }
-
-            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
-            return View();
+            ViewBag.Id_aerolinea = new SelectList(aerolineasBL.MostrarAerolineas(), "Id_aerolinea", "Nombre_aerolinea", Id_aerolinea);
+            
+            return View(aviones);
         }
 
         // GET: Aviones/Edit/5
         public ActionResult Edit(int id)
         {
 
-            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
+            ViewBag.Id_aerolinea= new SelectList(aerolineasBL.MostrarAerolineas(), "Id_aerolinea", "Nombre_aerolinea", avionesBL.ObtenerAvionesPorId(id).Aerolineas.Id_aerolinea);
             return View(avionesBL.ObtenerAvionesPorId(id));
         }
 
@@ -87,7 +90,10 @@ namespace Parcial3_Aeropuerto.Controllers
                 avionesBL.ModificarAviones(aviones);
                 return RedirectToAction("Aviones");
             }
+            ViewBag.Id_aerolinea = new SelectList(aerolineasBL.MostrarAerolineas(), "Id_aerolinea", "Nombre_aerolinea", aviones.Aerolineas.Id_aerolinea);
+
             return View();
+
         }
 
         // GET: Aviones/Delete/5

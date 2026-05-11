@@ -27,7 +27,7 @@ namespace Parcial3_Aeropuerto.DAL
                 {
                     Aviones aviones = new Aviones();
                     aviones.Id_avion = reader.GetInt32(0);
-                    aviones.Id_aerolinea = reader.GetInt32(1);
+                    aviones.Aerolineas = AerolineasDAL.ObtenerAerolineasPorId(reader.GetInt32(1));
                     aviones. Capacidad = reader.GetInt32(2);                   
                     avioneslist.Add(aviones);
                 }
@@ -128,7 +128,7 @@ namespace Parcial3_Aeropuerto.DAL
                 {
 
                     aviones.Id_avion = reader.GetInt32(0);
-                    aviones.Id_aerolinea = reader.GetInt32(1);
+                    aviones.Aerolineas = AerolineasDAL.ObtenerAerolineasPorId(reader.GetInt32(1));
                     aviones.Capacidad = reader.GetInt32(2);
                     
                   

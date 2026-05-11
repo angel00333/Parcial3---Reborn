@@ -16,7 +16,7 @@
             </div>
 
             <div class="modal-body p-4">
-                <form asp-action="Edit" method="post">
+                <form asp-action="Edit" method="post" id="EditForm">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <input type="hidden" asp-for="Id_avion" />
@@ -25,16 +25,10 @@
                         <label asp-for="Id_aerolinea" class="form-label fw-bold">Aerolínea</label>
 
                         <select asp-for="Id_aerolinea"
-                                id="Id_aerolinea_edit"
-                                class="form-select"
-                                placeholder="Seleccione o busque una aerolínea"
-                                required>
-                            <option value=""></option>
-
-                            @foreach (var aero in ViewBag.Aerolineas)
-                            {
-                                <option value="@aero.Id_aerolinea">@aero.Nombre_aerolinea</option>
-                            }
+                                asp-items="ViewBag.Id_aerolinea"
+                                id="aerolineaTS"
+                                class="form-select">
+                            <option value="">Seleccione o busque una aerolínea</option>
                         </select>
 
                         <span asp-validation-for="Id_aerolinea" class="text-danger small"></span>
@@ -65,12 +59,12 @@
 
 <script>
     setTimeout(() => {
-    const select = document.querySelector("#Id_aerolinea_edit");
+    const select = document.querySelector("#aerolineaTS");
 
     if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_aerolinea_edit", {
+    const ts = new TomSelect("#aerolineaTS", {
     create: false,
-    allowEmptyOption: true,
+    allowEmptyOption: false,
     maxOptions: 1000,
     searchField: ["text"],
     placeholder: "Seleccione o busque una aerolínea",
@@ -78,10 +72,48 @@
     hideSelected: false
     });
 
-    ts.inputState();
+    ts.on("change", function () {
+    $("#aerolineaTS").valid();
+    });
     }
     }, 200);
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).on("submit", "#EditForm", function (e) {
+            e.preventDefault();
+
+        if (!this.checkValidity()) return;
+
+        $.post('/Aviones/Edit', $(this).serialize(), (res) => {
+
+            if (res.includes("modal-body")) {
+                $("#modalContainer").html(res);
+                new bootstrap.Modal($("#createModal")[0]).show();
+                return;
+            }
+
+            Swal.fire({
+                title: "¡Guardado!",
+                text: "El pasajero se registró correctamente",
+                icon: "info",
+                color: "#000000",
+                iconColor: "#25E17A",
+                timer: 1600,
+                showConfirmButton: false,
+                confirmButtonColor: "#0136FA"
+            });
+
+            bootstrap.Modal.getInstance($("#editModal")[0]).hide();
+
+            setTimeout(() => {
+            location.reload();
+            }, 1500); // 🔥 espera que termine la alerta
+        });
+    });
+</script>
+
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
