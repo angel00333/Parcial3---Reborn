@@ -14,7 +14,7 @@
             </div>
 
             <div class="modal-body p-4">
-                <form asp-action="Edit" method="post">
+                <form asp-action="Edit" method="post" id="EditForm">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -64,7 +64,7 @@
     if (select && !select.tomselect) {
     const ts = new TomSelect("#AeropuertoTS", {
     create: false,
-    allowEmptyOption: true,
+    allowEmptyOption: false,
     maxOptions: 1000,
     searchField: ["text"],
     placeholder: "Seleccione o busque un aeropuerto",
@@ -80,6 +80,42 @@
     }
     }, 200);
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).on("submit", "#EditForm", function (e) {
+            e.preventDefault();
+
+        if (!this.checkValidity()) return;
+
+        $.post('/Destinos/Edit', $(this).serialize(), (res) => {
+
+            if (res.includes("modal-body")) {
+                $("#modalContainer").html(res);
+                new bootstrap.Modal($("#createModal")[0]).show();
+                return;
+            }
+
+            Swal.fire({
+                title: "¡Guardado!",
+                text: "El pasajero se registró correctamente",
+                icon: "info",
+                color: "#000000",
+                iconColor: "#25E17A",
+                timer: 1600,
+                showConfirmButton: false,
+                confirmButtonColor: "#0136FA"
+            });
+
+            bootstrap.Modal.getInstance($("#editModal")[0]).hide();
+
+            setTimeout(() => {
+            location.reload();
+            }, 1500); // 🔥 espera que termine la alerta
+        });
+    });
+</script>
+
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

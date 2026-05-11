@@ -13,7 +13,7 @@
             </div>
 
             <div class="modal-body">
-                <form asp-action="Edit" asp-controller="Pasajero" method="post">
+                <form asp-action="Edit" asp-controller="Pasajero" method="post" id="EditForm">
                     @Html.AntiForgeryToken()
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -65,6 +65,41 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).on("submit", "#EditForm", function (e) {
+            e.preventDefault();
+
+        if (!this.checkValidity()) return;
+
+        $.post('/Pasajero/Edit', $(this).serialize(), (res) => {
+
+            if (res.includes("modal-body")) {
+                $("#modalContainer").html(res);
+                new bootstrap.Modal($("#createModal")[0]).show();
+                return;
+            }
+
+            Swal.fire({
+                title: "¡Guardado!",
+                text: "El pasajero se registró correctamente",
+                icon: "info",
+                color: "#000000",
+                iconColor: "#25E17A",
+                timer: 1600,
+                showConfirmButton: false,
+                confirmButtonColor: "#0136FA"
+            });
+
+            bootstrap.Modal.getInstance($("#editModal")[0]).hide();
+
+            setTimeout(() => {
+            location.reload();
+            }, 1500); // 🔥 espera que termine la alerta
+        });
+    });
+</script>
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
