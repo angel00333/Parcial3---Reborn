@@ -153,5 +153,22 @@ namespace Parcial3_Aeropuerto.DAL
 
 
              }
+
+        public static bool PasajeroTieneReserva(int id)
+        {
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+
+                string sql = "SELECT COUNT(*) FROM Pasajeros WHERE Id_pasajero = @Id_pasajero";
+
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.Parameters.AddWithValue("@Id_pasajero", id);
+
+                int cantidad = Convert.ToInt32(comando.ExecuteScalar());
+
+                return cantidad > 0;
+            }
+        }
     }
 }
