@@ -21,7 +21,7 @@
                 <form asp-action="Create" method="post" id="form-crear-avion">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="mb-3">
+                       <div class="mb-3">
                         <label asp-for="Id_aerolinea" class="form-label fw-bold">Aerolínea</label>
 
                         <select asp-for="Id_aerolinea"
@@ -29,9 +29,6 @@
                                 id="Id_aerolineax"
                                 class="form-select">
                             <option value="">Seleccione o busque una aerolínea</option>
-                            {
-                                <option value="@aero.Id_aerolinea">@aero.Nombre_aerolinea</option>
-                            }
                         </select>
 
                         <span asp-validation-for="Id_aerolinea" class="text-danger small"></span>
