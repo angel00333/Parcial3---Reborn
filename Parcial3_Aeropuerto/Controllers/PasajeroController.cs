@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.DAL;
 using Parcial3_Aeropuerto.EN;
 
 namespace Parcial3_Aeropuerto.UI.Controllers
@@ -87,7 +88,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: PasajeroController/Delete/5
         public ActionResult Delete(int id)
         {
-            return PartialView("Delete", pasajeroBL.ObtenerPasajeroPorId(id));
+            return PartialView(pasajeroBL.ObtenerPasajeroPorId(id));
         }
 
         [HttpPost]
@@ -95,8 +96,17 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (pasajeroBL.PasajeroTieneReservas(id))
+            {
+                TempData["SMSError"] = "No se puede eliminar este pasajero porque tiene reserva relacionada.";
+                return RedirectToAction("Pasajero");
+            }
+
             pasajeroBL.EliminarPasajero(id);
+            TempData["SMSExito"] = "El pasajero se eliminó correctamente.";
+
             return RedirectToAction("Pasajero");
+            
         }
     }
 }

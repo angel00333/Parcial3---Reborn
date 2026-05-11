@@ -102,7 +102,6 @@ namespace Parcial3_Aeropuerto.Controllers
             if (ModelState.IsValid)
             {
                 reservasBL.ModificarReservas(reservas);
-                TempData["MensajeExito"] = "Reserva modificada exitosamente.";
                 return RedirectToAction("Reservas");
             }
 
@@ -115,7 +114,9 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: ReservasController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(reservasBL.ObtenerReservasPorId(id));
+            var reserva = reservasBL.ObtenerReservasPorId(id);
+            ViewBag.Pasajero = pasajerosBL.ObtenerPasajeroPorId(reserva.Id_pasajero);
+            return View(reserva);
         }
 
         // POST: ReservasController/Delete/5

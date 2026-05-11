@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 namespace Parcial3_Aeropuerto.EN
 {
     public class Vuelos
@@ -13,8 +14,8 @@ namespace Parcial3_Aeropuerto.EN
 
         public int Id_destino { get; set; }
 
-        [Required(ErrorMessage = "La cantidad de pasajeros es obligatoria.")]
-        [Range(1, int.MaxValue, ErrorMessage = "La cantidad de pasajeros debe ser al menos 1.")]
+        
+        [Range(0, int.MaxValue, ErrorMessage = "Error inesperado")]
         public int Cantidad_pasajeros { get; set; }
 
         [Required(ErrorMessage = "La fecha es obligatoria.")]

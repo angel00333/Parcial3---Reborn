@@ -38,5 +38,10 @@ namespace Parcial3_Aeropuerto.BL
         {
             return PasajeroDAL.ObtenerPasajeroPorId(id);
         }
+
+        public bool PasajeroTieneReservas(int id)
+        {
+            return PasajeroDAL.PasajeroTieneReserva(id);
+        }
     }
 }
