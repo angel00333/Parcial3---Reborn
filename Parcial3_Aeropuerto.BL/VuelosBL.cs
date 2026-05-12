@@ -38,5 +38,10 @@ namespace Parcial3_Aeropuerto.BL
         {
             return VuelosDAL.ObtenerVueloPorId(id);
         }
+
+        public bool VueloTieneReservas(int id)
+        {
+            return VuelosDAL.VueloTieneReservas(id);
+        }
     }
 }

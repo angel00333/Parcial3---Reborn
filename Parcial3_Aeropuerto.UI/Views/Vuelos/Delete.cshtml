@@ -1,7 +1,9 @@
 ﻿@model Parcial3_Aeropuerto.EN.Vuelos
 @{
     Layout = null;
+    var destino = ViewBag.Destino as Parcial3_Aeropuerto.EN.Destinos;
 }
+
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -13,8 +15,8 @@
             </div>
 
             <div class="modal-body">
-                <p class="fw-bold">¿Estás seguro de eliminar el vuelo:</p>
-                <p class="text-secondary">@Model.Id_vuelo?</p>
+                <p class="fw-bold">¿Estás seguro de eliminar el vuelo con destino a:</p>
+                <p class="text-secondary">@destino?.Nombre_destino</p>
 
                 <div class="alert alert-warning">
                     <i class="bi bi-exclamation-triangle"></i> Esta acción no se puede deshacer.
@@ -33,42 +35,3 @@
         </div>
     </div>
 </div>
-
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    document.querySelectorAll(".form-eliminar").forEach(form => {
-    form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    Swal.fire({
-    title: "¿Estás seguro?",
-    text: "Esta información no se recueperará",
-    icon: "warning",
-    iconColor: "#FB0700",
-    showCancelButton: true,
-    confirmButtonText: "Sí, eliminar",
-    confirmButtonColor: "#dc3545",
-    cancelButtonText: "Cancelar",
-    cancelButtonColor: "#6c757d"
-    }).then((result) => {
-    if (result.isConfirmed) {
-
-    Swal.fire({
-    title: "Eliminado",
-    text: "Se eliminó correctamente",
-    icon: "success",
-    iconColor: "#28a745",
-    timer: 1200,
-    timerProgressBar: true,
-    showConfirmButton: false
-    }).then(() => {
-    form.submit();
-    });
-
-    }
-    });
-    });
-    });
-</script>

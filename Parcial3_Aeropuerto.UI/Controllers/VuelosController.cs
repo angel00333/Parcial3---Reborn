@@ -10,6 +10,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         VuelosBL vuelosBL = new VuelosBL();
         AvionesBL avionesBL = new AvionesBL();
         DestinosBL destinosBL = new DestinosBL();
+        AerolineasBL aerolineasBL = new AerolineasBL();
 
         // GET: VuelosController
         public ActionResult Vuelos(int paginas = 1, string buscar="")
@@ -53,6 +54,9 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: VuelosController/Create
         public ActionResult Create()
         {
+            ViewBag.Aviones = avionesBL.MostrarAviones();
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
+            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
             return View();
         }
 
@@ -64,14 +68,22 @@ namespace Parcial3_Aeropuerto.UI.Controllers
             if (ModelState.IsValid)
             {
                 vuelosBL.AgregarVuelos(vuelos);
-                return RedirectToAction("Vuelos", new Vuelos());
+                TempData["MensajeExito"] = "Vuelo creado exitosamente.";
+                return RedirectToAction("Vuelos");
             }
+
+            ViewBag.Aviones = avionesBL.MostrarAviones();
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
+            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
             return View("Create", vuelos);
         }
 
         // GET: VuelosController/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewBag.Aviones = avionesBL.MostrarAviones();
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
+            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
             return View(vuelosBL.ObtenerVuelosPorId(id));
         }
 
@@ -85,13 +97,19 @@ namespace Parcial3_Aeropuerto.UI.Controllers
                 vuelosBL.ModificarVuelos(vuelos);
                 return RedirectToAction("Vuelos");
             }
+            ViewBag.Aviones = avionesBL.MostrarAviones();
+            ViewBag.Destinos = destinosBL.MostrarDestinos();
+            ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
             return View("Edit", vuelos);
         }
 
         // GET: VuelosController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(vuelosBL.ObtenerVuelosPorId(id));
+            var vuelo = vuelosBL.ObtenerVuelosPorId(id);
+
+            ViewBag.Destino = destinosBL.ObtenerDestinosPorId(vuelo.Id_destino);
+            return View(vuelo);
         }
 
         // POST: VuelosController/Delete/5
@@ -100,7 +118,15 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (vuelosBL.VueloTieneReservas(id))
+            {
+                TempData["SMSError"] = "No se puede eliminar este vuelo porque tiene reservas relacionadas.";
+                return RedirectToAction("Vuelos");
+            }
+
             vuelosBL.EliminarVuelos(id);
+            TempData["SMSExito"] = "El vuelo se eliminó correctamente.";
+
             return RedirectToAction("Vuelos");
         }
     }

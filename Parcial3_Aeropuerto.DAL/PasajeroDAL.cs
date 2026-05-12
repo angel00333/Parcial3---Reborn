@@ -160,7 +160,7 @@ namespace Parcial3_Aeropuerto.DAL
             {
                 con.Open();
 
-                string sql = "SELECT COUNT(*) FROM Pasajeros WHERE Id_pasajero = @Id_pasajero";
+                string sql = "SELECT COUNT(*) FROM Reservas WHERE Id_pasajero = @Id_pasajero";
 
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@Id_pasajero", id);

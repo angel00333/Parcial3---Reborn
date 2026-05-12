@@ -160,5 +160,22 @@ namespace Parcial3_Aeropuerto.DAL
                 }
             }
         }
+
+        public static bool VueloTieneReservas(int id)
+        {
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+
+                string sql = "SELECT COUNT(*) FROM Reservas WHERE Id_vuelo = @Id_vuelo";
+
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.Parameters.AddWithValue("@Id_vuelo", id);
+
+                int cantidad = Convert.ToInt32(comando.ExecuteScalar());
+
+                return cantidad > 0;
+            }
+        }
     }
 }
