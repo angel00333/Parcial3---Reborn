@@ -63,11 +63,19 @@
                 <input asp-for="Fecha" class="form-control" type="date"/>
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
-            <div class="mb-3">
-                <label asp-for="Estado" class="form-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
+                    <div class="mb-3">
+                        <label class="form-label">Estado</label><br />
+                        <input asp-for="Estado" class="form-check-input" type="radio" value="En espera" />
+                        <label asp-for="Estado" class="form-check-label">En Espera</label>
+
+                        <input asp-for="Estado" class="form-check-input" type="radio" value="En curso"  />
+                        <label asp-for="Estado" class="form-check-label" >En Curso</label>
+
+
+                        <input asp-for="Estado" class="form-check-input" type="radio" value="Finalizado" />
+                        <label asp-for="Estado" class="form-check-label" >Finalizado</label>
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
             <div class="mb-3">
                 <label asp-for="Hora_inicio" class="form-label"></label>
                 <input asp-for="Hora_inicio" class="form-control" type="time" />
