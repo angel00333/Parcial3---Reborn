@@ -21,14 +21,14 @@
                     <dd class="col-sm-8">@Model.Id_avion</dd>
 
                     <dt class="col-sm-4">Aerolínea</dt>
-                    <dd class="col-sm-8">@Model.Id_aerolinea</dd> @* O Nombre_aerolinea si lo tienes *@
+                    <dd class="col-sm-8">@Model.Aerolineas.Nombre_aerolinea</dd> @* O Nombre_aerolinea si lo tienes *@
 
                     <dt class="col-sm-4">Capacidad</dt>
                     <dd class="col-sm-8">@Model.Capacidad</dd>
                 </dl>
 
                 <div class="alert alert-warning py-2" role="alert">
-                    Esta acción no se puede deshacer.
+                    ¡Esta acción no se puede deshacer!
                 </div>
             </div>
 
@@ -42,6 +42,15 @@
                 </form>
             </div>
 
+            <form asp-action="Delete" method="post" class="form-eliminar-avion">
+                <input type="hidden" name="id" value="@Model.Id_avion" />
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+            </form>
+
+
+
         </div>
     </div>
 </div>
@@ -50,37 +59,41 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-document.querySelectorAll(".form-eliminar-avion").forEach(form => {
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
+    $(document).on("submit", ".form-eliminar-avion", function (e) {
+    e.preventDefault();
 
-        Swal.fire({
-            title: "¿Estás seguro?",
-            text: "Esta información no se recuperará",
-            icon: "warning",
-            iconColor: "#FB0700",
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar",
-            confirmButtonColor: "#dc3545",
-            cancelButtonText: "Cancelar",
-            cancelButtonColor: "#6c757d"
-        }).then((result) => {
-            if (result.isConfirmed) {
+    const form = this;
 
-                Swal.fire({
-                    title: "Eliminado",
-                    text: "Se eliminó correctamente",
-                    icon: "success",
-                    iconColor: "#28a745",
-                    timer: 1200,
-                    timerProgressBar: true,
-                    showConfirmButton: false
-                }).then(() => {
-                    form.submit();
-                });
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Esta información no se recuperará",
+        icon: "warning",
+        iconColor: "#FB0700",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        confirmButtonColor: "#dc3545",
+        cancelButtonText: "Cancelar",
+        cancelButtonColor: "#6c757d"
+    }).then((result) => {
+    if (result.isConfirmed) {
 
-            }
-        });
+    $.post($(form).attr("action"), $(form).serialize(), function () {
+
+    Swal.fire({
+        title: "Eliminado",
+        text: "Se eliminó correctamente",
+        icon: "success",
+        iconColor: "#28a745",
+        timer: 1400,
+        showConfirmButton: false
     });
-});
+
+        setTimeout(() => {
+        location.reload();
+    }, 1400);
+
+    });
+    }
+    });
+    });
 </script>

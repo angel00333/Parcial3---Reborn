@@ -1,7 +1,7 @@
 ﻿@model Parcial3_Aeropuerto.EN.Aeropuertos
 
 @{
-    ViewData["Title"] = "Delete";
+    Layout = null;
 }
 
 <h1>Delete</h1>
@@ -30,7 +30,7 @@
                 </dl>
 
                 <div class="alert alert-warning py-2" role="alert">
-                    Esta acción no se puede deshacer.
+                    ¡Esta acción no se puede deshacer!
                 </div>
             </div>
 
@@ -48,38 +48,45 @@
     </div>
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    document.querySelectorAll(".form-eliminar-aeropuerto").forEach(form => {
-    form.addEventListener("submit", function (e) {
+    $(document).on("submit", ".form-eliminar-aeropuerto", function (e) {
     e.preventDefault();
+
+    const form = this;
 
     Swal.fire({
     title: "¿Estás seguro?",
+    text: "Esta información no se recuperará",
     icon: "warning",
     iconColor: "#FB0700",
     showCancelButton: true,
     confirmButtonText: "Sí, eliminar",
-    confirmButtonColor: "#F46958",
-    cancelButtonColor: "#6c757d",
+    confirmButtonColor: "#dc3545",
+    cancelButtonText: "Cancelar",
+    cancelButtonColor: "#6c757d"
     }).then((result) => {
     if (result.isConfirmed) {
 
-    // 🔥 alerta con tiempo
+    $.post($(form).attr("action"), $(form).serialize(), function () {
+
     Swal.fire({
     title: "Eliminado",
     text: "Se eliminó correctamente",
     icon: "success",
-    iconColor: "#37FB00",
-    timer: 1050, //Temporixador XD
-    timerProgressBar: true,
+    iconColor: "#28a745",
+    timer: 1600,
     showConfirmButton: false
-    }).then(() => {
-    form.submit(); // se envía después del tiempo xd
     });
 
-    }
+    setTimeout(() => {
+    location.reload();
+    }, 1400);
+
     });
+    }
     });
     });
 </script>

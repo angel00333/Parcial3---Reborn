@@ -9,7 +9,7 @@
         <div class="modal-content">
 
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title">Eliminar Datos de Aerolineas</h5>
+                <h5 class="modal-title">Eliminar Datos de Aerolinea</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -18,10 +18,10 @@
                 <p class="text-secondary">@Model.Nombre_aerolinea</p>
 
                 <div class="alert alert-warning">
-                    <i class="bi bi-exclamation-triangle"></i> Esta acción no se puede deshacer.
+                    <i class="bi bi-exclamation-triangle"></i> ¡Esta acción no se puede deshacer!
                 </div>
 
-                <form asp-action="Delete" method="post" class="form-eliminar">
+                <form asp-action="Delete" method="post" class="form-eliminar-aerolinea">
                     <input type="hidden" name="id" asp-for="Id_aerolinea" />
 
                     <div class="d-flex justify-content-end gap-2">
@@ -36,3 +36,43 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).on("submit", ".form-eliminar-aerolinea", function (e) {
+    e.preventDefault();
+
+    const form = this;
+
+    Swal.fire({
+    title: "¿Estás seguro?",
+    text: "Esta información no se recuperará",
+    icon: "warning",
+    iconColor: "#FB0700",
+    showCancelButton: true,
+    confirmButtonText: "Sí, eliminar",
+    confirmButtonColor: "#dc3545",
+    cancelButtonText: "Cancelar",
+    cancelButtonColor: "#6c757d"
+    }).then((result) => {
+    if (result.isConfirmed) {
+
+    $.post($(form).attr("action"), $(form).serialize(), function () {
+
+    Swal.fire({
+    title: "Eliminado",
+    text: "Se eliminó correctamente",
+    icon: "success",
+    iconColor: "#28a745",
+    timer: 1600,
+    showConfirmButton: false
+    });
+
+    setTimeout(() => {
+    location.reload();
+    }, 1400);
+
+    });
+    }
+    });
+    });
+</script>
