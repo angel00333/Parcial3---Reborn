@@ -356,6 +356,7 @@ footer nav {
     color: red;
     font-size: 14px;
 }
+
 /* IMÁGENES SEGÚN ID_DESTINO */
 .destino-1 {
     background-image: url('/css/imgs/destinos/Brazil.png');
@@ -374,5 +375,65 @@ footer nav {
 }
 
 .destino-5 {
-    background-image: url('/imagenes/destinos/destino-5.png');
+    background-image: url('/css/imgs/destinos/Costa_Rica.png');
+}
+
+.destino-6 {
+    background-image: url('/css/imgs/destinos/España.png');
+}
+
+.destino-7 {
+    background-image: url('/css/imgs/destinos/Honduras.png');
+}
+
+.destino-8 {
+    background-image: url('/css/imgs/destinos/Guatemala.png');
+}
+
+.destino-9 {
+    background-image: url('/css/imgs/destinos/Belice.png');
+}
+
+.destino-10 {
+    background-image: url('/css/imgs/destinos/Canada.png');
+}
+
+.destino-11 {
+    background-image: url('/css/imgs/destinos/Japón.png');
+}
+
+.destino-12 {
+    background-image: url('/css/imgs/destinos/Colombia.png');
+}
+
+.destino-13 {
+    background-image: url('/css/imgs/destinos/México.png');
+}
+
+.destino-14 {
+    background-image: url('/css/imgs/destinos/Chile.png');
+}
+
+.destino-15 {
+    background-image: url('/css/imgs/destinos/República_Dominicana.png');
+}
+
+.destino-16 {
+    background-image: url('/css/imgs/destinos/Panama.png');
+}
+
+.destino-17 {
+    background-image: url('/css/imgs/destinos/Italia.png');
+}
+
+.destino-18 {
+    background-image: url('/css/imgs/destinos/Nicaragua.png');
+}
+
+.destino-19 {
+    background-image: url('/css/imgs/destinos/Perú.png');
+}
+
+.destino-14 {
+    background-image: url('/css/imgs/destinos/Rusia.png');
 }

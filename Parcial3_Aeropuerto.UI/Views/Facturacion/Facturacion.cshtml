@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Parcial3_Aeropuerto.EN.Facturacion>
+﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Facturacion>
 
 @{
     ViewData["Title"] = "Facturacion";
@@ -6,42 +6,96 @@
 
 <h1>Facturacion</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="row-md-6 mb-5">
+    <form asp-action="Facturacion" method="get" class="d-flex shadow-sm">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-search text-muted"></i>
+            </span>
+            <input type="text" name="buscar" class="form-control border-start-0"
+                   placeholder="Buscar facturaciones por mes..." value="@ViewData["buscar"]" />
+
+            <button type="submit" class="btn btn-primary">
+                Buscar
+            </button>
+
+            @if (!string.IsNullOrEmpty(Context.Request.Query["buscar"]))
+            {
+                <a asp-action="Facturacion" class="btn btn-outline-primary">Limpiar</a>
+            }
+
+        </div>
+    </form>
+</div>
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Facturacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Monto)
-            </th>
-            <th></th>
+            <th>Id Facturacion</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Items) {
         <tr>
+            <td>@item.Id_Facturacion</td>
+            <td>@item.Fecha</td>
+            <td>@item.Monto</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Facturacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Monto)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_Facturacion); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
+
+
+                    <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_Facturacion);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        @if (Model.PaginaActual > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Facturacion" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                <a class="page-link" asp-action="Facturacion" asp-route-paginas="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.PaginaActual < Model.TotalPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Facturacion" asp-route-paginas="@(Model.PaginaActual + 1)">Siguiente</a>
+            </li>
+        }
+    </ul>
+</nav>
+<div id="modalContainer"></div>
+
+<script>
+
+              function mostrarEdit(id) {
+        $.get('/Facturacion/Edit?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+
+            var modal = new bootstrap.Modal(document.getElementById('editModal'));
+            modal.show();
+        });
+    }
+
+        function mostrarDelete(id) {
+            $.get('/Facturacion/Delete?id=' + id, function (data) {
+                $('#modalContainer').html(data);
+
+                var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                modal.show();
+            });
+        }
+</script>

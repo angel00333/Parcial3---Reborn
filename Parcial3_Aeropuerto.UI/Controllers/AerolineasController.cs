@@ -15,6 +15,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AerolieasController
         public ActionResult Aerolineas(int paginas = 1, string buscar = "")
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             int registroPorPagina = 5;
 
             var lista = string.IsNullOrEmpty(buscar)
@@ -49,6 +56,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AerolieasController/Create
         public ActionResult Create()
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View();
         }
 
@@ -72,6 +86,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AerolieasController/Edit/5
         public ActionResult Edit(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var aerolineas = aerolineasBL.ObtenerAerolineasPorId(id);
             return View(aerolineas);
         }
@@ -94,6 +115,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AerolieasController/Delete/5
         public ActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View(aerolineasBL.ObtenerAerolineasPorId(id));
         }
 

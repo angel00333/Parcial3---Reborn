@@ -1,0 +1,80 @@
+﻿@model Parcial3_Aeropuerto.EN.Pasajero
+
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+
+            <div class="modal-header text-white" style="background:#203C73;">
+                <h5 class="modal-title fw-bold">
+                    Detalles del Pasajero
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body p-4">
+
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item">
+                        <strong>ID Pasajero:</strong> @Model.Id_pasajero
+                    </li>
+
+                    <li class="list-group-item">
+                        <strong>Nombre:</strong> @Model.Nombre
+                    </li>
+
+                    <li class="list-group-item">
+                        <strong>Apellido:</strong> @Model.Apellido
+                    </li>
+
+                    <li class="list-group-item">
+                        <strong>Pasaporte:</strong> @Model.Pasaporte
+                    </li>
+
+                    <li class="list-group-item">
+                        <strong>Edad:</strong> @Model.Edad
+                    </li>
+
+                    <li class="list-group-item">
+                        <strong>País:</strong> @Model.Pais
+                    </li>
+
+                    <li class="list-group-item">
+                        <strong>Visa:</strong> @Model.Visa
+                    </li>
+
+                </ul>
+
+            </div>
+            <div class="modal-footer border-0 px-4 pb-4">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <a href="javascript:void(0);"
+                   class="btn btn-success"
+                   onclick="mostrarEdit(@Model.Id_pasajero); return false;">
+                    Editar
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="modalContainer"></div>
+
+<script>
+    function mostrarEdit(id) {
+        $.get('/Pasajero/Edit?id=' + id, function (data) {
+            $('#modalContainer').html(data);
+
+            var modal = new bootstrap.Modal(document.getElementById('editModal'));
+            modal.show();
+        });
+    }
+</script>

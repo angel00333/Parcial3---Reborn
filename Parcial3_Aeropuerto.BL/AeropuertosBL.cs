@@ -32,5 +32,10 @@ namespace Parcial3_Aeropuerto.BL
         {
             return AeropuertosDAL.ObtenerAeropuertosPorId(id);
         }
+
+        public bool AeropuertoTieneDestino(int id)
+        {
+            return AeropuertosDAL.AeropuertoTieneDestino(id);
+        }
     }
 }

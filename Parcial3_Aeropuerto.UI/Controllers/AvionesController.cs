@@ -16,6 +16,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones
         public ActionResult Aviones(int paginas = 1, string buscar= "")
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             int registrosPorPagina = 5;
 
             var lista = string.IsNullOrEmpty(buscar)
@@ -50,6 +57,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones/Create
         public ActionResult Create()
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             //Se extrae la vista de Aerolineas hacia aviones/ GET
             ViewBag.Id_aerolinea = new SelectList(aerolineasBL.MostrarAerolineas(), "Id_aerolinea", "Nombre_aerolinea");
             return View();
@@ -75,6 +89,12 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones/Edit/5
         public ActionResult Edit(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
 
             ViewBag.Id_aerolinea= new SelectList(aerolineasBL.MostrarAerolineas(), "Id_aerolinea", "Nombre_aerolinea", avionesBL.ObtenerAvionesPorId(id).Aerolineas.Id_aerolinea);
             return View(avionesBL.ObtenerAvionesPorId(id));
@@ -99,6 +119,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: Aviones/Delete/5
         public ActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View(avionesBL.ObtenerAvionesPorId(id));
 
         }

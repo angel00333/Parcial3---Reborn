@@ -19,6 +19,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: ReservasController
         public ActionResult Reservas(int paginas, string buscar = "")
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             int registrosPorPagina = 5;
 
             var lista = string.IsNullOrEmpty(buscar)
@@ -51,6 +58,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: ReservasController/Create
         public ActionResult Create()
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             ViewBag.Pasajeros = pasajerosBL.MostrarPasajeros();
             ViewBag.Vuelos = vuelosBL.MostrarVuelos();
             ViewBag.Destinos = destinosBL.MostrarDestinos();
@@ -84,6 +98,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: ReservasController/Edit/5
         public ActionResult Edit(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            } 
+
             ViewBag.Pasajeros = pasajerosBL.MostrarPasajeros();
             ViewBag.Vuelos = vuelosBL.MostrarVuelos();
             ViewBag.Destinos = destinosBL.MostrarDestinos();
@@ -115,6 +136,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: ReservasController/Delete/5
         public ActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var reserva = reservasBL.ObtenerReservasPorId(id);
 
             ViewBag.Pasajero = pasajerosBL.ObtenerPasajeroPorId(reserva.Id_pasajero);
@@ -133,6 +161,13 @@ namespace Parcial3_Aeropuerto.Controllers
 
         public IActionResult Pdf(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var reserva = reservasBL.ObtenerReservasPorId(id);
 
             var modelo = new ReservasP

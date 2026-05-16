@@ -15,6 +15,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: PasajeroController
         public ActionResult Pasajero(int paginas = 1, string buscar = "")
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             int registrosPorPagina = 5;
 
             var lista = string.IsNullOrEmpty(buscar)
@@ -42,13 +49,20 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         }
         // GET: PasajeroController/Details/5
         public ActionResult Details(int id)
-        {
+        { 
             return View();
         }
 
         // GET: PasajeroController/Create
         public ActionResult Create()
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View();
         }
 
@@ -57,6 +71,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pasajero pasajero)
         {
+
             if (ModelState.IsValid)
             {
                 pasajeroBL.AgregarPasajero(pasajero);
@@ -69,6 +84,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: PasajeroController/Edit/5
         public ActionResult Edit(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return PartialView(pasajeroBL.ObtenerPasajeroPorId(id));
         }
 
@@ -77,6 +99,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Pasajero pasajero)
         {
+
             if (ModelState.IsValid)
             {
                 pasajeroBL.ModificarPasajero(pasajero);
@@ -88,6 +111,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: PasajeroController/Delete/5
         public ActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return PartialView("Delete", pasajeroBL.ObtenerPasajeroPorId(id));
         }
 
@@ -96,6 +126,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+
             if (pasajeroBL.PasajeroTieneReserva(id))
             {
                 TempData["SMSError"] = "No se puede eliminar este pasajero porque tiene reservas relacionadas.";

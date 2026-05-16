@@ -15,6 +15,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: VuelosController
         public ActionResult Vuelos(int paginas = 1, string buscar="")
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             int RegistrosPorPagina = 4; 
 
             var lista = string.IsNullOrEmpty(buscar)
@@ -54,6 +61,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: VuelosController/Create
         public ActionResult Create()
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             ViewBag.Aviones = avionesBL.MostrarAviones();
             ViewBag.Destinos = destinosBL.MostrarDestinos();
             ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
@@ -81,6 +95,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: VuelosController/Edit/5
         public ActionResult Edit(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             ViewBag.Aviones = avionesBL.MostrarAviones();
             ViewBag.Destinos = destinosBL.MostrarDestinos();
             ViewBag.Aerolineas = aerolineasBL.MostrarAerolineas();
@@ -106,6 +127,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: VuelosController/Delete/5
         public ActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var vuelo = vuelosBL.ObtenerVuelosPorId(id);
 
             ViewBag.Destino = destinosBL.ObtenerDestinosPorId(vuelo.Id_destino);

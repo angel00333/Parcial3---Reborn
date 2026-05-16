@@ -9,6 +9,27 @@
     <a href="javascript:void(0)" class="btn btn-primary" onclick="mostrarCreate()"><img class="acciones" src="~/css/imgs/iconosacciones/agregar.png" /></a>
 </p>
 
+<div class="row-md-6 mb-5">
+    <form asp-action="Destinos" method="get" class="d-flex shadow-sm">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-search text-muted"></i>
+            </span>
+            <input type="text" name="buscar" class="form-control border-start-0"
+                   placeholder="Buscar por nombre del destino..." value="@ViewData["buscar"]" />
+
+            <button type="submit" class="btn btn-primary">
+                Buscar
+            </button>
+
+            @if (!string.IsNullOrEmpty(Context.Request.Query["buscar"]))
+            {
+                <a asp-action="Destinos" class="btn btn-outline-primary">Limpiar</a>
+            }
+
+        </div>
+    </form>
+ </div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -21,8 +42,8 @@
 @foreach (var item in Model.Items) {
         <tr>
             <td>@item.Id_destino</td>
-            <td>@item.Aeropuertos.Nombre_aeropuerto</td>
-            <td>@item.Nombre_destino</td>
+            <td>@item?.Aeropuertos?.Nombre_aeropuerto</td>
+            <td>@item?.Nombre_destino</td>
             
                     <td>
                         <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_destino); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>

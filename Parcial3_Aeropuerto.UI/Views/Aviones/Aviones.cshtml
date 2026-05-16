@@ -20,7 +20,7 @@
             <input type="text" name="buscar" class="form-control border-start-0"
                    placeholder="Buscar por nombre o apellido..." value="@ViewData["buscar"]" />
 
-            <button type="submit" class=" btn text-white" style="background-color: blue">
+            <button type="submit" class=" btn btn-primary">
                 Buscar
             </button>
 
@@ -61,7 +61,6 @@
             <td>
                     <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_avion); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
                     <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_avion);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
-                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="mostrarDetails(@item.Id_avion);"><img class="acciones" src="/css/imgs/iconosacciones/detalle.png" /></a>
                     
 
             </td>

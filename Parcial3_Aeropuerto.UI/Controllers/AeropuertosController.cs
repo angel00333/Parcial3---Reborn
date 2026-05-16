@@ -15,6 +15,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AeropuertosController
         public ActionResult Aeropuertos( int paginas,  string buscar = "")
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             int registrosPorPagina = 5;
 
             var lista = string.IsNullOrEmpty(buscar)
@@ -52,6 +59,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AeropuertosController/Create
         public ActionResult Create()
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View();
         }
 
@@ -74,6 +88,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AeropuertosController/Edit/5
         public ActionResult Edit(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View(aeropuertosBL.ObtenerAeropuertoPorId(id));
         }
 
@@ -94,6 +115,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: AeropuertosController/Delete/5
         public ActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("Login", "Login");
+            } 
+
             return View(aeropuertosBL.ObtenerAeropuertoPorId(id));
         }
 
@@ -104,7 +132,15 @@ namespace Parcial3_Aeropuerto.Controllers
 
         public ActionResult DeleteConfirmed(int id)
         {
+            if (aeropuertosBL.AeropuertoTieneDestino(id))
+            {
+                TempData["SMSError"] = "No se puede eliminar este aeropuerto porque tiene destino relacionado.";
+                return RedirectToAction("Aeropuertos");
+            }
+
             aeropuertosBL.EliminarAeropuertos(id);
+            TempData["SMSExito"] = "El aeropuerto se eliminó correctamente.";
+
             return RedirectToAction("Aeropuertos");
 
         }

@@ -88,6 +88,30 @@ namespace Parcial3_Aeropuerto.DAL
                 return facturacion;
             }
         }
+
+        public static List<Facturacion> BuscarFacturacion(string criterio)
+        {
+            List<Facturacion> tFacturacion = new List<Facturacion>();
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+                string sql = "SELECT * FROM Facturacion WHERE Id_Facturacion LIKE @C OR Fecha LIKE @C OR CASE MONTH(Fecha) WHEN 1 THEN 'Enero' WHEN 2 THEN 'Febrero' WHEN 3 THEN 'Marzo' WHEN 4 THEN 'Abril' WHEN 5 THEN 'Mayo' WHEN 6 THEN 'Junio' WHEN 7 THEN 'Julio' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Septiembre' WHEN 10 THEN 'Octubre' WHEN 11 THEN 'Noviembre' WHEN 12 THEN 'Diciembre' END LIKE @C";
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.Parameters.AddWithValue("@C", "%" + criterio + "%");
+                IDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    Facturacion facturacion = new Facturacion();
+                    facturacion.Id_Facturacion = reader.GetInt32(0);
+                    facturacion.Fecha = DateOnly.FromDateTime(reader.GetDateTime(1));
+                    facturacion.Monto = reader.GetDouble(2);
+                    tFacturacion.Add(facturacion);
+                }
+                con.Close();
+                return tFacturacion;
+            }
+
+        }
     }
 }
 

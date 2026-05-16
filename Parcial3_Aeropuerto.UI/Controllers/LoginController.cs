@@ -35,7 +35,11 @@ namespace Parcial3_Aeropuerto.UI.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                else 
+                else if(usuario.Nombre_rol == "Gerente")
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
                 {
                     return RedirectToAction("Index", "Home");
                 }

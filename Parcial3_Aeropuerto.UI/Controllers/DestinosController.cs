@@ -14,6 +14,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: DestinosController
         public ActionResult Destinos(int paginas, string buscar = "")
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
             int registrosPorPagina = 5;
 
             var lista = string.IsNullOrEmpty(buscar)

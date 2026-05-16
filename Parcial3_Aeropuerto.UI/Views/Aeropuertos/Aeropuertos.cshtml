@@ -20,7 +20,7 @@
             <input type="text" name="buscar" class="form-control border-start-0"
                    placeholder="Buscar por nombre o pais..." value="@ViewData["buscar"]" />
 
-            <button type="submit" class=" btn text-white" style="background-color: blue">
+            <button type="submit" class=" btn btn-primary">
                 Buscar
             </button>
 
@@ -54,8 +54,6 @@
                     <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_aeropuerto); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
 
                     <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_aeropuerto);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
-
-                    <a class="btn btn-primary btn-sm"><img class="acciones" src="~/css/imgs/iconosacciones/detalle.png" /></a>
                 </td>
         </tr>
 }
@@ -66,7 +64,7 @@
         @if (Model.PaginaActual > 1)
         {
             <li class="page-item">
-                <a class="page-link" asp-action="Pasajero" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
+                <a class="page-link" asp-action="Aeropuertos" asp-route-paginas="@(Model.PaginaActual - 1)">Anterior</a>
             </li>
         }
 
@@ -113,6 +111,8 @@
         });
     }
 </script>
+
+
 @*LLamo la fucnion de alerta desde aquí por motivos de procesamiento de datos de validación_NG*@
 @if (TempData["SMSExito"] != null)
 {
@@ -128,5 +128,41 @@
         showConfirmButton: false
         });
     </script>
-    
+
+}
+@{
+    var smsExito = TempData["SMSExito"]?.ToString();
+    var smsError = TempData["SMSError"]?.ToString();
+}
+
+@if (!string.IsNullOrWhiteSpace(smsError))
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        Swal.fire({
+        title: "No se puede eliminar",
+        text: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(smsError)),
+        icon: "warning",
+        color: "#000000",
+        iconColor: "#F5650C",
+        confirmButtonText: "Entendido"
+        });
+    </script>
+}
+else if (!string.IsNullOrWhiteSpace(smsExito))
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        Swal.fire({
+        title: "¡Excelente!",
+        text: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(smsExito)),
+        icon: "success",
+        color: "#000000",
+        iconColor: "#25E17A",
+        timer: 1500,
+        showConfirmButton: false
+        });
+    </script>
 }

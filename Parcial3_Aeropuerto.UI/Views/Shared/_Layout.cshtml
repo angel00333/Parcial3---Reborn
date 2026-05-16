@@ -32,7 +32,7 @@
 
             @if (!string.IsNullOrEmpty(usuario))
             {
-                @if (rol == "Usuario")
+                @if (rol == "Recepcionista")
                 {
                 <nav class="menu-derecha">
                     <div class="cerrarsesion">
@@ -42,7 +42,7 @@
 
                 <div class="user-izquierda">
                 
-                    <img class="usericon" src="~/css/imgs/users/usuario.png" />
+                    <img class="usericon" src="~/css/imgs/users/recepcionista-3.png" />
 
                     <div class="usertext">
                                 <span class="nombre">@usuario</span>
@@ -52,6 +52,22 @@
                 </div>
                 }
 
+                @if (rol == "Gerente")
+                {
+                    <nav class="menu-derecha">
+                        <div class="cerrarsesion">
+                            <a class="btn btn-outline-light mx-2" asp-controller="Login" asp-action="CerrarSesion">Cerrar sesión</a>
+                        </div>
+                    </nav>
+                    <div class="user-izquierda">
+                        <img class="usericon" src="~/css/imgs/users/gerente.png" />
+                        <div class="usertext">
+                            <span class="nombre">@usuario</span>
+                            <span class="rol">@rol</span>
+                        </div>
+                    </div>
+                }
+                
                 @if (rol == "Administrador")
                 {
                     <nav class="menu-derecha">
@@ -82,6 +98,9 @@
                         </div>
 
                     </div>
+
+                            
+
                 }
             }
                     
@@ -104,15 +123,18 @@
                    asp-controller="Reservas" asp-action="Reservas">Reservas</a>
             </div>
             <div class="footer-boton">
-                <img src="~/css/imgs/iconosbotones/facturacion.png" />
-                <a class="btn btn-outline-light mx-2"
-                   asp-controller="Facturacion" asp-action="Facturacion">Facturación</a>
-            </div>
-            <div class="footer-boton">
                 <img src="~/css/imgs/iconosbotones/pasajero.png" />
                 <a class="btn btn-outline-light mx-2"
                    asp-controller="Pasajero" asp-action="Pasajero">Pasajeros</a>
             </div>
+            @if (rol == "Administrador" || rol == "Gerente")
+            {
+            <div class="footer-boton">
+                <img src="~/css/imgs/iconosbotones/facturacion.png" />
+                <a class="btn btn-outline-light mx-2"
+                   asp-controller="Facturacion" asp-action="Facturacion">Facturación</a>
+            </div>
+            }
             <div class="footer-boton">
                 <img src="~/css/imgs/iconosbotones/vuelos.png" />
                 <a class="btn btn-outline-light mx-2"

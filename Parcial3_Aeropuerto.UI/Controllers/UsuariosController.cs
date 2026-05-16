@@ -41,6 +41,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: UsuariosController/Create
         public ActionResult Create()
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
             ViewBag.Roles = rolBL.MostrarRoles();
             return View();
         }
@@ -67,6 +74,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: UsuariosController/Edit/5
         public ActionResult Edit(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
             ViewBag.Roles = rolBL.MostrarRoles();
             return View(usuariosBL.ObtenerUsuarioPorId(id));
         }
@@ -88,6 +102,13 @@ namespace Parcial3_Aeropuerto.Controllers
         // GET: UsuariosController/Delete/5
         public ActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
             return View(usuariosBL.ObtenerUsuarioPorId(id));
         }
 

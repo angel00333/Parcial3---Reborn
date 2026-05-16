@@ -10,9 +10,39 @@ namespace Parcial3_Aeropuerto.UI.Controllers
     {
         FacturacionBL facturacionBL = new FacturacionBL();
         // GET: FacturacionController
-        public ActionResult Facturacion()
+        public ActionResult Facturacion(int paginas, string buscar = "")
         {
-            return View(facturacionBL.MostrarFacturaciones());
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
+            int registrosPorPagina = 5;
+
+            var lista = string.IsNullOrEmpty(buscar)
+                ? facturacionBL.MostrarFacturaciones()
+                : facturacionBL.BuscarFacturacion(buscar);
+
+            var totalRegistros = lista.Count();
+
+            var facturaciones = lista
+                .OrderBy(p => p.Id_Facturacion)
+                .Skip((paginas - 1) * registrosPorPagina)
+                .Take(registrosPorPagina)
+                .ToList();
+
+            var modelo = new Paginacion<Facturacion>
+            {
+                Items = facturaciones,
+                PaginaActual = paginas,
+                TotalPaginas = (int)Math.Ceiling((double)totalRegistros / registrosPorPagina)
+            };
+
+            ViewBag.Buscar = buscar;
+
+            return View("Facturacion", modelo);
         }
 
         // GET: FacturacionController/Details/5

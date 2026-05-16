@@ -27,6 +27,11 @@ namespace Parcial3_Aeropuerto.BL
         public List<Facturacion> MostrarFacturaciones()
         {
             return FacturacionDAL.MostrarFacturaciones();
-        }   
+        }  
+        
+        public List<Facturacion> BuscarFacturacion(string criterio)
+        {
+            return FacturacionDAL.BuscarFacturacion(criterio);
+        }
     }
 }
