@@ -40,5 +40,10 @@ namespace Parcial3_Aeropuerto.BL
         }
 
         public AerolineasBL aerolineasBL = new AerolineasBL();
+
+        public bool AvionTieneVuelos(int id)
+        {
+            return AvionesDAL.AvionTieneVuelo(id);
+        }
     }
 }

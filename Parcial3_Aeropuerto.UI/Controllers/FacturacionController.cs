@@ -14,7 +14,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Administrador")
+            if (rol != "Administrador" && rol != "Gerente")
             {
                 return RedirectToAction("AccesoDenegado", "Login");
             }

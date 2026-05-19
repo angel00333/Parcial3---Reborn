@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.Operations;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using MySqlConnector;
 using Parcial3_Aeropuerto.BL;
+using Parcial3_Aeropuerto.DAL;
 using Parcial3_Aeropuerto.EN; // Agrega esta línea para incluir el espacio de nombres de tu modelo
 
 namespace Parcial3_Aeropuerto.Controllers
@@ -18,7 +19,7 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -136,7 +137,16 @@ namespace Parcial3_Aeropuerto.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (avionesBL.AvionTieneVuelos(id))
+            {
+                TempData["SMSError"] = "No se puede eliminar este avión porque tiene vuelos relacionados.";
+                return RedirectToAction("Aviones");
+            }
+
             avionesBL.EliminarAviones(id);
+            TempData["SMSExito"] = "El avión se eliminó correctamente.";
+
+            
             return RedirectToAction("Aviones");
 
         }

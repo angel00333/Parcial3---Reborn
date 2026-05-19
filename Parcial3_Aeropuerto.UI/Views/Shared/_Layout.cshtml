@@ -117,6 +117,7 @@
     <!-- MENU ABAJO CENTRADO -->
     <footer class="bg-dark text-center py-3 fixed-bottom">
         <nav>
+
             <div class="footer-boton">
                 <img src="~/css/imgs/iconosbotones/reserva.png" />
                 <a class="btn btn-outline-light mx-2"
@@ -127,6 +128,7 @@
                 <a class="btn btn-outline-light mx-2"
                    asp-controller="Pasajero" asp-action="Pasajero">Pasajeros</a>
             </div>
+
             @if (rol == "Administrador" || rol == "Gerente")
             {
             <div class="footer-boton">
