@@ -21,7 +21,7 @@ namespace Parcial3_Aeropuerto.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             int registrosPorPagina = 5;
@@ -60,9 +60,9 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             //Se extrae la vista de Aerolineas hacia aviones/ GET
@@ -92,9 +92,9 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             ViewBag.Id_aerolinea= new SelectList(aerolineasBL.MostrarAerolineas(), "Id_aerolinea", "Nombre_aerolinea", avionesBL.ObtenerAvionesPorId(id).Aerolineas.Id_aerolinea);
@@ -122,9 +122,9 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             return View(avionesBL.ObtenerAvionesPorId(id));

@@ -13,13 +13,13 @@ namespace Parcial3_Aeropuerto.Controllers
     {
         AeropuertosBL aeropuertosBL = new AeropuertosBL();
         // GET: AeropuertosController
-        public ActionResult Aeropuertos( int paginas,  string buscar = "")
+        public ActionResult Aeropuertos( int paginas = 1,  string buscar = "")
         {
             var rol = HttpContext.Session.GetString("Rol");
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             int registrosPorPagina = 5;
@@ -61,9 +61,9 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             return View();
@@ -90,9 +90,9 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             return View(aeropuertosBL.ObtenerAeropuertoPorId(id));
@@ -117,9 +117,9 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             } 
 
             return View(aeropuertosBL.ObtenerAeropuertoPorId(id));

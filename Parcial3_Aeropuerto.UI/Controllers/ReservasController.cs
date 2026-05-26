@@ -60,7 +60,7 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -100,7 +100,7 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
                 return RedirectToAction("Login", "Login");
             } 
@@ -138,7 +138,7 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -163,7 +163,7 @@ namespace Parcial3_Aeropuerto.Controllers
         {
             var rol = HttpContext.Session.GetString("Rol");
 
-            if (rol != "Usuario" && rol != "Gerente" && rol != "Administrador")
+            if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
                 return RedirectToAction("Login", "Login");
             }

@@ -12,7 +12,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
         DestinosBL destinosBL = new DestinosBL();
         // GET: DestinosController
-        public ActionResult Destinos(int paginas, string buscar = "")
+        public ActionResult Destinos(int paginas = 1, string buscar = "")
         {
             var rol = HttpContext.Session.GetString("Rol");
 
@@ -56,6 +56,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: DestinosController/Create
         public ActionResult Create()
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
             ViewBag.Id_aeropuerto = new SelectList(aeropuertosBL.MostrarAeropuertos(), "Id_aeropuerto", "Nombre_aeropuerto");
             return View();
         }
@@ -80,6 +87,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: DestinosController/Edit/5
         public ActionResult Edit(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
             ViewBag.Id_aeropuerto = new SelectList(aeropuertosBL.MostrarAeropuertos(), "Id_aeropuerto", "Nombre_aeropuerto", destinosBL.ObtenerDestinosPorId(id).Aeropuertos.Id_aeropuerto );
             return View(destinosBL.ObtenerDestinosPorId(id));
         }
@@ -102,6 +116,13 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         // GET: DestinosController/Delete/5
         public ActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+
+            if (rol != "Gerente" && rol != "Administrador")
+            {
+                return RedirectToAction("AccesoDenegado", "Login");
+            }
+
             return View(destinosBL.ObtenerDestinosPorId(id));
         }
 

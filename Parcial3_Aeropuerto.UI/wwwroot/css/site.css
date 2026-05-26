@@ -336,25 +336,29 @@ footer nav {
 }
 
 .fondo-overlay {
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.7);
     border-radius: 0.375rem;
     height: 100%;
 }
 
 /*Texto de la card*/
-.card-text-En {
-    color: green;
+
+.card-text-En.Espera {
+    color: greenyellow;
     font-size: 14px;
+    font-weight: bold;
 }
 
-.card-text-Curso {
-    color: green;
+.card-text-En.Curso {
+    color: cyan;
     font-size: 14px;
+    font-weight: bold;
 }
 
 .card-text-Finalizado {
     color: red;
     font-size: 14px;
+    font-weight: bold;
 }
 
 /* IMÁGENES SEGÚN ID_DESTINO */

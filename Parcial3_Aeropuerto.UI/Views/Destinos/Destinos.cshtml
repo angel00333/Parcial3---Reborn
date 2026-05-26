@@ -1,12 +1,20 @@
 ﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Destinos>
+@inject IHttpContextAccessor HttpContextAccessor
 
+@{
+    var usuario = Context.Session.GetString("Usuario");
+    var rol = Context.Session.GetString("Rol");
+}
 @{
     ViewData["Title"] = "Destinos";
 }
 
 <h1>Destinos</h1>
 <p>
+    @if(rol == "Administrador" || rol == "Gerente")
+     {
     <a href="javascript:void(0)" class="btn btn-primary" onclick="mostrarCreate()"><img class="acciones" src="~/css/imgs/iconosacciones/agregar.png" /></a>
+     }
 </p>
 
 <div class="row-md-6 mb-5">
@@ -46,10 +54,12 @@
             <td>@item?.Nombre_destino</td>
             
                     <td>
+                        @if (rol == "Administrador" || rol == "Gerente")
+                    {
                         <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_destino); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
-
                         <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_destino);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
-                    </td>
+                    }
+                </td>
             
         </tr>
 }

@@ -1,5 +1,10 @@
 ﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Aerolineas>
+@inject IHttpContextAccessor HttpContextAccessor
 
+@{
+    var usuario = Context.Session.GetString("Usuario");
+    var rol = Context.Session.GetString("Rol");
+}
 @{
     ViewData["Title"] = "Aerolineas";
 }
@@ -7,7 +12,10 @@
 <h1>Aerolineas</h1>
 
 <p>
+    @if (rol == "Administrador" || rol == "Gerente")
+     {
     <a href="javascript:void(0)" class="btn btn-primary" onclick="mostrarCreate()"><img class="acciones" src="~/css/imgs/iconosacciones/agregar.png" /></a>
+     }
 </p>
 
 <div class="row-md-6 mb-5">
@@ -40,6 +48,7 @@
         <tr>
             <th>Id Aerolineas</th>
             <th>Nombre Aerolinea</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -49,8 +58,11 @@
            <td>@Html.DisplayFor(modelItem => item.Nombre_aerolinea)</td>
 
              <td>
+                @if (rol == "Administrador" || rol == "Gerente")
+                {
                 <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_aerolinea); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
                 <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_aerolinea);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
+                }
             </td>
         </tr>
 

@@ -1,4 +1,10 @@
 ﻿@model Parcial3_Aeropuerto.EN.Paginacion<Parcial3_Aeropuerto.EN.Vuelos>
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var usuario = Context.Session.GetString("Usuario");
+    var rol = Context.Session.GetString("Rol");
+}
 
 @{
     ViewData["Title"] = "Vuelos";
@@ -8,7 +14,10 @@
 <h1>Vuelos</h1>
 
 <p>
+    @if(rol == "Administrador" || rol == "Gerente")
+     {
     <a href="javascript:void(0)" class="btn btn-primary" onclick="mostrarCreate()"><img class="acciones" src="~/css/imgs/iconosacciones/agregar.png" /></a>
+     }
 </p>
 
 <form asp-action="Vuelos" method="get" class="d-flex shadow-sm">
@@ -62,9 +71,11 @@
                         </p>
 
                         <div class="d-flex flex-wrap gap-2">
-                            <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_vuelo); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
-                            
-                            <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_vuelo);"><img class="acciones" src="~/css/imgs/iconosacciones/eliminar.png" /></a>
+                            @if (rol == "Administrador" || rol == "Gerente")
+                            {
+                                <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_vuelo); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
+                                <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_vuelo);"><img class="acciones" src="~/css/imgs/iconosacciones/eliminar.png" /></a>
+                            }
                         </div>
                     </div>
                 </div>
