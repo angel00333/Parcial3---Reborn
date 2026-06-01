@@ -268,15 +268,15 @@ footer nav {
     --bs-btn-bg: #203c73;
     --bs-btn-border-color: #203c73;
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #0b5ed7;
-    --bs-btn-hover-border-color: #0a58ca;
-    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-hover-bg: #1a315f;
+    --bs-btn-hover-border-color: #162a52;
+    --bs-btn-focus-shadow-rgb: 32, 60, 115;
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #0a58ca;
-    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-active-bg: #162a52;
+    --bs-btn-active-border-color: #132447;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-bg: #203c73;
     --bs-btn-disabled-border-color: #203c73;
 }
 /*Maistrou de detalle mis compas'! Ejejejeje*/
@@ -336,7 +336,7 @@ footer nav {
 }
 
 .fondo-overlay {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 0.375rem;
     height: 100%;
 }
@@ -363,81 +363,98 @@ footer nav {
 
 /* IMÁGENES SEGÚN ID_DESTINO */
 .destino-1 {
-    background-image: url('/css/imgs/destinos/Brazil.png');
-}
-
-.destino-2 {
-    background-image: url('/css/imgs/destinos/Estados_Unidos.png');
-}
-
-.destino-3 {
-    background-image: url('/css/imgs/destinos/El_Salvador.png');
-}
-
-.destino-4 {
     background-image: url('/css/imgs/destinos/Argentina.png');
 }
 
-.destino-5 {
-    background-image: url('/css/imgs/destinos/Costa_Rica.png');
-}
-
-.destino-6 {
-    background-image: url('/css/imgs/destinos/España.png');
-}
-
-.destino-7 {
-    background-image: url('/css/imgs/destinos/Honduras.png');
-}
-
-.destino-8 {
-    background-image: url('/css/imgs/destinos/Guatemala.png');
-}
-
-.destino-9 {
+.destino-2 {
     background-image: url('/css/imgs/destinos/Belice.png');
 }
 
-.destino-10 {
+.destino-3 {
+    background-image: url('/css/imgs/destinos/Brazil.png');
+}
+
+.destino-4 {
     background-image: url('/css/imgs/destinos/Canada.png');
 }
 
-.destino-11 {
-    background-image: url('/css/imgs/destinos/Japón.png');
-}
-
-.destino-12 {
-    background-image: url('/css/imgs/destinos/Colombia.png');
-}
-
-.destino-13 {
-    background-image: url('/css/imgs/destinos/México.png');
-}
-
-.destino-14 {
+.destino-5 {
     background-image: url('/css/imgs/destinos/Chile.png');
 }
 
-.destino-15 {
-    background-image: url('/css/imgs/destinos/República_Dominicana.png');
+.destino-6 {
+    background-image: url('/css/imgs/destinos/Colombia.png');
 }
 
-.destino-16 {
-    background-image: url('/css/imgs/destinos/Panama.png');
+.destino-7 {
+    background-image: url('/css/imgs/destinos/Costa_Rica.png');
 }
 
-.destino-17 {
+.destino-8 {
+    background-image: url('/css/imgs/destinos/El_Salvador.png');
+}
+
+.destino-9 {
+    background-image: url('/css/imgs/destinos/España.png');
+}
+
+.destino-10 {
+    background-image: url('/css/imgs/destinos/Estados_Unidos.png');
+}
+
+.destino-11 {
+    background-image: url('/css/imgs/destinos/Guatemala.png');
+}
+
+.destino-12 {
+    background-image: url('/css/imgs/destinos/Honduras.png');
+}
+
+.destino-13 {
     background-image: url('/css/imgs/destinos/Italia.png');
 }
 
-.destino-18 {
+.destino-14 {
+    background-image: url('/css/imgs/destinos/Japón.png');
+}
+
+.destino-15 {
+    background-image: url('/css/imgs/destinos/México.png');
+}
+
+.destino-16 {
     background-image: url('/css/imgs/destinos/Nicaragua.png');
 }
 
-.destino-19 {
+.destino-17 {
+    background-image: url('/css/imgs/destinos/Panama.png');
+}
+
+.destino-18 {
     background-image: url('/css/imgs/destinos/Perú.png');
 }
 
-.destino-14 {
+.destino-19 {
+    background-image: url('/css/imgs/destinos/República_Dominicana.png');
+}
+
+.destino-20 {
     background-image: url('/css/imgs/destinos/Rusia.png');
+}
+
+.btn-orange {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #FFA116;
+    --bs-btn-border-color: #FFA116;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #e68f0f;
+    --bs-btn-hover-border-color: #cc7f0d;
+    --bs-btn-focus-shadow-rgb: 255, 161, 22;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #cc7f0d;
+    --bs-btn-active-border-color: #b36f0b;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #FFA116;
+    --bs-btn-disabled-border-color: #FFA116;
 }

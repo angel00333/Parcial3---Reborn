@@ -17,7 +17,7 @@ namespace Parcial3_Aeropuerto.Controllers
         AvionesBL avionesBL = new AvionesBL();
         DestinosBL destinosBL = new DestinosBL();
         // GET: ReservasController
-        public ActionResult Reservas(int paginas, string buscar = "")
+        public ActionResult Reservas(int paginas = 1, string buscar = "")
         {
             var rol = HttpContext.Session.GetString("Rol");
 

@@ -132,7 +132,14 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+            if(destinosBL.DestinoTieneVuelo(id))
+            {
+                TempData["SMSError"] = "No se puede eliminar este destino porque tiene vuelos relacionados.";
+                return RedirectToAction("Destinos");
+            }
             destinosBL.EliminarDestino(id);
+            TempData["SMSExito"] = "El destino se eliminó correctamente.";
+
             return RedirectToAction("Destinos");
         }
     }

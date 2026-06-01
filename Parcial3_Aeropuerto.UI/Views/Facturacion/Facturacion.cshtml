@@ -4,7 +4,7 @@
     ViewData["Title"] = "Facturacion";
 }
 
-<h1>Facturacion</h1>
+<h1>Lista de Facturaciones</h1>
 
 <div class="row-md-6 mb-5">
     <form asp-action="Facturacion" method="get" class="d-flex shadow-sm">
@@ -42,11 +42,9 @@
         <tr>
             <td>@item.Id_Facturacion</td>
             <td>@item.Fecha</td>
-            <td>@item.Monto</td>
+            <td>$ @item.Monto</td>
             <td>
                     <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_Facturacion); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
-
-
                     <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_Facturacion);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
             </td>
         </tr>

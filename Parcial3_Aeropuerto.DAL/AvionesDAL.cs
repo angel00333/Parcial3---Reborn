@@ -43,7 +43,7 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "SELECT*FROM Aviones WHERE Id_avion LIKE @C OR Capacidad LIKE @C";
+                string sql = @"SELECT a.Id_avion, a.Id_aerolinea, e.Nombre_aerolinea, a.Capacidad FROM Aviones a INNER JOIN Aerolineas e ON a.Id_aerolinea = e.Id_aerolinea WHERE e.Nombre_aerolinea LIKE @C";
                 MySqlCommand comando = new MySqlCommand(sql, con);
 
                 comando.Parameters.AddWithValue("@C", "%" + criterio + "%");
@@ -55,7 +55,11 @@ namespace Parcial3_Aeropuerto.DAL
                     {
                         Id_avion = reader.GetInt32(0),
                         Id_aerolinea = reader.GetInt32(1),
-                        Capacidad = reader.GetInt32(2)
+                        Aerolineas = new Aerolineas
+                        {
+                            Nombre_aerolinea = reader.GetString(2)
+                        },
+                        Capacidad = reader.GetInt32(3)
 
                     });
                 }

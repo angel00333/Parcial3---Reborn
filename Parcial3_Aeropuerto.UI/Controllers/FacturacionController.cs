@@ -10,7 +10,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
     {
         FacturacionBL facturacionBL = new FacturacionBL();
         // GET: FacturacionController
-        public ActionResult Facturacion(int paginas, string buscar = "")
+        public ActionResult Facturacion(int paginas = 1, string buscar = "")
         {
             var rol = HttpContext.Session.GetString("Rol");
 

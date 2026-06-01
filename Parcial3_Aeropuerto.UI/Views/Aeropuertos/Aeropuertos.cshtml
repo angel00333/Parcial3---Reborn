@@ -9,7 +9,7 @@
     ViewData["Title"] = "Aeropuertos";
 }
 
-<h1>Datos Aeropuerto</h1>
+<h1>Lista de Aeropuertos</h1>
 
 <p>
     @if(rol == "Administrador" || rol == "Gerente")
@@ -62,6 +62,10 @@
             {
                     <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_aeropuerto); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
                     <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_aeropuerto);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
+            }
+            else
+            {
+                <span>Sin Acciones</span>
             }
                 </td>
         </tr>

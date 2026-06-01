@@ -10,11 +10,11 @@ namespace Parcial3_Aeropuerto.EN
         public int Id_pasajero { get; set; }
 
         [Required(ErrorMessage = "El nombre es obligatorio.")]
-        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "El nombre solo puede contener letras y espacios.")]
+        [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", ErrorMessage = "El nombre solo puede contener letras y espacios.")]
         public string Nombre { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El apellido es obligatorio.")]
-        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "El apellido solo puede contener letras y espacios.")]
+        [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", ErrorMessage = "El apellido solo puede contener letras y espacios.")]
         public string Apellido { get; set; } = string.Empty;
 
         public string Pasaporte { get; set; } = string.Empty;
@@ -24,7 +24,7 @@ namespace Parcial3_Aeropuerto.EN
         public int Edad { get; set; }
 
         [Required(ErrorMessage = "El país es obligatorio.")]
-        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "El país solo puede contener letras y espacios.")]
+        [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", ErrorMessage = "El país solo puede contener letras y espacios.")]
         public string Pais { get; set; } = string.Empty;
 
         public string Visa { get; set; } = string.Empty;

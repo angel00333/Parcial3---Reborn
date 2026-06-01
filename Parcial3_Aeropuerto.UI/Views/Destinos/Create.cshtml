@@ -24,9 +24,9 @@
 
                         <select asp-for="Id_aeropuerto"
                                 asp-items="ViewBag.Id_aeropuerto"
-                                id="Id_aerolineax"
+                                id="Id_aeropuertox"
                                 class="form-select">
-                            <option value="">Seleccione o busque una aerolínea</option>
+                            <option value="">Seleccione o busque una aeropuerto</option>
                         </select>
 
                         <span asp-validation-for="Id_aeropuerto" class="text-danger small"></span>
@@ -62,10 +62,10 @@
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script> @*Es la funcion del TomSelect*@
 <script>
     setTimeout(() => {
-    const select = document.querySelector("#Id_aerolineax");
+    const select = document.querySelector("#Id_aeropuertox");
 
     if (select && !select.tomselect) {
-    const ts = new TomSelect("#Id_aerolineax", {
+    const ts = new TomSelect("#Id_aeropuertox", {
     create: false,
     allowEmptyOption: false,
     maxOptions: 1000,
@@ -78,7 +78,7 @@
     ts.clear(true);
 
     ts.on("change", function () {
-    $("#Id_aerolineax").valid();
+    $("#Id_aeropuertox").valid();
     });
     }
     }, 200);

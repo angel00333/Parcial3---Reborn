@@ -62,7 +62,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Costo" class="form-label"></label>
-                <input asp-for="Costo" class="form-control" />
+                        <input asp-for="Costo" type="number" min="0" step="0.01" class="form-control" />
                 <span asp-validation-for="Costo" class="text-danger"></span>
             </div>
                     <div class="mb-3">

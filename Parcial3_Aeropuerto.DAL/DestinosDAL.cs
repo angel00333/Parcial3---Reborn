@@ -129,6 +129,22 @@ namespace Parcial3_Aeropuerto.DAL
             
         }
 
-       
+        public static bool DestinoTieneVuelo(int id)
+        {
+            using (MySqlConnection con = ConexionSQL.Conectar())
+            {
+                con.Open();
+
+                string sql = "SELECT COUNT(*) FROM Vuelos WHERE Id_destino = @Id_destino";
+
+                MySqlCommand comando = new MySqlCommand(sql, con);
+                comando.Parameters.AddWithValue("@Id_destino", id);
+
+                int cantidad = Convert.ToInt32(comando.ExecuteScalar());
+
+                return cantidad > 0;
+            }
+        }
+
     }
 }

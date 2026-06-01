@@ -15,6 +15,7 @@ namespace Parcial3_Aeropuerto.EN
 
         [Required (ErrorMessage = "El costo de la reserva es obligatorio.")]
 
+        [Range(0, double.MaxValue, ErrorMessage ="No se permiten números negativos")]
         public double Costo { get; set; }
 
         public int Id_usuario { get; set; }

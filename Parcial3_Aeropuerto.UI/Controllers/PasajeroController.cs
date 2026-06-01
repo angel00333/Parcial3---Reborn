@@ -19,7 +19,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             int registrosPorPagina = 5;
@@ -60,7 +60,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             return View();
@@ -88,7 +88,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             return PartialView(pasajeroBL.ObtenerPasajeroPorId(id));
@@ -115,7 +115,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             return PartialView("Delete", pasajeroBL.ObtenerPasajeroPorId(id));

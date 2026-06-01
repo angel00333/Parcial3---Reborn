@@ -10,7 +10,7 @@
     ViewData["Title"] = "Aviones";
 }
 
-<h1>Aviones</h1>
+<h1>Lista de Aviones</h1>
 
 <p>
     @if(rol == "Administrador" || rol == "Gerente")
@@ -26,7 +26,7 @@
                 <i class="bi bi-search text-muted"></i>
             </span>
             <input type="text" name="buscar" class="form-control border-start-0"
-                   placeholder="Buscar por nombre o apellido..." value="@ViewData["buscar"]" />
+                   placeholder="Buscar por nombre de aerolinea..." value="@ViewData["buscar"]" />
 
             <button type="submit" class=" btn btn-primary">
                 Buscar
@@ -51,6 +51,7 @@
             <th>IDAvion</th>
             <th> Aerolinea</th>
             <th> Capacidad</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -71,6 +72,10 @@
                  {
                     <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="mostrarEdit(@item.Id_avion); return false;"><img class="acciones" src="/css/imgs/iconosacciones/editar.png" /></a>
                     <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="mostrarDelete(@item.Id_avion);"><img class="acciones" src="/css/imgs/iconosacciones/eliminar.png" /></a>
+                 }
+                 else
+                 {
+                <span>Sin Acciones</span>
                  }
                     
             </td>
