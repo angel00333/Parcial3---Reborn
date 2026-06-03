@@ -215,10 +215,39 @@ footer nav {
     width: 20px;
 }
 
-.table-striped {
+/*.table-striped {
     --bs-table-bg: none;
     --bs-table-bg-type: rgb(0 2 0 / 40%);
+}*/
+
+.table-striped {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: rgba(0, 2, 0, 0.40);
+    border-radius: 15px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
 }
+    .table-striped thead tr:first-child th:first-child {
+        border-top-left-radius: 15px;
+    }
+
+    .table-striped thead tr:first-child th:last-child {
+        border-top-right-radius: 15px;
+    }
+
+    .table-striped tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 15px;
+    }
+
+    .table-striped tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 15px;
+    }
+
+    .table-striped th,
+    .table-striped td {
+        border-color: #000;
+    }
 
 .table > :not(caption) > * > * {
     padding: .5rem .5rem;
@@ -362,85 +391,94 @@ footer nav {
 }
 
 /* IMÁGENES SEGÚN ID_DESTINO */
-.destino-1 {
+.Argentina {
     background-image: url('/css/imgs/destinos/Argentina.png');
 }
 
-.destino-2 {
+.Belice {
     background-image: url('/css/imgs/destinos/Belice.png');
 }
 
-.destino-3 {
+.Brazil {
     background-image: url('/css/imgs/destinos/Brazil.png');
 }
 
-.destino-4 {
+.Canadá {
     background-image: url('/css/imgs/destinos/Canada.png');
 }
 
-.destino-5 {
+.Chile {
     background-image: url('/css/imgs/destinos/Chile.png');
 }
 
-.destino-6 {
+.Colombia {
     background-image: url('/css/imgs/destinos/Colombia.png');
 }
 
-.destino-7 {
+.Costa.Rica {
     background-image: url('/css/imgs/destinos/Costa_Rica.png');
 }
 
-.destino-8 {
+.El.Salvador {
     background-image: url('/css/imgs/destinos/El_Salvador.png');
 }
 
-.destino-9 {
+.España {
     background-image: url('/css/imgs/destinos/España.png');
 }
 
-.destino-10 {
+.Estados.Unidos {
     background-image: url('/css/imgs/destinos/Estados_Unidos.png');
 }
 
-.destino-11 {
+.Guatemala {
     background-image: url('/css/imgs/destinos/Guatemala.png');
 }
 
-.destino-12 {
+.Honduras {
     background-image: url('/css/imgs/destinos/Honduras.png');
 }
 
-.destino-13 {
+.Italia {
     background-image: url('/css/imgs/destinos/Italia.png');
 }
 
-.destino-14 {
+.Japón {
     background-image: url('/css/imgs/destinos/Japón.png');
 }
 
-.destino-15 {
+.México {
     background-image: url('/css/imgs/destinos/México.png');
 }
 
-.destino-16 {
+.Nicaragua {
     background-image: url('/css/imgs/destinos/Nicaragua.png');
 }
 
-.destino-17 {
+.Panamá {
     background-image: url('/css/imgs/destinos/Panama.png');
 }
 
-.destino-18 {
+.Perú {
     background-image: url('/css/imgs/destinos/Perú.png');
 }
 
-.destino-19 {
+.Republica.Dominicana {
     background-image: url('/css/imgs/destinos/República_Dominicana.png');
 }
 
-.destino-20 {
+.Rusia {
     background-image: url('/css/imgs/destinos/Rusia.png');
 }
+
+.Turquía {
+    background-image: url('/css/imgs/destinos/Turquía.png')
+}
+
+.Suiza {
+    background-image: url('/css/imgs/destinos/Suiza.png')
+}
+
 
 .btn-orange {
     --bs-btn-color: #fff;

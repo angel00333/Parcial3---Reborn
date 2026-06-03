@@ -19,7 +19,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             int RegistrosPorPagina = 4; 
@@ -65,7 +65,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
             if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             ViewBag.Aviones = avionesBL.MostrarAviones();
@@ -99,7 +99,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
             if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             ViewBag.Aviones = avionesBL.MostrarAviones();
@@ -131,7 +131,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
 
             if (rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             var vuelo = vuelosBL.ObtenerVuelosPorId(id);

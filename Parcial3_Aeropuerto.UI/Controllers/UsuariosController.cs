@@ -21,7 +21,7 @@ namespace Parcial3_Aeropuerto.Controllers
 
             if (string.IsNullOrEmpty(usuario))
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AcessoDenegado", "Login");
             }
 
             if (rol != "Administrador")

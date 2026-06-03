@@ -128,7 +128,7 @@ namespace Parcial3_Aeropuerto.DAL
                     using (MySqlConnection con = ConexionSQL.Conectar())
                     {
                         con.Open();
-                        string sql = "SELECT * FROM Pasajeros WHERE Nombre LIKE @Criterio OR Apellido LIKE @Criterio OR Pasaporte LIKE @Criterio OR Pais LIKE @Criterio";
+                        string sql = "SELECT * FROM Pasajeros WHERE Nombre LIKE @Criterio OR Apellido LIKE @Criterio";
                         MySqlCommand comando = new MySqlCommand(sql, con);
                         comando.Parameters.AddWithValue("@Criterio", "%" + criterio + "%");
 

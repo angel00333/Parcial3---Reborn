@@ -111,22 +111,28 @@ namespace Parcial3_Aeropuerto.DAL
             using (MySqlConnection con = ConexionSQL.Conectar())
             {
                 con.Open();
-                string sql = "SELECT * FROM Destinos WHERE Id_destino LIKE @Criterio OR Nombre_destino LIKE @Criterio";
+                string sql = @"SELECT d.Id_destino, d.Id_aeropuerto, a.Nombre_aeropuerto, d.Nombre_destino FROM Destinos d INNER JOIN Aeropuertos a ON d.Id_aeropuerto = a.Id_aeropuerto WHERE d.Nombre_destino LIKE @Criterio";
                 MySqlCommand comando = new MySqlCommand(sql, con);
                 comando.Parameters.AddWithValue("@Criterio", "%" + criterio + "%");
                 IDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
-                    Destinos destinos = new Destinos();
-                    destinos.Id_destino = reader.GetInt32(0);
-                    destinos.Id_aeropuerto = reader.GetInt32(1);
-                    destinos.Nombre_destino = reader.GetString(2);
-                    tdestinos.Add(destinos);
+                    tdestinos.Add(new Destinos
+                    {
+                        Id_destino = reader.GetInt32(0),
+                        Id_aeropuerto = reader.GetInt32(1),
+                        Aeropuertos = new Aeropuertos
+                        {
+                            Nombre_aeropuerto = reader.GetString(2)
+                        },
+                        Nombre_destino = reader.GetString(3)
+
+                    });
                 }
                 con.Close();
-                return tdestinos;
+               
             }
-            
+            return tdestinos;
         }
 
         public static bool DestinoTieneVuelo(int id)

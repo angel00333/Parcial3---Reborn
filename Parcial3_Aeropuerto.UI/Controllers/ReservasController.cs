@@ -23,7 +23,7 @@ namespace Parcial3_Aeropuerto.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             int registrosPorPagina = 5;
@@ -62,7 +62,7 @@ namespace Parcial3_Aeropuerto.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             ViewBag.Pasajeros = pasajerosBL.MostrarPasajeros();
@@ -102,7 +102,7 @@ namespace Parcial3_Aeropuerto.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             } 
 
             ViewBag.Pasajeros = pasajerosBL.MostrarPasajeros();
@@ -140,7 +140,7 @@ namespace Parcial3_Aeropuerto.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             var reserva = reservasBL.ObtenerReservasPorId(id);
@@ -165,7 +165,7 @@ namespace Parcial3_Aeropuerto.Controllers
 
             if (rol != "Recepcionista" && rol != "Gerente" && rol != "Administrador")
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("AccesoDenegado", "Login");
             }
 
             var reserva = reservasBL.ObtenerReservasPorId(id);
@@ -184,7 +184,8 @@ namespace Parcial3_Aeropuerto.Controllers
             {
                 FileName = "RegistroReserva.pdf",
                 PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
-                PageSize = Rotativa.AspNetCore.Options.Size.A4
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                PageMargins = new Rotativa.AspNetCore.Options.Margins(0, 0, 0, 0)
             };
         }
 

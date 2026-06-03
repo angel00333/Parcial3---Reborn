@@ -20,13 +20,13 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     
                     <div class="mb-3">
-                        <label asp-for="Id_aeropuerto" class="form-label fw-bold">Aerolínea</label>
+                        <label asp-for="Id_aeropuerto" class="form-label fw-bold">Aeropuerto</label>
 
                         <select asp-for="Id_aeropuerto"
                                 asp-items="ViewBag.Id_aeropuerto"
                                 id="Id_aeropuertox"
                                 class="form-select">
-                            <option value="">Seleccione o busque una aeropuerto</option>
+                            <option value="">Seleccione o busque un aeropuerto</option>
                         </select>
 
                         <span asp-validation-for="Id_aeropuerto" class="text-danger small"></span>
@@ -70,7 +70,7 @@
     allowEmptyOption: false,
     maxOptions: 1000,
     searchField: ["text"],
-    placeholder: "Seleccione o busque una aerolínea",
+    placeholder: "Seleccione o busque una aeropuerto",
     openOnFocus: true,
     hideSelected: false
     });

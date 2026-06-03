@@ -77,7 +77,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
             {
                 destinos.Aeropuertos = new Aeropuertos{Id_aeropuerto = Id_aeropuerto};
                 destinosBL.AgregarDestino(destinos);
-                TempData["SMSExito"] = "El usuario se agregó correctamente";
+                TempData["SMSExito"] = "El destino se agregó correctamente";
                 return RedirectToAction("Destinos");
             }
             ViewBag.Id_aeropuerto = new SelectList(aeropuertosBL.MostrarAeropuertos(), "Id_aeropuerto", "Nombre_aeropuerto", Id_aeropuerto);
@@ -106,7 +106,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
             if(ModelState.IsValid)
             {
                 destinosBL.ModificarDestino(destinos);
-                TempData["SMSExito"] = "El usuario se modificó correctamente";
+                TempData["SMSExito"] = "El destino se modificó correctamente";
                 return RedirectToAction("Destinos");
             }
             ViewBag.Id_aeropuerto = new SelectList(aeropuertosBL.MostrarAeropuertos(), "Id_aeropuerto", "Nombre_aeropuerto", destinos.Aeropuertos.Id_aeropuerto);

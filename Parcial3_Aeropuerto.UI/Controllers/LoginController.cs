@@ -54,6 +54,11 @@ namespace Parcial3_Aeropuerto.UI.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
+
+        public IActionResult AccesoDenegado()
+        {
+            return View();
+        }
     }
 
         
