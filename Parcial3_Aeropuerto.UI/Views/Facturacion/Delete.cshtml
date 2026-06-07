@@ -14,8 +14,18 @@
             </div>
 
             <div class="modal-body">
-                <p class="fw-bold">¿Estás seguro de eliminar la siguiente facturación:</p>
-                <p class="text-secondary">@Model.Id_Facturacion - $@Model.Monto [@Model.Fecha]?</p>
+                <h5 class="text-danger mb-4">¿Estás seguro de eliminar este registro?</h5>
+                <dl class="row">
+                    <dt class="col-sm-4">Id Facturacion:</dt>
+                    <dd class="col-sm-8">@Model.Id_Facturacion</dd>
+
+                    <dt class="col-sm-4">Monto:</dt>
+                    <dd class="col-sm-8">@Model.Monto</dd>
+
+                    <dt class="col-sm-4">Fecha:</dt>
+                    <dd class="col-sm-8">@Model.Fecha</dd>
+                </dl>
+                
 
                 <div class="alert alert-warning">
                     <i class="bi bi-exclamation-triangle"></i> ¡Esta acción no se puede deshacer!

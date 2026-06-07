@@ -13,8 +13,14 @@
             </div>
 
             <div class="modal-body">
-                <p class="fw-bold">¿Estás seguro de eliminar a:</p>
-                <p class="text-secondary">@Model.Nombre @Model.Apellido?</p>
+                <h5 class="text-danger mb-4">¿Estás seguro de eliminar este registro?</h5>
+                <dl class="row">
+                    <dt class="col-sm-4">Id Pasajero: </dt>
+                    <dd class="col-sm-8">@Model.Id_pasajero</dd>
+
+                    <dt class="col-sm-4">Nombre Pasajero: </dt>
+                    <dd class="col-sm-8">@Model.Nombre @Model.Apellido</dd>
+                </dl>
                 
                 <div class="alert alert-warning">
                     <i class="bi bi-exclamation-triangle"></i> ¡Esta acción no se puede deshacer!

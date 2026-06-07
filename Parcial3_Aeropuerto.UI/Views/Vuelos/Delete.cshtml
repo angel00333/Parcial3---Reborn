@@ -15,8 +15,21 @@
             </div>
 
             <div class="modal-body">
-                <p class="fw-bold">¿Estás seguro de eliminar el vuelo con destino a:</p>
-                <p class="text-secondary">@destino?.Nombre_destino</p>
+                <div class="modal-body">
+                    <h5 class="text-danger mb-4">¿Estás seguro de eliminar este registro?</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Id Vuelo: </dt>
+                        <dd class="col-sm-8">@Model.Id_vuelo</dd>
+
+                        <dt class="col-sm-4">Destino: </dt>
+                        <dd class="col-sm-8">@destino?.Nombre_destino</dd>
+
+                        <dt class="col-sm-4">Cant. pasajeros: </dt>
+                        <dd class="col-sm-8">@Model.Cantidad_pasajeros</dd>
+
+                        <dt class="col-sm-4">Fecha: </dt>
+                        <dd class="col-sm-8">@Model.Fecha</dd>
+                    </dl>
 
                 <div class="alert alert-warning">
                     <i class="bi bi-exclamation-triangle"></i> Esta acción no se puede deshacer.

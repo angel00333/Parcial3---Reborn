@@ -14,9 +14,18 @@
             </div>
 
             <div class="modal-body">
-                <p class="fw-bold">¿Estás seguro de eliminar la reserva del pasajero:</p>
-                <p class="text-secondary">@pasajero?.Nombre @pasajero?.Apellido?</p>
+                <h5 class="text-danger mb-4">¿Estás seguro de eliminar este registro?</h5>
+                <dl class="row">
+                    <dt class="col-sm-4">Id Reserva: </dt>
+                    <dd class="col-sm-8">@Model.Id_reserva</dd>
 
+                    <dt class="col-sm-4">Nombre Pasajero: </dt>
+                    <dd class="col-sm-8">@pasajero?.Nombre @pasajero?.Apellido</dd>
+
+                    <dt class="col-sm-4">Fecha: </dt>
+                    <dd class="col-sm-8">@Model.Fecha</dd>
+                </dl>
+                
                 <div class="alert alert-warning">
                     <i class="bi bi-exclamation-triangle"></i> ¡Esta acción no se puede deshacer!
                 </div>

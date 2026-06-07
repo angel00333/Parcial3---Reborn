@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Parcial3_Aeropuerto.DAL;
+using Parcial3_Aeropuerto.EN;
+using Parcial3_Aeropuerto.BL;
 
 namespace Parcial3_Aeropuerto.UI.Controllers
 {
     public class LoginController : Controller
     {
-
+        LoginBL loginBL = new LoginBL();
         [HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Login()
@@ -23,7 +24,7 @@ namespace Parcial3_Aeropuerto.UI.Controllers
         [HttpPost]
         public IActionResult Login(string Nombre_usuario, string Contraseña)
         {
-            var usuario = LoginDAL.IniciarSesion(Nombre_usuario, Contraseña);
+            var usuario = LoginBL.IniciarSesion(Nombre_usuario, Contraseña);
 
             if (usuario != null)
             {
